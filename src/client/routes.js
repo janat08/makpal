@@ -1,17 +1,18 @@
-//Note: although react-router 4 allows for dynamic/distributed routing, we need
-//to use a single static route config for code-splitting to work
-import App from './App';
-import {HomePage, UsersPage, ErrorPage} from './codeSplitMappingsSync';
+import { Component } from './interfaces';
+import { Counter } from './components/counter';
+import { Speaker } from './components/speaker';
 
-const routes = [
-  { 
-    component: App,
-    routes: [
-      { path: '/', exact: true, component: HomePage, layout:'fred'  },
-      { path: '/users', component: UsersPage, layout:'fred2'  },
-      { path: '*', component: ErrorPage, layout:'fred2'  }
-    ]
-  }
-];
+export interface RouteValue {
+    component: Component;
+    scope: string;
+}
+export interface Routes {
+    readonly [index: string]: RouteValue;
+}
 
-export default routes;
+export const routes: Routes = {
+    '/': { component: Counter, scope: 'counter' },
+    '/p2': { component: Speaker, scope: 'speaker' }
+};
+
+export const initialRoute = '/';

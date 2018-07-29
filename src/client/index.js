@@ -1,43 +1,41 @@
-//this is the entry point for the client app bundle
-import './utils/polyfills';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {hydrate} from 'react-dom';
-import BrowserRouter from 'react-router-dom/BrowserRouter';
-import { renderRoutes } from 'react-router-config';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { setup, run } from '@cycle/run';
+import isolate from '@cycle/isolate';
+/// #if DEVELOPMENT
+import { restartable, rerunner } from 'cycle-restart/lib/restart';
+/// #endif
 
-import routes from './routes';
-import reducers from './reducers';
-import 'config'; //see utils/clientConfig.js
-import './index.scss'; //Parcel will use this import to build the css bundle 
+import { buildDrivers, wrapMain } from './drivers';
+// import { Component } from './interfaces';
+import { App } from './components/app';
 
+const main = wrapMain(App);
 
-//The SSR(Sever Side Render) passes data to client via __INIT_DATA_FROM_SERVER_RENDER__
-const initData = window.__INIT_DATA_FROM_SERVER_RENDER__;
-console.log('server render stats', initData.stats);  //eslint-disable-line no-console 
+/// #if PRODUCTION
+// run(main as any, buildDrivers(([k, t]) => [k, t()]));
 
-const store = createStore(
-  reducers, initData.initialState, applyMiddleware(thunk)
-);
+/// #else
+const mkDrivers = () =>
+    buildDrivers(([k, t]) => {
+        if (k === 'DOM') {
+            return [k, restartable(t(), { pauseSinksWhileReplaying: false })];
+        }
+        if (k === 'time' || k === 'router') {
+            return [k, t()];
+        }
+        return [k, restartable(t())];
+    });
+const rerun = rerunner(setup, mkDrivers, isolate);
+// rerun(main as any);
 
-export default class Index extends Component {
-  
-    static propTypes = {
-      route: PropTypes.object
-    }
-  
-    render() {
-      return (
-        <Provider store={store}>
-          <BrowserRouter>
-            {renderRoutes(routes)}
-          </BrowserRouter>
-        </Provider>
-      );
-    }
+// if (module.hot) {
+//     module.hot.accept('./components/app', () => {
+//         const newApp = (require('./components/app') as any).App;
+
+//         rerun(wrapMain(newApp));
+//     });
+// }
+/// #endif
+
+export default function(){
+    run(main, buildDrivers(([k, t]) => [k, t()]));
 }
-
-hydrate(<Index store={store} />, document.querySelector('#app'));

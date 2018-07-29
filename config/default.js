@@ -3,7 +3,7 @@
 //note: temporary local config (for local debugging/development) can be put into config/local.js (it's git ignored)
 module.exports = {
   host: undefined,
-  port: 5000,
+  port: 3000,
 
   //config inside here will be available in the client browser app
   clientConfig:{
@@ -11,7 +11,7 @@ module.exports = {
     apiHost: 'http://localhost:5000',
   },
 
-  enableServerSideRender:true,
+  enableServerSideRender:false,
 
   logIncomingHttpRequests:true,
   logOutgoingHttpRequests:true,
