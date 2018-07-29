@@ -38,7 +38,7 @@ app.get('/api/users', getUsers);
 
 //all page rendering
 //Note: handles page routing and 404/500 error pages where necessary
-app.get('*', renderPageRoute);
+// app.get('*', renderPageRoute);
 
 
 const server = app.listen(config.port, function () {

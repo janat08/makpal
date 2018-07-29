@@ -5,7 +5,6 @@ import isolate from '@cycle/isolate';
 import { extractSinks } from 'cyclejs-utils';
 
 import { driverNames } from '../drivers';
-import { BaseSources, BaseSinks } from '../interfaces';
 import { RouteValue, routes, initialRoute } from '../routes';
 
 import { State as CounterState } from './counter';

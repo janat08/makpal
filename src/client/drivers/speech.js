@@ -6,7 +6,7 @@
 
 import { Stream } from 'xstream';
 
-export default function speechDriver(speechText$: Stream<string>): void {
+export default function speechDriver(speechText$) {
     speechText$.addListener({
         next: what => {
             if (window.speechSynthesis !== undefined) {

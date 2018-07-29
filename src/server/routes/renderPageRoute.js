@@ -11,7 +11,7 @@ import getLog from '../utils/logger';
 
 // import routes from '../../client/routes';
 // import reducers from '../../client/reducers';
-import app from '../../client/index'
+// import app from '../../client/index'
 
 
 const log = getLog();
@@ -90,10 +90,9 @@ function renderHTML(content, clientData, helmet){
   </head>
   <body  >
   
-    <div id="app">${content()}</div>
+    <div id="app"></div>
   
-    <script>
-    </script>
+    <!--<script>()()    </script>-->
     <script src="/bundles/index.js"></script>
   </body>
 </html>  
