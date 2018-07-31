@@ -27,10 +27,7 @@
     "test:e2e:dev": "npx cypress open --env env=production",
     "test:watch": "npm-watch",
     "test:quick": "npm run lint && npm run test:unit",
-    "todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note",
-    "storybook": "npm-run-all --parallel dev:build:css storybook:serve",
-    "storybook:serve": "wait-on ./dist/bundles/index.css && start-storybook -p 6006",
-    "storybook:build": "build-storybook"
+    "todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note"
   },
   "browser": {
     "./src/client/codeSplitMappingsSync.js": "./src/client/codeSplitMappingsAsync.js",

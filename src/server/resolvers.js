@@ -40,7 +40,8 @@ function authenticatedResolvers(resolvers: Object): Object {
   }, resolvers)
 }
 
-const resolvers = authenticatedResolvers({
+const resolvers = //authenticatedResolvers(
+  {
   TodoList: {
     todos() {
       return todos
@@ -90,6 +91,7 @@ const resolvers = authenticatedResolvers({
       }
     }
   }
-})
+}
+// )
 
 export { resolvers, pubsub, TODO_UPDATED_TOPIC }
