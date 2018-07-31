@@ -15,7 +15,11 @@ module.exports = {
 
   logIncomingHttpRequests:true,
   logOutgoingHttpRequests:true,
-  
+  db:{
+    host: "localhost",
+    port: "8529",
+    name: "stubbed",
+  },
   logging:{
     consoleLogLevel:'debug',
     logFileLogLevel:'info',
