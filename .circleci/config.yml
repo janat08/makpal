@@ -66,6 +66,7 @@ workflows:
   build-deploy:
     jobs:
       - build
+      - test
       - deploy-stage:
           requires:
             - build
