@@ -21,6 +21,7 @@
     "prod:copy-files": "cross-env npx copyfiles -u 1 'src/static/**/*' dist",
     "prod:serve": "cross-env NODE_ENV=production node dist/server/",
     "test": "npm run lint && npm run test:unit && npm run test:e2e",
+    "testCI": "",
     "lint": "npx eslint --ext jsx,js src test",
     "test:unit": "npx jest --config test/unit-test/jest.config.js",
     "1test:e2e": "npm run prod:build && cross-env NODE_ENV=test node-while -s dist/server/index.js -r \"node node_modules/cypress/bin/cypress run\"",
@@ -172,6 +173,40 @@
     "hot loading",
     "boilerplate"
   ],
+  "ava": {
+    "files": [
+      "src/client/**/*.spec.js",
+      "src/server/**/*.spec.js"
+    ],
+    "source": [
+      "src/client/**/*.js",
+      "src/server/**/*.js"
+    ],
+    "failFast": true,
+    "babel": "inherit"
+  },
+  "nyc": {
+    "include": [
+      "src/client/**/*.js",
+      "src/server/**/*.js"
+    ],
+    "exclude": [
+      "**/*.spec.js",
+      "test/**/*.spec.js",
+      "client/reducers.js",
+      "client/store.js",
+      "client/routes.js",
+      "server/util/setup-test-env.js",
+      "server/util/test-helpers.js",
+      "server/config.js",
+      "server/dummyData.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "html"
+    ]
+  },
   "repository": "gregtillbrook/react-head-start",
   "license": "MIT"
 }

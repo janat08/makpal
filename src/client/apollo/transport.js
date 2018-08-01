@@ -1,6 +1,6 @@
 
 import { PersistedQueryNetworkInterface } from 'persistgraphql'
-import queryMap from '../../extracted_queries.json'
+import queryMap from '../extracted_queries.json'
 import config from '../config.json'
 
 // Returns either a standard, fetch-full-query network interface or a

@@ -1,0 +1,103 @@
+kkarczmarczyk/node-yarn
+
+image: kkarczmarczyk/node-yarn
+
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+
+stages:
+  - build
+  - test
+  - deploy
+
+# before_script:
+#   - yarn install
+
+ build:
+  stage: build
+  script:
+   - yarn install
+   - yarn start
+
+  test:
+  artifacts:
+
+      - run:
+          name: Jest Suite
+          command: yarn jest tests --ci --testResultsProcessor="jest-junit" --runInBand
+          environment:
+              JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+      - run:
+          name: test
+          command: npm testCI #e2e not implemented
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+      - run:
+          name: code-coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      # - store_artifacts:
+      #     path: coverage
+      #     prefix: coverage
+      # - store_test_results:
+      #     path: test-results.xml
+
+test_async:
+  stage: test
+  script:
+   - npm install
+   - node ./specs/start.js ./specs/async.spec.js
+  tags:
+    - docker
+
+
+deploy_dev:
+  stage: deploy
+  only: 
+    - master
+  script:
+      - yarn global add now
+      - now --public -t ${NOW_TOKEN}
+      - now -t ${NOW_TOKEN} alias makpal
+
+deploy_production:
+  stage: deploy
+  only: #production@janat08/makpal
+    - production
+  script:
+      - yarn global add now
+      - now --public -t ${NOW_TOKEN}
+      - now -t ${NOW_TOKEN} alias makpal-prod
+
+    ####################
+
+version: 2
+jobs:
+  build:
+    working_directory: ~/mern-starter
+    docker:
+      - image: circleci/node:8.11.3-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-wee
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+        name: build
+        command: yarn prod:build
+
+
+
