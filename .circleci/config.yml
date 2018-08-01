@@ -45,33 +45,18 @@ jobs:
     - store_test_results:
       path: test-results.xml
   deploy-stage:
+    branches:
+      only:
+        - master
     commands:
       - yarn global add now
       - now -t ${NOW_TOKEN}
       - now -t ${NOW_TOKEN} alias makpal
   deploy-production:
+    branches:
+      only:
+        - production
     commands:
       - yarn global add now
       - now -t ${NOW_TOKEN}
       - now -t ${NOW_TOKEN} alias makpal-prod
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build
-      - test
-      - deploy-stage:
-          requires:
-            - build
-            - test
-          filters:
-            branches:
-              only: master
-      - deploy-production:
-          requires:
-            - build
-            - test
-          filters:
-            branches:
-              only: production   
