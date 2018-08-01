@@ -4,5 +4,6 @@ module.exports = {
   testPathIgnorePatterns:[
     '/config/', //skip the test.js config file
     '/node_modules/'
-  ]
+  ],
+  "testResultsProcessor": "jest-junit"
 };
