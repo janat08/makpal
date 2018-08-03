@@ -1,6 +1,7 @@
 {
     "alias": [
       "makpal",
-      "makpal-prod"
+      "makpal-prod",
+      "makpal.app"
     ]
 }

@@ -60,7 +60,7 @@ jobs:
     commands:
       - yarn global add now
       - now -t ${NOW_TOKEN}
-      - now -t ${NOW_TOKEN} alias makpal-prod
+      - now -t ${NOW_TOKEN} alias makpal.app
 
 workflows:
   version: 2
