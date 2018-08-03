@@ -69,16 +69,16 @@ workflows:
       - build
       - test
       - deploy-stage:
-          requires:
-            - build
-            - test
+          # requires:
+          #   - build
+          #   - test
           filters:
             branches:
               only: master
       - deploy-production:
-          requires:
-            - build
-            - test
+          # requires:
+          #   - build
+          #   - test
           filters:
             branches:
               only: production    
