@@ -8,30 +8,31 @@ import view from '../Login/view';
 // import view from './view';
 import Login from './index.js'
 // import Snabbdom from 'snabbdom-pragma';
+import { buildDrivers} from './index.ts'
 
 const defaultState = {
 
 }
 
 export default function TaskList(sources) {
-  // const match$ = sources.router.define({
-  //   "/": Login,
-  //   // "/login": Login
-  // })
+  const match$ = sources.router.define({
+    "/": Login,
+    // "/login": Login
+  })
 
   // const initReducer$ = xs.of(prevState=> (
   //   prevState === undefined ? defaultState : prevState
   // ))
 
-  // const componentSink$ = match$.map(
-  //   ({ path, value }) => {
-  //     const { component, scope } = value;
-  //     return isolate(component, scope)({
-  //         ...sources,
-  //         router: sources.router.path(path)
-  //     });
-  // }
-  // )
+  const componentSink$ = match$.map(
+    ({ path, value }) => {
+      const { component, scope } = value;
+      return isolate(component, scope)({
+          ...sources,
+          router: sources.router.path(path)
+      });
+  }
+  )
 
   // const loginSinks = isolate(Login, "login")(sources)
   // const loginVDOM$ = loginSinks.DOM
@@ -55,6 +56,7 @@ export default function TaskList(sources) {
   return {
     DOM: vdom$,
     onion: reducer$,
+    router: xs.of("/"),
   };
 }
  
