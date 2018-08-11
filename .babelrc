@@ -1,4 +1,14 @@
 {
-  "presets": ["env", "react", "stage-0", "flow"],
-  "plugins": ["transform-class-properties", "syntax-dynamic-import"]
-} 
+  "presets": [
+    "env",
+    "react",
+    "stage-0",
+    "flow"
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "syntax-dynamic-import",
+    "syntax-jsx",
+    ["transform-react-jsx", {"pragma": "Snabbdom.createElement"}]
+  ]
+}

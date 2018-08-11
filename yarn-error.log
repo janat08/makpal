@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js testCI
+  C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add cycle-apollo-driver
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\HashiCorp\Vagrant\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\PostgreSQL\pg10\bin;C:\Program Files\Microsoft VS Code\bin;C:\ProgramData\chocolatey\bin;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\user\AppData\Local\hyper\app-2.0.0\resources\bin;C:\Users\user\AppData\Roaming\npm;C:\Users\user\dev\apps;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\user\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\user\AppData\Local\.meteor;;C:\Users\user\AppData\Local\now-cli
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\HashiCorp\Vagrant\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\PostgreSQL\pg10\bin;C:\Program Files\Microsoft VS Code\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\PuTTY\;C:\Users\user\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\user\AppData\Local\Programs\Python\Python37-32\;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\user\AppData\Roaming\npm;C:\Users\user\dev\_apps;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\user\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\user\AppData\Local\.meteor;C:\Users\user\AppData\Local\now-cli;;C:\Users\user\AppData\Local\hyper\app-2.1.0-canary2\resources\bin
 
 Yarn version: 
   1.9.2
@@ -14,17 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  TypeError: "file" argument must be a non-empty string
-      at normalizeSpawnArguments (child_process.js:383:11)
-      at Object.exports.spawn (child_process.js:496:38)
-      at C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30417:24
-      at new Promise (<anonymous>)
-      at new F (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:23624:28)
-      at C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30416:12
-      at run (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:45165:7)
-      at BlockingQueue.maybePushConcurrencyQueue (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:45180:7)
-      at BlockingQueue.shift (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:45175:10)
-      at C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:45119:15
+  Error: https://registry.yarnpkg.com/cycle-apollo-driver: Not found
+      at Request.params.callback [as _callback] (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:64150:18)
+      at Request.self.callback (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:137416:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:138388:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (C:\Users\user\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:138310:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
@@ -50,7 +50,7 @@ npm manifest:
       "prod:copy-files": "cross-env npx copyfiles -u 1 'src/static/**/*' dist",
       "prod:serve": "cross-env NODE_ENV=production node dist/server/",
       "test": "npm run lint && npm run test:unit && npm run test:e2e",
-      "testCI": "",
+      "testCI": "yarn test:unit",
       "lint": "npx eslint --ext jsx,js src test",
       "test:unit": "npx jest --config test/unit-test/jest.config.js",
       "1test:e2e": "npm run prod:build && cross-env NODE_ENV=test node-while -s dist/server/index.js -r \"node node_modules/cypress/bin/cypress run\"",
@@ -98,6 +98,7 @@ npm manifest:
       "@cycle/time": "^0.13.0",
       "apollo-client": "^1.9.1",
       "arangojs": "^6.4.0",
+      "babel-plugin-transform-react-jsx": "^6.24.1",
       "babel-preset-flow": "^6.23.0",
       "caller-callsite": "^2.0.0",
       "compression": "^1.7.3",
@@ -131,6 +132,7 @@ npm manifest:
       "request-promise-native": "^1.0.5",
       "serve-favicon": "^2.5.0",
       "simple-oauth2": "^2.2.0",
+      "snabbdom-pragma": "^2.7.0",
       "subscriptions-transport-ws": "^0.8.2",
       "switch-path": "^1.2.0",
       "winston": "^2.4.3",
@@ -202,6 +204,40 @@ npm manifest:
       "hot loading",
       "boilerplate"
     ],
+    "ava": {
+      "files": [
+        "src/client/**/*.spec.js",
+        "src/server/**/*.spec.js"
+      ],
+      "source": [
+        "src/client/**/*.js",
+        "src/server/**/*.js"
+      ],
+      "failFast": true,
+      "babel": "inherit"
+    },
+    "nyc": {
+      "include": [
+        "src/client/**/*.js",
+        "src/server/**/*.js"
+      ],
+      "exclude": [
+        "**/*.spec.js",
+        "test/**/*.spec.js",
+        "client/reducers.js",
+        "client/store.js",
+        "client/routes.js",
+        "server/util/setup-test-env.js",
+        "server/util/test-helpers.js",
+        "server/config.js",
+        "server/dummyData.js"
+      ],
+      "reporter": [
+        "lcov",
+        "text",
+        "html"
+      ]
+    },
     "repository": "gregtillbrook/react-head-start",
     "license": "MIT"
   }
@@ -10721,7 +10757,7 @@ Lockfile:
     version "1.1.6"
     resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
   
-  snabbdom-pragma@^2.6.0:
+  snabbdom-pragma@^2.6.0, snabbdom-pragma@^2.7.0:
     version "2.7.0"
     resolved "https://registry.yarnpkg.com/snabbdom-pragma/-/snabbdom-pragma-2.7.0.tgz#e245014c40e123d1a13a40a6b4a1a8914626b65b"
     dependencies:
