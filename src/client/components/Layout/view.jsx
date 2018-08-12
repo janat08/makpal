@@ -13,8 +13,11 @@ function snab (){
   ])
 }
 
+var a = <div> example </div>
+
 function jsx({count}){
   return  <div>
+    {a}
      counter: {count}
      </div>
 }
