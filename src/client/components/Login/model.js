@@ -26,12 +26,12 @@ export default function model(actions) {
   //     return void 0;
   //   });
   const initReducer$ = xs.of(prevState=>{
-    return {count: 0}
+    return prevState === undefined ? {count: 0} : prevState
   })
 
   const clickedReducer$ = actions.click$
     .mapTo(function(prev){
-      return prev + 1
+      return {count: prev.count + 1}
     })
 
   return xs.merge(

@@ -11,19 +11,18 @@ import { createHistory } from '@cycle/history'
 import { makeRouterDriver } from 'cyclic-router'
 
 
-// const main = routerify(onionify(Layout), switchPath);
+const main = routerify(onionify(Layout), switchPath, {omitHistory: false});
 
-// run(main, {
-//   DOM: makeDOMDriver('#app'),
-//   // history: captureClicks(makeHistoryDriver()),
-//   history: makeHistoryDriver()
-//   // storage: storageDriver,
-// });
-// const main = routerify(onionify(Layout), switchPath);
-
-run(Layout, {
+run(main, {
   DOM: makeDOMDriver('#app'),
   // history: captureClicks(makeHistoryDriver()),
-  // history: makeHistoryDriver()
+  history: makeHistoryDriver()
   // storage: storageDriver,
 });
+
+// run(Layout, {
+//   // DOM: makeDOMDriver('#app'),
+//   history: captureClicks(makeHistoryDriver()),
+//   // history: makeHistoryDriver()
+//   // storage: storageDriver,
+// });
