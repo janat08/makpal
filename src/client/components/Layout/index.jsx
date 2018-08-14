@@ -37,7 +37,7 @@ function view(history$, vdom$, login$) {
       <div className="header-wrapper">
       </div>
       <section class="main">
-        {vdom}
+        {/* {vdom} */}
         {login}
       </section>
       <footer>
@@ -57,34 +57,34 @@ export default function TaskList(sources) {
   //   prevState === undefined ? defaultState : prevState
   // ))
 
-  const page$ = match$.map(
-    ({ path, value }) => {
-      const { component, scope } = value;
-      return isolate(component, scope)({
-        ...sources,
-        router: sources.router.path(path)
-      });
-    }
-  )
+  // const page$ = match$.map(
+  //   ({ path, value }) => {
+  //     const { component, scope } = value;
+  //     return isolate(component, scope)({
+  //       ...sources,
+  //       router: sources.router.path(path)
+  //     });
+  //   }
+  // )
 
-  const view$ = page$.map(v => v.DOM || xs.never()).flatten()
-  // const http$ = page$.map(v => v.HTTP || xs.never()).flatten()
-  const route$ = page$.map(v => v.router || xs.never()).flatten()
-  const reducers$ = page$.map(v => v.onion || xs.never()).flatten()
+  // const view$ = page$.map(v => v.DOM || xs.never()).flatten()
+  // // const http$ = page$.map(v => v.HTTP || xs.never()).flatten()
+  // const route$ = page$.map(v => v.router || xs.never()).flatten()
+  // const reducers$ = page$.map(v => v.onion || xs.never()).flatten()
   const history$ = sources.history
 
   const state$ = sources.onion.state$;
   const actions = intent(sources.DOM, sources.history);
   const parentReducer$ = model(actions);
 
-  console.log(Login, typeof login)
+  // console.log(Login, typeof login)
 
   const login = isolate(Login, {onion: "counter"})(sources)
   const childReducer$ = login.onion
 
-  console.log(login)
-  const vdom$ = view(history$, view$, login.DOM);
-  const reducer$ = xs.merge(parentReducer$, reducers$, childReducer$);
+  // console.log(login)
+  const vdom$ = view(history$, login.DOM);
+  const reducer$ = xs.merge(parentReducer$, childReducer$);
 
   return {
     DOM: vdom$,
