@@ -12,7 +12,6 @@ import Snabbdom from 'snabbdom-pragma';
 
 
 const defaultState = {
-
 }
 
 function navigation(pathname) {
@@ -25,14 +24,14 @@ function navigation(pathname) {
   );
 }
 
-function view(history$, vdom$, login$) {
-  return xs.combine(history$, vdom$, login$).map(([{ pathname }, vdom, login]) =>
+function view(login$) {
+  return xs.combine(login$).map(([login]) =>
     <div className="main-wrapper">
       <header>
         <h1>makpal</h1>
       </header>
       <nav>
-        {navigation(pathname)}
+        {/* {navigation(pathname)} */}
       </nav>
       <div className="header-wrapper">
       </div>
@@ -48,14 +47,14 @@ function view(history$, vdom$, login$) {
 }
 
 export default function TaskList(sources) {
-  const match$ = sources.router.define({
-    "/": Login,
-    // "/login": Login
-  })
+  // const match$ = sources.router.define({
+  //   "/": Login,
+  //   // "/login": Login
+  // })
 
-  // const initReducer$ = xs.of(prevState=> (
-  //   prevState === undefined ? defaultState : prevState
-  // ))
+  const initReducer$ = xs.of(prevState=> (
+    prevState === undefined ? defaultState : prevState
+  ))
 
   // const page$ = match$.map(
   //   ({ path, value }) => {
@@ -71,24 +70,25 @@ export default function TaskList(sources) {
   // // const http$ = page$.map(v => v.HTTP || xs.never()).flatten()
   // const route$ = page$.map(v => v.router || xs.never()).flatten()
   // const reducers$ = page$.map(v => v.onion || xs.never()).flatten()
-  const history$ = sources.history
+  // const history$ = sources.history
 
-  const state$ = sources.onion.state$;
-  const actions = intent(sources.DOM, sources.history);
-  const parentReducer$ = model(actions);
+  // const state$ = sources.onion.state$;
+  // const actions = intent(sources.DOM, sources.history);
+  // const parentReducer$ = model(actions);
 
   // console.log(Login, typeof login)
 
-  const login = isolate(Login, {onion: "counter"})(sources)
+  const login = isolate(Login, {onion: "child"})(sources)
   const childReducer$ = login.onion
 
   // console.log(login)
-  const vdom$ = view(history$, login.DOM);
-  const reducer$ = xs.merge(parentReducer$, childReducer$);
+  // const vdom$ = view(history$, login.DOM);
+  const vdom$ = view(login.DOM);
+  const reducer$ = xs.merge(initReducer$, childReducer$);
 
   return {
     DOM: vdom$,
     onion: reducer$,
-    router: xs.of("/"),
+    // router: xs.of("/"),
   };
 }

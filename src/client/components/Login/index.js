@@ -2,6 +2,7 @@ import intent from './intent';
 import model from './model';
 import view from './view.jsx';
 import xs, {Stream, MemoryStream} from 'xstream';
+import {div, button, p, makeDOMDriver} from '@cycle/dom';
 
 // import Snabbdom from 'snabbdom-pragma';
 
