@@ -17,34 +17,39 @@ import {div, button, p, makeDOMDriver} from '@cycle/dom';
 //   };
 // }
 
-export default function Counter(sources) {
-  const action$ = xs.merge(
-    sources.DOM.select('.decrement').events('click').map(ev => -1),
-    sources.DOM.select('.increment').events('click').map(ev => +1)
-  );
+export default function Login(sources) {
+  // const action$ = xs.merge(
+  //   sources.DOM.select('.decrement').events('click').map(ev => -1),
+  //   sources.DOM.select('.increment').events('click').map(ev => +1)
+  // );
+  const action$ = intent(sources.DOM)
+  action$.fields$.debug("actions")
+  action$.login$.debug("login")
+  const reducer$ = model(action$)
+  const vdom$ = view(sources.onion.state$)
+  // const state$ = sources.onion.state$;
 
-  const state$ = sources.onion.state$;
 
-  const vdom$ = state$.map(state =>
-    div([
-      button('.decrement', 'Decrement'),
-      button('.increment', 'Increment'),
-      p('Counter: ' + state.count)
-    ])
-  );
+  // const vdom$ = state$.map(state =>
+  //   div([
+  //     button('.decrement', 'Decrement'),
+  //     button('.increment', 'Increment'),
+  //     p('Counter: ' + state.count)
+  //   ])
+  // );
 
-  const initReducer$ = xs.of(function initReducer(prevState) {
-    if (prevState) {
-      return prevState;
-    } else {
-      return {count: 0};
-    }
-  });
-  const updateReducer$ = action$
-    .map(num => function updateReducer(prevState){
-      return {count: prevState.count + num};
-    });
-  const reducer$ = xs.merge(initReducer$, updateReducer$);
+  // const initReducer$ = xs.of(function initReducer(prevState) {
+  //   if (prevState) {
+  //     return prevState;
+  //   } else {
+  //     return {count: 0};
+  //   }
+  // });
+  // const updateReducer$ = action$
+  //   .map(num => function updateReducer(prevState){
+  //     return {count: prevState.count + num};
+  //   });
+  // const reducer$ = xs.merge(initReducer$, updateReducer$);
 
   return {
     DOM: vdom$,

@@ -1,18 +1,16 @@
 import Snabbdom from 'snabbdom-pragma';
+import xs from 'xstream';
 
 export default function view(state$) {
-  return state$.map(jsx);
-}
-
-function snab (){
-  return div([
-    input({attrs: {type: 'checkbox'}}), 'Toggle me',
-    p("ON")
-  ])
-}
-
-function jsx({count}){
-  return  <div>
-     counter: {count}
-     </div>
+  console.log(state$)
+  return state$.map(state=>(
+    <div>
+      <h3>Login</h3>
+      {/* {state.page.name} */}
+      <input className="nameJs" />
+      <input className="passJs" />
+      <button className="loginJs">login</button>
+      <button className="registerJs">register</button>
+    </div>
+  ));
 }

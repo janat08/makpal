@@ -94,6 +94,7 @@
     "koa-logger": "^3.0.1",
     "koa-mount": "^3.0.0",
     "koa-router": "^7.2.1",
+    "koa-sendfile": "^2.0.0",
     "koa-static": "^5.0.0",
     "morgan": "^1.9.0",
     "ms": "^2.1.1",

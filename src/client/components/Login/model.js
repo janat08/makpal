@@ -26,17 +26,29 @@ export default function model(actions) {
   //     return void 0;
   //   });
   const initReducer$ = xs.of(prevState=>{
-    return prevState === undefined ? {count: 0} : prevState
+    return prevState === undefined ? {name: "", pass: ""} : prevState
   })
-
-  const clickedReducer$ = actions.click$
-    .mapTo(function(prev){
-      return {count: prev.count + 1}
+  const fields$ = actions.fields$
+    .map((stuff)=> function(prev){
+      console.log(stuff, "unde")
+      return {...prev}
     })
 
+
+    const login$ = actions.login$
+    .mapTo(prev=>{
+      console.log(prev.name, prev.pass)
+      return initReducer$
+      // return ()=>console.log("testing")
+    })
+    // const name$ = actions.name$.map(prev=>{
+
+    // })
   return xs.merge(
     initReducer$,
-    clickedReducer$
+    fields$,
+    login$,
+    // name$,
     // startEditReducer$,
     // doneEditReducer$,
     // cancelEditReducer$,
