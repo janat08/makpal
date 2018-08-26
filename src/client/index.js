@@ -19,15 +19,10 @@ run(main, {
   // storage: storageDriver,
 });
 
-// run(Layout, {
-//   // DOM: makeDOMDriver('#app'),
-//   history: captureClicks(makeHistoryDriver()),
-//   // history: makeHistoryDriver()
-//   // storage: storageDriver,
-// });
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker
-           .register('/sw.js')
-           .then(function() { console.log('Service Worker Registered'); })
-           .catch(err=>console.log(err));
-} 
+
+// if('serviceWorker' in navigator) {
+//   navigator.serviceWorker
+//            .register('/sw.js')
+//            .then(function() { console.log('Service Worker Registered'); })
+//            .catch(err=>console.log(err));
+// } 

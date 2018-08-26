@@ -57,16 +57,17 @@ function view(vdom$, path$) {
   );
 }
 
-export default function TaskList(sources) {
+export default function Layout(sources) {
   const Routes = {
     "/": Home,
     "/login": Login,
-    '*': ()=>({DOM: xs.of(<h1> 404</h1>)})
+    // '*': ()=>{return {DOM: xs.of(<h1> 404</h1>)}}
   }
 
   const initReducer$ = xs.of(prevState => (
     prevState === undefined ? defaultState : prevState
   ))
+  initReducer$.debug("init")
 
   const history$ = sources.history;
   const pageSinks$ = history$.map((location) => {
@@ -74,12 +75,11 @@ export default function TaskList(sources) {
 
     return switchPath(pathname, Routes);
   }).map((route) => {
-    console.log(route)
     return isolate(route.value, 'page')(sources)
   });
+  pageSinks$.debug("sinks")
 
   const PS = extractSinks(pageSinks$, ['DOM', 'onion']);
-
   const vdom$ = view(PS.DOM, history$);
   const reducer$ = xs.merge(initReducer$, PS.onion);
 
