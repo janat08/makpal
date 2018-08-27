@@ -67,7 +67,6 @@ export default function Layout(sources) {
   const initReducer$ = xs.of(prevState => (
     prevState === undefined ? defaultState : prevState
   ))
-  initReducer$.debug("init")
 
   const history$ = sources.history;
   const pageSinks$ = history$.map((location) => {

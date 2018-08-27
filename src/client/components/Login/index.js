@@ -23,8 +23,8 @@ export default function Login(sources) {
   //   sources.DOM.select('.increment').events('click').map(ev => +1)
   // );
   const action$ = intent(sources.DOM)
-  action$.fields$.debug("actions")
   action$.login$.debug("login")
+  action$.pass$.debug("pass")
   const reducer$ = model(action$)
   const vdom$ = view(sources.onion.state$)
   // const state$ = sources.onion.state$;
