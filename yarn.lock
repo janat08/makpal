@@ -5175,6 +5175,10 @@ graphql-anywhere@^3.0.1, graphql-anywhere@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-3.1.0.tgz#3ea0d8e8646b5cee68035016a9a7557c15c21e96"
 
+graphql-auth@0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/graphql-auth/-/graphql-auth-0.2.2.tgz#52b73ba46854365b615e7a95f1d3d490d7be1e63"
+
 graphql-extensions@^0.0.x, graphql-extensions@~0.0.9:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.0.10.tgz#34bdb2546d43f6a5bc89ab23c295ec0466c6843d"
@@ -5187,6 +5191,14 @@ graphql-fragments@^0.1.0:
   resolved "https://registry.yarnpkg.com/graphql-fragments/-/graphql-fragments-0.1.0.tgz#21e04a3913f7cc8cfbc42c3e1d8b323a5847655e"
   dependencies:
     graphql-anywhere "^0.2.4"
+
+graphql-iso-date@^3.3.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/graphql-iso-date/-/graphql-iso-date-3.5.0.tgz#55a1be0efa8d28c1453afd2eb5ce1d052189a513"
+
+graphql-resolve-batch@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/graphql-resolve-batch/-/graphql-resolve-batch-1.0.2.tgz#ab069df8ab3410a0188701ed9fa8e382bbb8d6a5"
 
 graphql-server-koa@^1.4.0:
   version "1.4.0"

@@ -8,8 +8,18 @@ import morgan from 'morgan';
 import url from 'url'
 
 import getLog from './utils/logger';
+import modules from './modules/index.ts';
+
 
 const app = express();
+
+for (const applyBeforeware of modules.beforewares) {
+  applyBeforeware(app);
+}
+
+for (const applyMiddleware of modules.middlewares) {
+  applyMiddleware(app);
+}
 
 //logging
 const log = getLog();
