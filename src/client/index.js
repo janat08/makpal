@@ -22,38 +22,44 @@ run(main, {
 
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
-           .register('/sw.js')
+           .register('./sw.js')
            .then(function() { console.log('Service Worker Registered'); })
            .catch(err=>console.log(err));
 } 
 
 var deferredPrompt
 var registration
-// try {
-//   if ("serviceWorker" in navigator) {
-//     window.addEventListener("load", () => {
-//       try {
-//         navigator.serviceWorker.register('./sw.js').then(r=>{
-//           registration = registration
-//         }).catch(e=>{
-//           console.log("SW error", e)
-//         })
-//       } catch (e) {
-//         console.log(e, "error in registration")
-//       }
-//     })
-//   }
-// }catch (e) {
-//   console.log(e, "error in registration")
-// }
+try {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      try {
+        navigator.serviceWorker.register('./sw.js').then(r=>{
+          registration = registration
+        }).catch(e=>{
+          console.log("SW error", e)
+        })
+      } catch (e) {
+        console.log(e, "error in registration")
+      }
+    })
+  }
+}catch (e) {
+  console.log(e, "error in registration")
+}
 
-window.addEventListender("beforeinstallprompt", e => {
-  e.preventDefault()
+window.addEventListener("beforeinstallprompt", e => {
+  // e.preventDefault()
   console.log(e, 1)
   showInstallButton(true)
   deferredPrompt = e
 })
 
+// example invocation
+// setTimeout(prompt, 3000);
+
+// used for manual prompts
+function prompt(){
+  console.log()
 deferredPrompt.prompt()
 
 deferredPrompt.userChoice
@@ -65,3 +71,4 @@ deferredPrompt.userChoice
     }
     deferredPrompt = null
   })
+}

@@ -1,7 +1,7 @@
 {
-  "name": "Meteor Files",
-  "description": "Meteor Files: Upload and Share files with speed of a meteor",
-  "short_name": "Meteor Files",
+  "name": "Makpal",
+  "description": "Longevity from Makpal",
+  "short_name": "Makpal",
   "lang": "en",
   "icons": [
     {
@@ -18,5 +18,5 @@
   "theme_color": "#2b3850",
   "background_color": "#2b3850",
   "start_url": "/",
-  "display": "standalone"
+  "display": "fullscreen"
 }
