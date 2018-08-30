@@ -61,7 +61,7 @@ export default function Layout(sources) {
   const Routes = {
     "/": Home,
     "/login": Login,
-    // '*': ()=>{return {DOM: xs.of(<h1> 404</h1>)}}
+    '*': function(){return {DOM: xs.of(<h1> 404</h1>)}}
   }
 
   const initReducer$ = xs.of(prevState => (
@@ -75,6 +75,7 @@ export default function Layout(sources) {
 
     return switchPath(pathname, Routes);
   }).map((route) => {
+    console.log(route)
     return isolate(route.value, 'page')(sources)
   });
   pageSinks$.debug("sinks")
