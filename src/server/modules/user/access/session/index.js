@@ -1,11 +1,19 @@
 import { writeSession, createSession, readSession } from './sessions';
 import { isApiExternal } from '../../../../net';
 import Feature from '../connector';
-import schema from './schema.graphql';
+// import schema from './schema.graphql';
 import resolvers from './resolvers';
 import scopes from '../../scopes';
 import User from '../../sql';
 import config from 'config';
+import gql from 'graphql-tag';
+
+var schema = gql`
+extend type Mutation {
+  # Logout user
+  logout: String
+}
+`
 
 const grant = async (user, req) => {
   const session = {

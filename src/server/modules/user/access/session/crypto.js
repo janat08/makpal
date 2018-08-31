@@ -16,7 +16,7 @@ const hmac = (val, macKey) => {
 
 // Encrypt then MAC session object as JSON
 export const encryptSession = session => {
-  const iv = crypto.randomBytes(16);
+  const iv = crypto.randomBytes(16); 
   const cipher = crypto.createCipheriv('aes-256-cbc', _encKey, iv);
   const enc = Buffer.concat([cipher.update(JSON.stringify(session)), cipher.final()]);
 

@@ -5,13 +5,13 @@ import FacebookStrategy from 'passport-facebook';
 import resolvers from './resolvers';
 import Feature from '../connector';
 import User from '../../sql';
-import config from 'config';
 import access from '../../access';
 import getCurrentUser from '../utils';
+import config from "config";
+var {__TEST__} = config
+let middleware; 
 
-let middleware;
-
-if (config.user.auth.facebook.enabled && !__TEST__) {
+if (config.user.auth.facebook.enabled && !__TEST__) { 
   passport.use(
     new FacebookStrategy(
       {

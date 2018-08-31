@@ -6,9 +6,9 @@ import resolvers from './resolvers';
 import Feature from '../connector';
 import User from '../../sql';
 import access from '../../access';
-import config from 'config';
 import getCurrentUser from '../utils';
-
+import config from "config";
+var {__TEST__} = config
 let middleware;
 
 if (config.user.auth.google.enabled && !__TEST__) {

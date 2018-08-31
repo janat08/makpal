@@ -2,9 +2,17 @@ import jwt from 'jsonwebtoken';
 
 import createTokens from './createTokens';
 import resolvers from './resolvers';
-import schema from './schema.graphql';
+// import schema from './schema.graphql';
 import Feature from '../connector';
 import config from 'config';
+import gql from 'graphql-tag';
+
+var schema = gql`
+extend type Mutation {
+  # Refresh user tokens
+  refreshTokens(refreshToken: String!): Tokens!
+}
+`
 
 const grant = async user => {
   const refreshSecret = config.user.secret + user.passwordHash;

@@ -1,8 +1,58 @@
 import { SchemaLink } from 'apollo-link-schema';
-import modules from '../../../../modules';
+import modules from '../../../index.ts';
 import { isApiExternal, apiUrl } from '../../../../net';
-import createApolloClient from '../../../../../../common/createApolloClient';
-import CURRENT_USER_QUERY from '../../../../../../client/src/modules/user/graphql/CurrentUserQuery.graphql';
+import createApolloClient from '../../../../common/createApolloClient';
+// import CURRENT_USER_QUERY from '../../../../../../client/src/modules/user/graphql/CurrentUserQuery.graphql';
+
+import gql from 'graphql-tag';  
+
+var CURRENT_USER_QUERY = gql`
+fragment UserProfileInfo on UserProfile {
+  firstName
+  lastName
+  fullName
+}
+
+fragment UserInfo on User {
+  id
+  username
+  role
+  isActive
+  email
+  profile {
+    ...UserProfileInfo
+  }
+  auth {
+    certificate {
+      serial
+    }
+    facebook {
+      fbId
+      displayName
+    }
+    google {
+      googleId
+      displayName
+    }
+    github {
+      ghId
+      displayName
+    }
+    linkedin {
+      lnId
+      displayName
+    }
+  }
+}
+
+query currentUser {
+  currentUser {
+    ...UserInfo
+  }
+}
+
+`
+
 
 export default async function getCurrentUser(req, res) {
   const schema = require('../../../../api/schema').default;
@@ -12,5 +62,5 @@ export default async function getCurrentUser(req, res) {
     createNetLink: !isApiExternal ? () => schemaLink : undefined
   });
 
-  return await client.query({ query: CURRENT_USER_QUERY });
+  return await client.query({ query: CURRENT_USER_QUERY }); 
 }

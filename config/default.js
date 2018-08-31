@@ -6,9 +6,10 @@
 const CERTIFICATE_DEVSERIAL = '00';
 
 module.exports = {
+  __TEST__: false,
   host: undefined,
   port: 3000,
-
+  API_URL: '"/graphql"',
   //config inside here will be available in the client browser app
   clientConfig:{
     //WARNING: dont put anything sensitive in here - it WILL be publicly visible in the client browser
@@ -34,7 +35,7 @@ module.exports = {
 
   //USER
   user: {
-    secret: process.env.NODE_ENV === 'test' ? 'secret for tests' : process.env.AUTH_SECRET,
+    secret: process.env.NODE_ENV === 'test' ? 'secret for tests' : process.env.AUTH_SECRET || "SIMPLE PASS",
     auth: {
       access: {
         session: {

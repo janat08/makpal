@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 
 import access from '../../access';
 import User from '../../sql';
-import FieldError from '../../../../../../common/FieldError';
-import config from '../../../../../../../config';
+import FieldError from '../../../../common/FieldError';
+import config from 'config';
 
 const validateUserPassword = async (user, password, t) => {
   const e = new FieldError();
