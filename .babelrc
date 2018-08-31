@@ -10,5 +10,5 @@
     "syntax-dynamic-import",
     "syntax-jsx",
     ["transform-react-jsx", {"pragma": "Snabbdom.createElement"}]
-  ]
+  ],
 }

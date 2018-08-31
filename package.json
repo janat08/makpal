@@ -128,6 +128,7 @@
     "copyfiles": "^1.2.0",
     "core-js": "^2.5.3",
     "cross-env": "^5.1.1",
+    "cycle-hmr": "^0.3.1",
     "cycle-restart": "^0.2.3",
     "cycle-scripts-one-fits-all": "5.4.3",
     "cyclejs-test-helpers": "^2.0.0",

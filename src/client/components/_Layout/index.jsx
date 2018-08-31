@@ -29,8 +29,6 @@ function navigation(pathname) {
         <li>
           <a href="/login" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Login</a>
         </li>
-        <a href="/losssgin" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Losssgin</a>
-
       </ol>
     </nav>
   );
@@ -60,8 +58,9 @@ function view(vdom$, path$) {
 export default function Layout(sources) {
   const Routes = {
     "/": Home,
-    "/login": Login,
-    '*': function(){return {DOM: xs.of(<h1> 404</h1>)}}
+    //something must be embedded because of a bug relating to if/when '*' is detected
+    "/login": {"/": Login},
+    '*': function(){return {DOM: xs.of((<div><h1> 404</h1> <h4> doesn't exist</h4></div>))}}
   }
 
   const initReducer$ = xs.of(prevState => (
@@ -72,10 +71,8 @@ export default function Layout(sources) {
   const history$ = sources.history;
   const pageSinks$ = history$.map((location) => {
     const { pathname } = location;
-
     return switchPath(pathname, Routes);
   }).map((route) => {
-    console.log(route)
     return isolate(route.value, 'page')(sources)
   });
   pageSinks$.debug("sinks")

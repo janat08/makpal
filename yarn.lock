@@ -1389,6 +1389,13 @@ babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-cycle-hmr@^0.3.0:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-cycle-hmr/-/babel-plugin-cycle-hmr-0.3.3.tgz#92577e875f4cf86fd506c12e303b0d9dc5717403"
+  dependencies:
+    cycle-hmr "^0.0.1"
+    include-exclude "0.0.1"
+
 babel-plugin-espower@^2.3.2:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-espower/-/babel-plugin-espower-2.4.0.tgz#9f92c080e9adfe73f69baed7ab3e24f649009373"
@@ -3417,6 +3424,16 @@ currently-unhandled@^0.4.1:
 custom-error-instance@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/custom-error-instance/-/custom-error-instance-2.1.1.tgz#3cf6391487a6629a6247eb0ca0ce00081b7e361a"
+
+cycle-hmr@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/cycle-hmr/-/cycle-hmr-0.0.1.tgz#fe4701d1634ba3765518d09956cab0ba42fb0937"
+
+cycle-hmr@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cycle-hmr/-/cycle-hmr-0.3.1.tgz#1a251a50687e9ada4c879414afe7afa446af2cf9"
+  dependencies:
+    babel-plugin-cycle-hmr "^0.3.0"
 
 cycle-onionify@^5.0.0:
   version "5.2.0"
@@ -5729,6 +5746,12 @@ in-publish@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/in-publish/-/in-publish-2.0.0.tgz#e20ff5e3a2afc2690320b6dc552682a9c7fadf51"
 
+include-exclude@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/include-exclude/-/include-exclude-0.0.1.tgz#224caa55321a606ab83bdd9f6b21cf5333686944"
+  dependencies:
+    multimatch "^2.0.0"
+
 indent-string@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/indent-string/-/indent-string-2.1.0.tgz#8e2d48348742121b4a8218b7a137e9a52049dc80"
@@ -7807,7 +7830,7 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
-multimatch@^2.1.0:
+multimatch@^2.0.0, multimatch@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/multimatch/-/multimatch-2.1.0.tgz#9c7906a22fb4c02919e2f5f75161b4cdbd4b2a2b"
   dependencies:
