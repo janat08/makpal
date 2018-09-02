@@ -17,7 +17,7 @@ run(main, {
   DOM: makeDOMDriver('#app'),
   history: captureClicks(makeHistoryDriver())
   // storage: storageDriver,
-});
+}); 
 
 
 // if('serviceWorker' in navigator) {
