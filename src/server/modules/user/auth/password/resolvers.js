@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import access from '../../access';
 import User from '../../sql';
-import FieldError from '../../../../common/FieldError';
+import FieldError from '../../../../../common/FieldError';
 import config from 'config';
 
 const validateUserPassword = async (user, password, t) => {
@@ -19,7 +19,6 @@ const validateUserPassword = async (user, password, t) => {
     e.setError('usernameOrEmail', t('user:auth.password.emailConfirmation'));
     e.throwIf();
   }
-
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) {
     // bad password

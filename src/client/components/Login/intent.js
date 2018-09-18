@@ -18,5 +18,7 @@ export default function intent(dom) {
     login$: dom.select('.loginJs').events('click'),
     name$: dom.select('.nameJs').events('input').map(e=>({name: e.target.value})),
     pass$: dom.select('.passJs').events('input').map(e=>({pass: e.target.value})),
+    facebook$: dom.select('.oauthFacebookJs').events('click'),
+    google$: dom.select('.oauthGoogleJs').events('click'),
   }
 }

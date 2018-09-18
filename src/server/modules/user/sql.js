@@ -1,130 +1,160 @@
+import bcrypt from 'bcryptjs';
 
-// Actual query fetching and transformation in DB
-class User {
-  constructor(){
-    this.users = [
-      {
-        id: 123,
-        username: "user",
-        role: "user",
-        is_active: true,
-        email: "asdf@asdf",
-        first_name: "asdf",
-        last_name: "asdf",
-        serial: "asdf",
-      }
-    ]
-    this.user = this.users[0]
-  }
-  async getUsers(orderBy, filter) {
-    return this.users
-  }
-
-  async getUser(id) {
-    return this.user
-  }
-
-  async getUserWithPassword(id) {
-    return this.user
-  }
-
-  async getUserWithSerial(serial) {
-    return this.user
-  }
-
-  async register({ username, email, password, role, isActive }) {
-    return null
-  }
-
-  createFacebookAuth({ id, displayName, userId }) {
-    return null
-    // return returnId(knex('auth_facebook')).insert({ fb_id: id, display_name: displayName, user_id: userId });
-  }
-
-  createGithubAuth({ id, displayName, userId }) {
-    return null
-  }
-
-  createGoogleOAuth({ id, displayName, userId }) {
-    return null
-  }
-
-  createLinkedInAuth({ id, displayName, userId }) {
-    return null
-  }
-
-  async editUser({ id, username, email, role, isActive, password }) {
-    return null
-  }
-
-  async editUserProfile({ id, profile }) {
-    return null
-  }
-
-  // async editAuthCertificate({
-  //   id,
-  //   auth: {
-  //     certificate: { serial }
-  //   }
-  // }) {
-  //   const userProfile = await knex
-  //     .select('id')
-  //     .from('auth_certificate')
-  //     .where({ user_id: id })
-  //     .first();
-
-  //   if (userProfile) {
-  //     return knex('auth_certificate')
-  //       .update({ serial })
-  //       .where({ user_id: id });
-  //   } else {
-  //     return returnId(knex('auth_certificate')).insert({ serial, user_id: id });
-  //   }
-  // }
-
-  deleteUser(id) {
-    return null
-  }
-
-  async updatePassword(id, newPassword) {
-    return null
-  }
-
-  updateActive(id, isActive) {
-    return null
-  }
-
-  async getUserByEmail(email) {
-    return this.user
-  }
-
-  async getUserByFbIdOrEmail(id, email) {
-    return this.user
-  }
-
-  async getUserByLnInIdOrEmail(id, email) {
-    return this.user
-  }
-
-  async getUserByGHIdOrEmail(id, email) {
-    return this.user
-  }
-
-  async getUserByGoogleIdOrEmail(id, email) {
-    return this.user
-  }
-
-  async getUserByUsername(username) {
-    return this.user
-  }
-
-  async getUserByUsernameOrEmail(usernameOrEmail) {
-    return this.user
+function filterField(field, param) {
+  return function (object) {
+    if (Array.isArray(field)) {
+      return field.reduce(function (a, x) {
+        if (Array.isArray(param)) {
+          a = param.reduce(function (ab, xb) {
+            if (object[x] == xb) {
+              ab = true
+            }
+          }, false)
+        } else {
+          if (object[x] == param) {
+            a = true
+          }
+        }
+        return a
+      }, false)
+    } else {
+      return object[field] == param
+    }
   }
 }
-const userDAO = new User();
+  // Actual query fetching and transformation in DB
+  class User {
+    constructor() {
+      this.users = [
+        {
+          id: "1234",
+          username: "asdf",
+          role: "asdf",
+          isActive: true,
+          email: "asdf@asdf",
+          first_name: "asdf",
+          last_name: "asdf",
+          serial: "asdf",
+          passwordHash: "$2a$12$GiTLGeMeaoFyzAJhQKPms.BgaGo.KI6D/Hhptw3J3gk44Fb49aMLS" //"asdf" is unecrypted and unsalted
+        }
+      ]
+      this.user = this.users[0]
+    }
+    async getUsers(orderBy, filter) {
+      return this.users
+    }
 
-export default userDAO;
+    async getUser(id) {
+      return this.users.filter(filterField("id", id))[0]
+    }
+
+    async getUserWithPassword(id) {
+      return this.users.filter(filterField("id", id))[0]
+    }
+
+    async getUserWithSerial(serial) {
+      return this.users.filter(filterField("serial", serial))[0]
+    }
+
+    async register({ username, email, password, role, isActive }) {
+      if (role === undefined) {
+        role = 'user';
+      }
+
+      console.log(password)
+      var passwordHashed = await bcrypt.hash(password, 12);
+      this.users.push({id: password, username, email, passwordHash: passwordHashed, role, isActive })
+      return password
+    }
+
+    createFacebookAuth({ id, displayName, userId }) {
+      this.users.push({ fb_id: id, displayName, id: userId })
+      return userId
+      // return returnId(knex('auth_facebook')).insert({ fb_id: id, display_name: displayName, user_id: userId });
+    }
+
+    // createGithubAuth({ id, displayName, userId }) {
+    //   this.users.push({ fb_id: id, displayName, id: userId })
+    //   return userId
+    // }
+
+    createGoogleOAuth({ id, displayName, userId }) {
+      this.users.push({ fb_id: id, displayName, id: userId })
+      return userId
+    }
+
+    // createLinkedInAuth({ id, displayName, userId }) {
+    //   this.users.push({ fb_id: id, displayName, id: userId })
+    //   return userId
+    // }
+
+    async editUser({ id, username, email, role, isActive, password }) {
+      return null
+    }
+
+    async editUserProfile({ id, profile }) {
+      return null
+    }
+
+    // async editAuthCertificate({
+    //   id,
+    //   auth: {
+    //     certificate: { serial }
+    //   }
+    // }) {
+    //   const userProfile = await knex
+    //     .select('id')
+    //     .from('auth_certificate')
+    //     .where({ user_id: id })
+    //     .first();
+
+    //   if (userProfile) {
+    //     return knex('auth_certificate')
+    //       .update({ serial })
+    //       .where({ user_id: id });
+    //   } else {
+    //     return returnId(knex('auth_certificate')).insert({ serial, user_id: id });
+    //   }
+    // }
+
+    deleteUser(id) {
+      return null
+    }
+
+    async updatePassword(id, newPassword) {
+      return null
+    }
+
+    updateActive(id, isActive) {
+      return null
+    }
+
+    async getUserByEmail(email) {
+      return this.users.filter(filterField("email", email))[0]
+    }
+
+    async getUserByFbIdOrEmail(id, email) {
+      return this.users.filter(filterField(["fb_id", "email"], [id, email]))[0]
+    }
+
+    async getUserByGoogleIdOrEmail(id, email) {
+      return this.users.filter(filterField(["google_id", "email"], [id, email]))[0]
+    }
+
+    async getUserByUsername(username) {
+
+      return this.users.filter(filterField("username", username))[0]
+    }
+
+    async getUserByUsernameOrEmail(usernameOrEmail) {
+      // bcrypt.hash("asdf", 12).then(x=>console.log(x, "hashed"));
+      // bcrypt.compare("asdf", "$2a$12$GiTLGeMeaoFyzAJhQKPms.BgaGo.KI6D/Hhptw3J3gk44Fb49aMLS").then(x=>console.log(x, "compared"));
+      return this.users.filter(filterField(["username", "email"], usernameOrEmail))[0]
+    }
+  }
+  const userDAO = new User();
+
+  export default userDAO;
 
 
 // // Actual query fetching and transformation in DB
@@ -260,15 +290,15 @@ export default userDAO;
 //     );
 //   }
 
-//   async register({ username, email, password, role, isActive }) {
-//     const passwordHash = await bcrypt.hash(password, 12);
+  // async register({ username, email, password, role, isActive }) {
+  //   const passwordHash = await bcrypt.hash(password, 12);
 
-//     if (role === undefined) {
-//       role = 'user';
-//     }
+  //   if (role === undefined) {
+  //     role = 'user';
+  //   }
 
-//     return returnId(knex('user')).insert({ username, email, role, password_hash: passwordHash, is_active: !!isActive });
-//   }
+  //   return returnId(knex('user')).insert({ username, email, role, password_hash: passwordHash, is_active: !!isActive });
+  // }
 
 //   createFacebookAuth({ id, displayName, userId }) {
 //     return returnId(knex('auth_facebook')).insert({ fb_id: id, display_name: displayName, user_id: userId });

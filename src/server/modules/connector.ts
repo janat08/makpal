@@ -14,13 +14,13 @@ const combine = <F>(features: F[], extractor: (x: F) => any): any[] =>
   without(union(...map(features, res => castArray(extractor(res)))), undefined);
 
 export default class {
-  public localization: any[];
-  public schema: any[];
-  public createResolversFunc: any[];
-  public createContextFunc: any[];
-  public beforeware: any[];
-  public middleware: any[];
-  public data: any[];
+   localization: any[];
+   schema: any[];
+   createResolversFunc: any[];
+   createContextFunc: any[];
+   beforeware: any[];
+   middleware: any[];
+   data: any[];
 
   constructor(...features: FeatureShape[]) {
     // Localization
@@ -33,7 +33,7 @@ export default class {
 
     // Middleware
     this.beforeware = combine(features, arg => arg.beforeware);
-    this.middleware = combine(features, arg => arg.middleware);
+    this.middleware = combine(features, arg => arg.middleware); 
 
     // Shared modules data
     const empty: FeatureShape = {};
@@ -47,7 +47,7 @@ export default class {
     return this.schema;
   }
 
-  public async createContext(req: any, res: any, connectionParams: any, webSocket: any) {
+   async createContext(req: any, res: any, connectionParams: any, webSocket: any) {
     let context = {};
     for (const createContextFunc of this.createContextFunc) {
       context = merge(context, await createContextFunc({ req, res, connectionParams, webSocket, context }));
@@ -55,7 +55,7 @@ export default class {
     return context;
   }
 
-  public createResolvers(pubsub: any) {
+   createResolvers(pubsub: any) {
     return merge({}, ...this.createResolversFunc.map(createResolvers => createResolvers(pubsub)));
   }
 

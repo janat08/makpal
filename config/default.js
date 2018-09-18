@@ -7,8 +7,10 @@ const CERTIFICATE_DEVSERIAL = '00';
 
 module.exports = {
   __TEST__: false,
+  __DEV__: process.env.NODE_ENV !== 'production',
+  __SERVER__: typeof window !== 'undefined' ? false: true,
   host: undefined,
-  port: 3000,
+  port: 4000,
   API_URL: '"/graphql"',
   //config inside here will be available in the client browser app
   clientConfig:{
@@ -31,6 +33,28 @@ module.exports = {
     logFilePath:'./logs/server.log',
     maxLogFileSizeInMB:5,
     maxLogFileCount:5
+  },
+
+  //app
+  app: {
+    name: 'Makpal',
+    logging: {
+      level: ['production'].indexOf(process.env.NODE_ENV) < 0 ? 'debug' : 'info',
+      debugSQL: false,
+      apolloLogging: ['production'].indexOf(process.env.NODE_ENV) < 0
+    },
+    // Check here for Windows and Mac OS X: https://code.visualstudio.com/docs/editor/command-line#_opening-vs-code-with-urls
+    // Use this protocol handler for Linux: https://github.com/sysgears/vscode-handler
+    stackFragmentFormat: 'vscode://file/{0}:{1}:{2}'
+  },
+  
+
+  //apollo
+  engine: {
+    apiKey: '', // Set your Engine API key here
+    logging: {
+      level: 'DEBUG' // Engine Proxy logging level. DEBUG, INFO, WARN or ERROR
+    }
   },
 
   //USER
@@ -58,9 +82,9 @@ module.exports = {
         enabled: false
       },
       facebook: {
-        enabled: false,
-        clientID: process.env.FACEBOOK_CLIENTID ||123,
-        clientSecret: process.env.FACEBOOK_CLIENTSECRET||123,
+        enabled: true,
+        clientID: process.env.FACEBOOK_CLIENTID || "742508426141483",
+        clientSecret: process.env.FACEBOOK_CLIENTSECRET|| "448c4dced4a1b78f37f9b60dfd2becb3",
         scope: ['email'],
         profileFields: ['id', 'emails', 'displayName']
       },

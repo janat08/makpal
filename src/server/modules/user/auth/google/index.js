@@ -17,7 +17,7 @@ if (config.user.auth.google.enabled && !__TEST__) {
       {
         clientID: config.user.auth.google.clientID,
         clientSecret: config.user.auth.google.clientSecret,
-        callbackURL: '/auth/google/callback'
+        callbackURL: 'http://localhost:4000/auth/google/callback'
       },
       async function(accessToken, refreshToken, profile, cb) {
         const {
@@ -72,6 +72,7 @@ if (config.user.auth.google.enabled && !__TEST__) {
   middleware = app => {
     app.use(passport.initialize());
     app.get('/auth/google', (req, res, next) => {
+      console.log(req.user, "authorising with google")
       passport.authenticate('google', {
         scope: config.user.auth.google.scope,
         state: req.query.expoUrl

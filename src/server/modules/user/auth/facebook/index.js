@@ -19,7 +19,8 @@ if (config.user.auth.facebook.enabled && !__TEST__) {
         clientSecret: config.user.auth.facebook.clientSecret,
         callbackURL: '/auth/facebook/callback',
         scope: config.user.auth.facebook.scope,
-        profileFields: config.user.auth.facebook.profileFields
+        profileFields: config.user.auth.facebook.profileFields,
+        enableProof: true,
       },
       async function(accessToken, refreshToken, profile, cb) {
         const {
@@ -29,6 +30,8 @@ if (config.user.auth.facebook.enabled && !__TEST__) {
           emails: [{ value }]
         } = profile;
         try {
+          console.log("aaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", id, value)
           let user = await User.getUserByFbIdOrEmail(id, value);
 
           if (!user) {

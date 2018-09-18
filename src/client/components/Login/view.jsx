@@ -12,6 +12,9 @@ export default function view(state$) {
       {register && (<input classname="passVerifyJs" value={passVerify} placeholder="pass verify"/>)}
       <button className="loginJs">{register? "submit" : "login"}</button>
       <button className="registerJs">register</button>
+      <br></br>
+      <button className="oauthFacebookJs">Login with facebook</button>
+      <button className="oauthGoogleJs">Login with google</button>
     </div>
   )});
 }

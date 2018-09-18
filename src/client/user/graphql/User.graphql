@@ -1,4 +1,5 @@
-#import "./Profile.graphql"
+# import './Profile.graphql'
+
 
 fragment UserInfo on User {
   id

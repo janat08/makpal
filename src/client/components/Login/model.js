@@ -37,11 +37,16 @@ export default function model(actions) {
 
   const register$ = actions.register$.mapTo(prev => ({ ...prev, register: !prev.register }))
 
+  const facebook$ = actions.facebook$.mapTo(prev=>{window.location = '/auth/facebook'})
+  const google$ = actions.google$.mapTo(prev=>{window.location = '/auth/google'})
+
   return xs.merge(
     initReducer$,
     fields$,
     login$,
     register$,
+    facebook$,
+    google$,
     // name$,
     // startEditReducer$,
     // doneEditReducer$,

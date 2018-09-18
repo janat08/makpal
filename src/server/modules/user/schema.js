@@ -1,6 +1,5 @@
-import gql from 'graphql-tag';
 
-export default gql`
+export default `
 type User {
   id: Int!
   username: String!

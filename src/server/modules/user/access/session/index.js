@@ -1,19 +1,11 @@
 import { writeSession, createSession, readSession } from './sessions';
 import { isApiExternal } from '../../../../net';
 import Feature from '../connector';
-// import schema from './schema.graphql';
+import schema from './schema.js'; 
 import resolvers from './resolvers';
 import scopes from '../../scopes';
 import User from '../../sql';
 import config from 'config';
-import gql from 'graphql-tag';
-
-var schema = gql`
-extend type Mutation {
-  # Logout user
-  logout: String
-}
-`
 
 const grant = async (user, req) => {
   const session = {
@@ -36,7 +28,7 @@ const attachSession = req => {
     if (!req.session) {
       req.session = createSession(req);
     } else {
-      if (!isApiExternal && req.path === __API_URL__) {
+      if (!isApiExternal && req.path === "localhost:4000") {
         if (req.universalCookies.get('x-token') !== req.session.csrfToken) {
           req.session = createSession(req);
           throw new Error('CSRF token validation failed');
