@@ -2,9 +2,9 @@ import xs from 'xstream';
 import Snabbdom from 'snabbdom-pragma';
 
 
-export default function view(state$) {
-  return state$.map(jsx);
-}
+// export default function view(state$) {
+//   return state$.map(jsx);
+// }
 
 function snab (){
   return div([
@@ -56,3 +56,45 @@ function renderFooter(state) {
 //   </div>
 //   );
 // };
+
+function navigation(pathname) {
+
+  return (
+    <nav>
+      <ol>
+        <li>
+          <a href="/" style={pathname.startsWith('/') ? 'font-weight:bold' : ''}>Makpal</a>
+        </li>
+        <li>
+          <a href="/login" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Login</a>
+        </li>
+        <a href="/losssgin" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Losssgin</a>
+
+      </ol>
+    </nav>
+  );
+}
+
+export default function view(vdom$, path$, results$) {
+  return xs.combine(vdom$, path$, results$).map(([vdom, { pathname }, results]) =>{
+    console.log(results)
+    return (<div className="main-wrapper">
+      <header>
+        <h1>makpal</h1>
+      </header>
+      <nav>
+        {navigation(pathname)}
+      </nav>
+      <div className="header-wrapper">
+      </div>
+      <section class="main">
+        {vdom}
+      </section>
+      <footer>
+        footer 1
+        {JSON.stringify(results)} {results}
+      </footer>
+    </div>)
+  }
+  );
+}

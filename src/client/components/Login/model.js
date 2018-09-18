@@ -25,29 +25,28 @@ export default function model(actions) {
   //   .mapTo(function destroyReducer(data) {
   //     return void 0;
   //   });
-  const initReducer$ = xs.of(prevState=>{
-    return prevState === undefined ? {name: "", pass: ""} : prevState
+  const initReducer$ = xs.of(prevState => {
+    return prevState === undefined ? { name: "", pass: "", register: false, passVerify: "" } : prevState
   })
-  const fields$ = actions.fields$
-    .map((stuff)=> function(prev){
-      console.log(stuff, "unde")
-      return {...prev}
-    })
+  const fields$ = xs.merge(actions.name$, actions.pass$)
+    .map((val) => prev => ({ ...prev, ...val }))
 
 
-    const login$ = actions.login$
-    .mapTo(prev=>{
-      console.log(prev.name, prev.pass)
-      return initReducer$
-      // return ()=>console.log("testing")
-    })
-    // const name$ = actions.name$.map(prev=>{
+  const login$ = actions.login$
+    .mapTo(prev => (prev.register? { ...prev, name: "", pass: "" } :{ ...prev, passVerify: "", name: "", pass: "" }))
 
-    // })
+  const register$ = actions.register$.mapTo(prev => ({ ...prev, register: !prev.register }))
+
+  const facebook$ = actions.facebook$.mapTo(prev=>{window.location = '/auth/facebook'})
+  const google$ = actions.google$.mapTo(prev=>{window.location = '/auth/google'})
+
   return xs.merge(
     initReducer$,
     fields$,
     login$,
+    register$,
+    facebook$,
+    google$,
     // name$,
     // startEditReducer$,
     // doneEditReducer$,
