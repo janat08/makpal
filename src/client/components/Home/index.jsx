@@ -12,19 +12,22 @@ import Snabbdom from 'snabbdom-pragma';
 
 //   return {
 //     DOM: vdom$,
-//     onion: reducer$,
+//     onion: reducer$, 
 //   };
-// }
+// } 
 
 export default function Home(sources) {
   const vdom$ = xs.of((
-      <h1>sdf</h1>
+    <div> 
+      <h1>Home</h1>
+      <h3>A wellness and longevity site</h3>
+    </div>
   ))
   
   const initReducer$ = xs.of(function initReducer(prevState) {
     if (prevState) {
-      return prevState;
-    } else {
+      return prevState; 
+    } else { 
       return {count: 0};
     }
   });

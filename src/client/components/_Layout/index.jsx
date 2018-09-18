@@ -65,8 +65,9 @@ export default function Layout(sources) {
 
   const Routes = {
     "/": Home,
-    "/login": Login,
-    // '*': ()=>{return {DOM: xs.of(<h1> 404</h1>)}}
+    //something must be embedded because of a bug relating to if/when '*' is detected
+    "/login": {"/": Login},
+    '*': function(){return {DOM: xs.of((<div><h1> 404</h1> <h4> doesn't exist</h4></div>))}}
   }
 
   var results$ = xs.of({})
@@ -78,7 +79,6 @@ export default function Layout(sources) {
   const history$ = sources.history;
   const pageSinks$ = history$.map((location) => {
     const { pathname } = location;
-
     return switchPath(pathname, Routes);
   }).map((route) => {
     return isolate(route.value, 'page')(sources)

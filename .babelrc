@@ -16,5 +16,5 @@
           "regenerator": true
       }],
     ["transform-react-jsx", {"pragma": "Snabbdom.createElement"}]
-  ]
+  ],
 }
