@@ -17,28 +17,50 @@ import gql from 'graphql-tag'
 import { json } from 'jsverify';
 import flattenConcurrently from 'xstream/extra/flattenConcurrently'
 
+import {LOGIN, COUNTER} from '/gql.js'; 
+
 
 const defaultState = {
 }
 
 
-
 export default function Layout(sources) {
-  // const query$ = xs.of({
-  //   query: gql`
-  //   query serverCounterQuery {
-  //     serverCounter {
-  //       amount
-  //     }
-  //   }
-  //   `,
-  //     category: 'allusers'
-  // })
+  const query$ = xs.of({
+    mutation:  LOGIN,
+    variables: {input: {usernameOrEmail: "asdf", password: "asdf"}},
+      category: 'allusers'
+  })
 
-  // const results$ = sources.apollo.select('allusers')
-  //   .flatten()
-  //   .startWith([])
+  const counterUpdated$ = xs.of({
+    subscription: true,
+    query: gql`subscription onCounterUpdated {
+      counterUpdated {
+        amount
+      }
+    }`,
+    category: "sub"
+  })
 
+  const counter$ = xs.of({
+    query: COUNTER,
+    category: 'counter',
+    polling: 500
+  })
+
+  const subscription$ = sources.apollo.select('sub')
+    .flatten()
+
+
+  const response$ = sources.apollo.select('allusers')
+    .flatten()
+    // .startWith([])
+  const counterQuery$ = sources.apollo.select('asdf')
+    .flatten()
+
+  const counterQuery2$ = sources.apollo.select('counter')
+    .flatten()
+
+    console.log(counterQuery$)
 
   // let results$ = sources.apollo
   // .flatMap(r$ => r$
@@ -53,15 +75,33 @@ export default function Layout(sources) {
   // })
   // .map(({data}) => data)
 
-  let response$ = sources.apollo
-    .compose(flattenConcurrently)
-    .map(({data}) => data);
+  // let response$ = sources.apollo//.flatten()
+  //   .compose(flattenConcurrently)
+  //   .map((data) => data);
 
-  response$.addListener({
-    next: s => { console.log(s) },
-    error: err => console.error(err),
-    complete: () => {},
-  });
+  // subscription$.subscribe({
+  //   next: s => { console.log("new", new Date()/1000, s) },
+  //   error: err => console.error(err),
+  //   complete: () => {},
+  // });
+
+  // response$.addListener({
+  //   next: s => { console.log("user", new Date()/1000, s) },
+  //   error: err => console.error(err),
+  //   complete: () => {},
+  // });
+  var ab = {
+    next: s => {console.log("new counted", s)},
+    complete: s => {console.log("counter done")}
+  }
+
+  counterQuery$.subscribe(ab)
+  // counterQuery2$.subscribe(ab)
+
+  // xs.merge(counterQuery2$, counterQuery$).addListener({
+  //   next: s => {console.log("new counted", s)},
+  //   complete: s => {console.log("counter done")}
+  // })
 
   const Routes = {
     "/": Home,
@@ -69,8 +109,6 @@ export default function Layout(sources) {
     "/login": {"/": Login},
     '*': function(){return {DOM: xs.of((<div><h1> 404</h1> <h4> doesn't exist</h4></div>))}}
   }
-
-  var results$ = xs.of({})
 
   const initReducer$ = xs.of(prevState => (
     prevState === undefined ? defaultState : prevState
@@ -86,17 +124,22 @@ export default function Layout(sources) {
   pageSinks$.debug("sinks")
 
   const PS = extractSinks(pageSinks$, ['DOM', 'onion']);
-  const vdom$ = view(PS.DOM, history$, results$);
+  const vdom$ = view(PS.DOM, history$, counterQuery$);
   const reducer$ = xs.merge(initReducer$, PS.onion);
 
   return {
     DOM: vdom$,
     onion: reducer$,
-    apollo: xs.fromArray([{
-      query: 'count',
-      // variables: {
-      //   id: 'randomid'
-      // }
-    },])
+    // apollo: xs.fromArray([{
+    //   query: 'count',
+    //   // variables: {
+    //   //   id: 'randomid'
+    //   // }
+    // },{
+    //   query: "currentUser"
+    // },])
+    // apollo: xs.merge(counterUpdated$, query$, counter$)
+    apollo: xs.merge( counter$)
+
   };
 }
