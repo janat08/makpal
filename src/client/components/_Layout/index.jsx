@@ -9,18 +9,20 @@ import switchPath from 'switch-path';
 // import intent from './intent';
 // import model from './model';
 import view from './view.jsx';
-import Login from '../Login/index.js'
+import Login from '../Login/login.js'
 import Home from "../Home/index.jsx"
 // import Snabbdom from 'snabbdom-pragma';
 import Snabbdom from 'snabbdom-pragma';
 import gql from 'graphql-tag'
 import { json } from 'jsverify';
 import flattenConcurrently from 'xstream/extra/flattenConcurrently'
+import notificationLens from '../notificationLens.js'
 
 import {LOGIN, COUNTER} from '/gql.js'; 
 
 
 const defaultState = {
+  notifications: xs.fromArray([])
 }
 
 
@@ -44,23 +46,23 @@ export default function Layout(sources) {
   const counter$ = xs.of({
     query: COUNTER,
     category: 'counter',
-    polling: 500
+    pollingInterval: 500
   })
 
-  const subscription$ = sources.apollo.select('sub')
-    .flatten()
+
+  // const subscription$ = sources.apollo.select('sub')
+  //   .flatten()
 
 
-  const response$ = sources.apollo.select('allusers')
-    .flatten()
-    // .startWith([])
-  const counterQuery$ = sources.apollo.select('asdf')
-    .flatten()
+  // const response$ = sources.apollo.select('allusers')
+  //   .flatten()
+  //   // .startWith([])
+  // const counterQuery$ = sources.apollo.select('serverCounterQuery')
+  //   .flatten()
 
-  const counterQuery2$ = sources.apollo.select('counter')
-    .flatten()
+  // const counterQuery2$ = sources.apollo.select('counter')
+  //   .flatten()
 
-    console.log(counterQuery$)
 
   // let results$ = sources.apollo
   // .flatMap(r$ => r$
@@ -95,7 +97,7 @@ export default function Layout(sources) {
     complete: s => {console.log("counter done")}
   }
 
-  counterQuery$.subscribe(ab)
+  // counterQuery$.subscribe(ab)
   // counterQuery2$.subscribe(ab)
 
   // xs.merge(counterQuery2$, counterQuery$).addListener({
@@ -107,6 +109,7 @@ export default function Layout(sources) {
     "/": Home,
     //something must be embedded because of a bug relating to if/when '*' is detected
     "/login": {"/": Login},
+    "/forgotPassword": Login,
     '*': function(){return {DOM: xs.of((<div><h1> 404</h1> <h4> doesn't exist</h4></div>))}}
   }
 
@@ -119,12 +122,12 @@ export default function Layout(sources) {
     const { pathname } = location;
     return switchPath(pathname, Routes);
   }).map((route) => {
-    return isolate(route.value, 'page')(sources)
+    return isolate(route.value, {onion: notificationLens('page')})(sources)
   });
   pageSinks$.debug("sinks")
 
   const PS = extractSinks(pageSinks$, ['DOM', 'onion']);
-  const vdom$ = view(PS.DOM, history$, counterQuery$);
+  const vdom$ = view(PS.DOM, history$);
   const reducer$ = xs.merge(initReducer$, PS.onion);
 
   return {

@@ -15,7 +15,8 @@ export default function intent(dom) {
     //       .map(e => e.target.value)
     //   ).map(([name, pass])=>{console.log({name, pass}); return {name, pass}}),
     register$: dom.select('.registerJs').events('click'),
-    login$: dom.select('.loginJs').events('click'),
+    login$: dom.select('.submitJs').events('click'),
+    forgotPassword$: dom.select(".forgotPasswordJs").events('click'),
     name$: dom.select('.nameJs').events('input').map(e=>({name: e.target.value})),
     pass$: dom.select('.passJs').events('input').map(e=>({pass: e.target.value})),
     facebook$: dom.select('.oauthFacebookJs').events('click'),

@@ -19,8 +19,8 @@ function navigation(pathname) {
   );
 }
 
-export default function view(vdom$, path$, result$) {
-  return xs.combine(vdom$, path$,result$).map(([vdom, { pathname }, result]) =>{
+export default function view(vdom$, path$) {
+  return xs.combine(vdom$, path$).map(([vdom, { pathname }]) =>{
     // console.log(results)
     return (<div className="main-wrapper">
       <header>
