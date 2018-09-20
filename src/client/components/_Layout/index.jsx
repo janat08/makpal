@@ -105,28 +105,43 @@ export default function Layout(sources) {
   //   complete: s => {console.log("counter done")}
   // })
 
-  const Routes = {
+  const routes$ = sources.router.define({
     "/": Home,
     //something must be embedded because of a bug relating to if/when '*' is detected
     "/login": {"/": Login},
     "/forgotPassword": Login,
     '*': function(){return {DOM: xs.of((<div><h1> 404</h1> <h4> doesn't exist</h4></div>))}}
-  }
+  })
 
   const initReducer$ = xs.of(prevState => (
     prevState === undefined ? defaultState : prevState
   ))
 
-  const history$ = sources.history;
-  const pageSinks$ = history$.map((location) => {
-    const { pathname } = location;
-    return switchPath(pathname, Routes);
-  }).map((route) => {
-    return isolate(route.value, {onion: notificationLens('page')})(sources)
-  });
-  pageSinks$.debug("sinks")
+  const history$ = sources.router.history$
+  // console.log("path", sources.router.history$)
 
-  const PS = extractSinks(pageSinks$, ['DOM', 'onion']);
+  // const pageSinks$ = history$.map((location) => {
+  //   const { pathname } = location;
+  //   return switchPath(pathname, Routes);
+  // }).map((route) => {
+  //   return isolate(route.value, {onion: notificationLens('page')})(sources)
+  // });
+
+  const page$ = routes$.map(({path, value}) => {
+    var newSources = Object.assign({}, sources, {
+      router: sources.router.path(path)
+    })
+    console.log(path, value, newSources)
+    return isolate(value, "page")(newSources);
+  })
+  // .map((comp) => {
+  //   return isolate(comp, {onion: notificationLens('page')})(sources)
+  // });
+  
+
+  page$.debug("sinks")
+
+  const PS = extractSinks(page$, ['DOM', 'onion']);
   const vdom$ = view(PS.DOM, history$);
   const reducer$ = xs.merge(initReducer$, PS.onion);
 

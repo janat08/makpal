@@ -7,8 +7,6 @@ import storageify from "cycle-storageify";
 import Layout from './components/_Layout/index.jsx';
 import switchPath from 'switch-path';
 import {routerify} from 'cyclic-router';
-import { createHistory } from '@cycle/history'
-import { makeRouterDriver } from 'cyclic-router'
 import Cookies from 'universal-cookie';
 import createApolloClient from '/../common/createApolloClient';
 import { apiUrl } from './net';
@@ -38,7 +36,8 @@ const client = createApolloClient({
 //////////////
 
 
-const main = onionify(Layout);
+const main = routerify(onionify(Layout), switchPath, {omitHistory: true});
+// const main = onionify(Layout);
 
 run(main, {
   DOM: makeDOMDriver('#app'),
