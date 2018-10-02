@@ -19,7 +19,7 @@ import {makeApolloDriver} from './drivers/cycleApollo.js'
 import onionify from 'cycle-onionify';
 import {makeDOMDriver} from '@cycle/dom';
 import {captureClicks, makeHistoryDriver} from '@cycle/history'
-
+ 
 const client = createApolloClient({
   apiUrl, 
   links: link,
