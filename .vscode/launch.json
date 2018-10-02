@@ -19,5 +19,15 @@
             "port": 9222,
             "webRoot": "${workspaceFolder}"
         },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Process",
+            "port": 9229,
+            "restart": true,
+            "protocol": "inspector",
+            // "processId": "${command:PickProcess}",
+            "address": "localhost"
+        }
     ]
 }

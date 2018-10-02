@@ -2,57 +2,52 @@ import xs from 'xstream';
 import Snabbdom from 'snabbdom-pragma';
 
 
-export default function view(state$) {
-  return state$.map(jsx);
-}
+function navigation(pathname, hasLoggedIn) {
+  var sessionState = hasLoggedIn? 
+  (<a class="logoutJs" href="#" style={pathname.startsWith('/logout') ? 'font-weight:bold' : ''}>Log out</a>)
+  : (<a class="loginJs" href="/login" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Log in</a>)
 
-function snab (){
-  return div([
-    input({attrs: {type: 'checkbox'}}), 'Toggle me',
-    p("ON")
-  ])
-}
-
-var a = <div> example </div>
-
-function jsx({count}){
-  return  <div>
-    {a}
-     counter: {count}
-     </div>
-}
-
-function renderHeader(state) {
   return (
-    <header>
-      <h1>makpal</h1>
-    </header>
-  )
+    <nav>
+      <ol>
+        <li>
+          <a class="homeJs" href="/" style={pathname.startsWith('/') ? 'font-weight:bold' : ''}>Makpal</a>
+        </li>
+        <li>
+          <a class="secondHomeJs" href="/secondHome" style={pathname.startsWith('/secondHome') ? 'font-weight:bold' : ''}>Makpal2</a>
+        </li>
+        <li>
+          {sessionState}
+        </li>
+        <li>
+          <a href="/profile" style={pathname.startsWith('/profile') ? 'font-weight:bold' : ''}>Profile</a>
+        </li>
+
+      </ol>
+    </nav>
+  );
 }
 
-function renderMainSection(state, login) {
-
-  return(
-    <section class="main">
-      <Login />
-    </section>
-  )
+export default function view(vdom$, path$, hasLoggedIn$) {
+  return xs.combine(vdom$, path$, hasLoggedIn$).map(([vdom, { pathname }, hasLoggedIn]) =>{
+    // console.log(results)
+    return (<div className="main-wrapper">
+      <header>
+        <h1>makpal</h1>
+      </header>
+      <nav>
+        {navigation(pathname, hasLoggedIn)}
+      </nav>
+      <div className="header-wrapper">
+      </div>
+      <section class="main">
+        {vdom}
+      </section>
+      <footer>
+        footer
+        {/* {JSON.stringify(result)} {result} */}
+      </footer>
+    </div>)
+  }
+  );
 }
-
-function renderFooter(state) {
-  return (
-    <footer>
-      footer
-    </footer>
-  )
-}
-
-// export default function view(state$, listVDom$, loginVDOM$) {
-//   return xs.combine(state$, listVDom$, loginVDOM$).map(([state, listVDom, loginVDom]) =>
-//   <div>
-//     {renderHeader(state)}
-//     {renderMainSection(state, loginVDom)}
-//     {renderFooter(state)}
-//   </div>
-//   );
-// };

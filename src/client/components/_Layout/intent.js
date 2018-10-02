@@ -1,11 +1,5 @@
-import xs from 'xstream';
-import {ENTER_KEY, ESC_KEY} from '../../utils';
-
-export default function intent(domSource) {
-
-  return {
-    click$: domSource
-      .select('.jslogin').events('click')
-      .mapTo(null),
-  }
+export default function (dom){
+    return {
+        logout$: dom.select('.logoutJs').events('click'),
+    }
 }

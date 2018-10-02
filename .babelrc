@@ -9,6 +9,12 @@
     "transform-class-properties",
     "syntax-dynamic-import",
     "syntax-jsx",
+    "babel-plugin-inline-import",
+    ["transform-runtime",
+      {
+          "polyfill": false,
+          "regenerator": true
+      }],
     ["transform-react-jsx", {"pragma": "Snabbdom.createElement"}]
-  ]
+  ],
 }

@@ -1,58 +1,31 @@
 import xs from 'xstream';
 
+var init = {name: "", pass: "", error: "", complete: false}
+var allFieldsInAuth = {name: "", pass: "", passVerify: "", email: "", completed: true}
 export default function model(actions) {
-  // const startEditReducer$ = actions.startEdit$
-  //   .mapTo(function startEditReducer(data) {
-  //     return {...data, editing: true};
-  //   });
-
-  // const doneEditReducer$ = actions.doneEdit$
-  //   .map(content => function doneEditReducer(data) {
-  //     return {...data, title: content, editing: false};
-  //   });
-
-  // const cancelEditReducer$ = actions.cancelEdit$
-  //   .mapTo(function cancelEditReducer(data) {
-  //     return {...data, editing: false};
-  //   });
-
-  // const toggleReducer$ = actions.toggle$
-  //   .map(isToggled => function toggleReducer(data) {
-  //     return {...data, completed: isToggled};
-  //   });
-
-  // const destroyReducer$ = actions.destroy$
-  //   .mapTo(function destroyReducer(data) {
-  //     return void 0;
-  //   });
-  const initReducer$ = xs.of(prevState=>{
-    return prevState === undefined ? {name: "", pass: ""} : prevState
+  const initReducer$ = xs.of(prevState => {
+    return prevState === undefined ? init : Object.assign({}, init, prevState)
   })
-  const fields$ = actions.fields$
-    .map((stuff)=> function(prev){
-      console.log(stuff, "unde")
-      return {...prev}
-    })
+  const fields$ = xs.merge(actions.name$, actions.pass$)
+    .map((val) => prev => ({ ...prev, ...val }))
 
 
-    const login$ = actions.login$
-    .mapTo(prev=>{
-      console.log(prev.name, prev.pass)
-      return initReducer$
-      // return ()=>console.log("testing")
-    })
-    // const name$ = actions.name$.map(prev=>{
+  const facebook$ = actions.facebook$.mapTo(prev=>{window.location = '/auth/facebook'})
+  const google$ = actions.google$.mapTo(prev=>{window.location = '/auth/google'})
 
-    // })
+  const completed$ = actions.result$.map(x => {
+    if (x.errors != null) {
+      return xs.of(prev => ({ ...prev, error: x.errors[0].message }))
+    } else if (x.user && x.user.id) {
+      return xs.of(prev => ({ ...prev, ...allFieldsInAuth }))
+    }
+  }).flatten()
+
   return xs.merge(
     initReducer$,
     fields$,
-    login$,
-    // name$,
-    // startEditReducer$,
-    // doneEditReducer$,
-    // cancelEditReducer$,
-    // toggleReducer$,
-    // destroyReducer$
+    facebook$,
+    google$,
+    completed$,
   );
 }
