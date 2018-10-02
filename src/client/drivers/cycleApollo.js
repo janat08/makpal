@@ -40,6 +40,14 @@ const producer = observable => {
 //   return response$
 // }
 
+function appendGraphOperationNameToOptions (options) {
+  var operationType = Object.keys(options).filter(x => x == "query" || x == "subscription" || x == "mutation")[0]
+  var operationNameField = options[operationType].definitions[0].name
+  var operationName = operationNameField ? operationNameField.value : false
+  //options contains definitions for graphql operation, thus overwrite instead of shallow clone
+  return Object.assign(options, { operationName: operationName })
+}
+
 export function makeApolloDriver(client) {
   // const store = createApolloStore(client)
   // client.setStore(store)
@@ -52,11 +60,7 @@ export function makeApolloDriver(client) {
         const key = Object.keys(results.data)[0]
         return Object.assign(results, { result: results.data[key] }, { observer: observer })
       })
-    
-    var operationType = Object.keys(options).filter(x => x == "query" || x == "subscription")
-    var operationNameField = options[operationType].definitions[0].name
-    var operationName = operationNameField ? operationNameField.value : false
-    response$.options = Object.assign(options, { operationName: operationName })
+    response$.options = appendGraphOperationNameToOptions(options)
     // console.log(options, response$.options)
   return response$
   }
@@ -70,7 +74,7 @@ export function makeApolloDriver(client) {
       .filter(input => input.mutation)
       .map(options => {
         const response$ = xs.from(client.mutate(options))
-        response$.options = options
+        response$.options = appendGraphOperationNameToOptions(options)
         return response$
       })
 
@@ -89,6 +93,8 @@ export function makeApolloDriver(client) {
         response$$.filter(responseFilter(category)) :
         response$$
     }
+
+    response$$.client = client
 
 
     return response$$

@@ -4258,6 +4258,10 @@ cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
+"cookie_js@git://github.com/10clouds/cookie.js.git#master":
+  version "1.2.0"
+  resolved "git://github.com/10clouds/cookie.js.git#989b2bc558425e040569d28dad6bd8f8cb05e5c7"
+
 cookiejar@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
@@ -4709,6 +4713,16 @@ cycle-graphql-driver@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/cycle-graphql-driver/-/cycle-graphql-driver-0.4.2.tgz#ad23d486d4920008c362092ebb32dcee6bb53b9f"
 
+cycle-hmr@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/cycle-hmr/-/cycle-hmr-0.0.1.tgz#fe4701d1634ba3765518d09956cab0ba42fb0937"
+
+cycle-hmr@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cycle-hmr/-/cycle-hmr-0.3.1.tgz#1a251a50687e9ada4c879414afe7afa446af2cf9"
+  dependencies:
+    babel-plugin-cycle-hmr "^0.3.0"
+
 cycle-onionify@^5.0.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/cycle-onionify/-/cycle-onionify-5.2.0.tgz#3f26ceb76b8f24f5c431eddd8c544e23c3d0229d"
@@ -4773,6 +4787,12 @@ cycle-storageify@^4.0.1:
 cycle@1.0.x:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
+
+cyclejs-cookie@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/cyclejs-cookie/-/cyclejs-cookie-0.7.4.tgz#b04f1f9c6576d358eb22bf08f1c15de4f2bcd996"
+  dependencies:
+    cookie_js "git://github.com/10clouds/cookie.js#master"
 
 cyclejs-test-helpers@^2.0.0:
   version "2.0.0"
@@ -12087,13 +12107,6 @@ read-pkg-up@^2.0.0:
   dependencies:
     find-up "^2.0.0"
     read-pkg "^2.0.0"
-
-read-pkg-up@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-3.0.0.tgz#3ed496685dba0f8fe118d0691dc51f4a1ff96f07"
-  dependencies:
-    find-up "^2.0.0"
-    read-pkg "^3.0.0"
 
 read-pkg@^1.0.0:
   version "1.1.0"
