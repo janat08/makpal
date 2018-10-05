@@ -1,5 +1,4 @@
 import url from 'url';
-
 var __API_URL__ =  "/graphql"
 var __DEV__ = true
 export const isApiExternal = !!url.parse(__API_URL__).protocol;
