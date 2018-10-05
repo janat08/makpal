@@ -8,5 +8,5 @@ export default function(childScope){
             ({...state, [childScope]: scopedChildState, notifications: childState.notifications})
         }
     }
-    return
+    return notification
 }

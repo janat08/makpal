@@ -1,21 +1,24 @@
 import {run} from '@cycle/run';
-import {makeDOMDriver} from '@cycle/dom';
 import storageDriver from '@cycle/storage';
-import {captureClicks, makeHistoryDriver} from '@cycle/history'
-import onionify from 'cycle-onionify';
 import storageify from "cycle-storageify";
-import Layout from './components/_Layout/index.jsx';
+import Layout from './components/_Layout/Layout.js';
 import switchPath from 'switch-path';
-import {routerify} from 'cyclic-router';
 import Cookies from 'universal-cookie';
 import createApolloClient from '/../common/createApolloClient';
 import { apiUrl } from './net';
 // import modules from './modules/index';
 import link from './modules/user/access/index'
 import gql from 'graphql-tag';  
-import {makeApolloDriver} from './drivers/cycleApollo.js'
 import xs from "xstream"
 import {COUNTER, ADDCOUNTER} from './gql.js'
+
+//drivers
+import {makeCookieDriver} from 'cyclejs-cookie';
+import {routerify} from 'cyclic-router';
+import {makeApolloDriver} from './drivers/cycleApollo.js'
+import onionify from 'cycle-onionify';
+import {makeDOMDriver} from '@cycle/dom';
+import {captureClicks, makeHistoryDriver} from '@cycle/history'
 
 const client = createApolloClient({
   apiUrl, 
@@ -24,25 +27,17 @@ const client = createApolloClient({
   // clientResolvers: modules.resolvers
 });
 
-// var a = client.watchQuery({query: gql`${COUNTER}`, polling: 1000})
-// a.subscribeToMore(function(x){console.log(x)})
-// console.log("client", a)
-
-// client.query({query: query, errorPolicy: "all"}).then(x=>console.log("test", x))//.catch(x=>console.log('err', x))
-// client.mutate({mutation: gql`${LOGIN}${USERPROFILED}`, variables: {input: {usernameOrEmail: "asdf", password: "asdf"}}}).then(x=>console.log(x)).then(()=>{
-  // client.watchQuery({query: gql`${COUNTER}`}).then(x=>console.log("current", x))
-// })
-
 //////////////
 
 
-const main = routerify(onionify(Layout), switchPath, {omitHistory: true});
+const main = routerify(onionify(Layout), switchPath, {omitHistory: false});
 // const main = onionify(Layout);
 
 run(main, {
   DOM: makeDOMDriver('#app'),
   history: captureClicks(makeHistoryDriver()),
-  apollo: makeApolloDriver (client)
+  apollo: makeApolloDriver (client),
+  cookie: makeCookieDriver(),
 }); 
 
 

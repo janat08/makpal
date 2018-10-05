@@ -7,22 +7,22 @@ import User from '../../sql';
 import FieldError from '../../../../../common/FieldError';
 import config from 'config';
 
-const validateUserPassword = async (user, password, t) => {
+const validateUserPassword = async (user, password) => {
   const e = new FieldError();
 
   if (!user) {
     // user with provided email not found
-    e.setError('usernameOrEmail', t('user:auth.password.validPasswordEmail'));
+    e.setError('usernameOrEmail', 'validEmail');
     e.throwIf();
   }
   if (config.user.auth.password.confirm && !user.isActive) {
-    e.setError('usernameOrEmail', t('user:auth.password.emailConfirmation'));
+    e.setError('usernameOrEmail', 'emailConfirmation');
     e.throwIf();
   }
   const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) {
     // bad password
-    e.setError('password', t('user:auth.password.validPassword'));
+    e.setError('password', 'validPassword');
     e.throwIf();
   }
 };
@@ -39,7 +39,7 @@ export default () => ({
       try {
         const user = await User.getUserByUsernameOrEmail(usernameOrEmail);
 
-        await validateUserPassword(user, password, req.t);
+        await validateUserPassword(user, password);
 
         const tokens = await access.grantAccess(user, req);
 
@@ -54,12 +54,12 @@ export default () => ({
         const e = new FieldError();
         const userExists = await User.getUserByUsername(input.username);
         if (userExists) {
-          e.setError('username', t('user:auth.password.usernameIsExisted'));
+          e.setError('username', 'usernameIsExisted');
         }
 
         const emailExists = await User.getUserByEmail(input.email);
         if (emailExists) {
-          e.setError('email', t('user:auth.password.emailIsExisted'));
+          e.setError('email', 'emailIsExisted');
         }
 
         e.throwIf();
@@ -99,6 +99,7 @@ export default () => ({
             });
           });
         }
+        console.log({user}, "user is registered?")
 
         return { user };
       } catch (e) {
@@ -145,11 +146,11 @@ export default () => ({
         const e = new FieldError();
         const reset = pick(input, ['password', 'passwordConfirmation', 'token']);
         if (reset.password !== reset.passwordConfirmation) {
-          e.setError('password', t('user:auth.password.passwordsIsNotMatch'));
+          e.setError('password', 'user:auth.password.passwordsIsNotMatch');
         }
 
         if (reset.password.length < 8) {
-          e.setError('password', t('user:auth.password.passwordLength'));
+          e.setError('password', 'user:auth.password.passwordLength');
         }
         e.throwIf();
 
@@ -157,7 +158,7 @@ export default () => ({
         const { email, password } = jwt.verify(token, config.user.secret);
         const user = await User.getUserByEmail(email);
         if (user.passwordHash !== password) {
-          e.setError('token', t('user:auth.password.invalidToken'));
+          e.setError('token', 'user:auth.password.invalidToken');
           e.throwIf();
         }
 

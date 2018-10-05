@@ -24,17 +24,17 @@ export default function Home(sources) {
     </div>
   ))
   
-  const initReducer$ = xs.of(function initReducer(prevState) {
-    if (prevState) {
-      return prevState; 
-    } else { 
-      return {count: 0};
-    }
-  });
+  // const initReducer$ = xs.of(function initReducer(prevState) {
+  //   if (prevState) {
+  //     return prevState; 
+  //   } else { 
+  //     return {count: 0};
+  //   }
+  // });
 
-  const reducer$ = xs.merge(initReducer$, );
+  // const reducer$ = xs.merge(initReducer$, );
   return {
     DOM: vdom$,
-    onion: reducer$,
+    // onion: reducer$,
   };
 }
