@@ -44,20 +44,19 @@ graphqlServer.applyMiddleware({
   path: "/graphql", 
   cors: corsOptions
 });
- 
+app.use(favicon(path.join(__dirname, '../../src/static/favicon.ico')));
+
 app.get('/graphql', () => {});
 
 //static files
-app.use(favicon(path.join(__dirname, '../../src/static/favicon.ico')));
 app.use('/', express.static(path.join(__dirname, '../../src/static')));
 //bundles are mapped like this so dev and prod builds both work (as dev uses src/static while prod uses dist/static)
 app.use('/bundles', express.static(path.join(__dirname, '../bundles')));
 
 
-// //all page rendering
-// //Note: handles page routing and 404/500 error pages where necessary
+// //Note: doesnt handles ssr page routing and 404/500 error pages where necessary
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../static/index.html'));
+  res.sendFile(path.join(__dirname, '../../src/static/index.html')); 
 });
 
 // //static files

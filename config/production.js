@@ -1,6 +1,6 @@
 module.exports = {
   host: undefined,
-  port: process.env.PORT||8080,
+  port: process.env.PORT||4000,
 
   //config inside here will be available in the client browser app
   clientConfig:{
