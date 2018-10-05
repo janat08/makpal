@@ -38,13 +38,8 @@ export default function Layout(sources) {
   })
 
   var hasLoggedIn$ = apollo.select("currentUser").flatten().map(x=>x.result && x.result.id?true:false)
-  // hasLoggedIn$.map(x=>{
-  //   console.log(apollo, "apollo")
-  //   apollo.client.cache.reset()
-  //   console.log(apollo.client.cache)
-  //   return x
-  // }).subscribe({})
-  hasLoggedIn$.debug("user").subscribe({})
+
+  apollo.select("currentUser").flatten().debug('result').subscribe({})
 
   const routes$ = router.define({
     "/": Home,

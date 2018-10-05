@@ -34,7 +34,7 @@ export default function getLog(context) {
     context = path.basename(filePath);
   }  
 
-  const logger = new winston.Logger({
+  const logger = winston.createLogger({
     transports: [
 
       new (winston.transports.Console)({
