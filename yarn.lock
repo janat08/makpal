@@ -4258,9 +4258,9 @@ cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-"cookie_js@git://github.com/10clouds/cookie.js.git#master":
+"cookie_js@git://github.com/10clouds/cookie.js#master":
   version "1.2.0"
-  resolved "git://github.com/10clouds/cookie.js.git#989b2bc558425e040569d28dad6bd8f8cb05e5c7"
+  resolved "git://github.com/10clouds/cookie.js#989b2bc558425e040569d28dad6bd8f8cb05e5c7"
 
 cookiejar@^2.1.0:
   version "2.1.2"
@@ -14728,7 +14728,7 @@ xpipe@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/xpipe/-/xpipe-1.0.5.tgz#8dd8bf45fc3f7f55f0e054b878f43a62614dafdf"
 
-xstream@*, "xstream@10.x || 11.x", xstream@11.x, xstream@>=10, xstream@^11.2.0, xstream@^11.7.0:
+xstream@*, "xstream@10.x || 11.x", xstream@11.x, xstream@>=10, xstream@^11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/xstream/-/xstream-11.7.0.tgz#6557e9710e1ab05ae28b6902af41745250d32e36"
   dependencies:
