@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 import createApolloClient from '/../common/createApolloClient';
 import { apiUrl } from './net';
 // import modules from './modules/index';
-import link from './modules/user/access/index'
+import link from './user/access/index'
 import gql from 'graphql-tag';  
 import xs from "xstream"
 import {COUNTER, ADDCOUNTER} from './gql.js'
