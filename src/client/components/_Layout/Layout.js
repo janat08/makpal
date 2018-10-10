@@ -15,7 +15,7 @@ import Home from "../Home/Home.jsx"
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js"
 import Register from "../Register/Register.js"
 
-import { LOGIN, COUNTER, CURRENTUSER } from '/gql.js';
+// import { LOGIN, COUNTER, CURRENTUSER } from '/gql.js';
 
 
 const defaultState = {

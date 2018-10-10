@@ -2,8 +2,9 @@ import { SchemaLink } from 'apollo-link-schema';
 import modules from '../../../index.ts';
 import { isApiExternal, apiUrl } from '../../../../net';
 import createApolloClient from '../../../../../common/createApolloClient';
-// import CURRENT_USER_QUERY from '../../../../../../client/src/modules/user/graphql/CurrentUserQuery.graphql';
+import CURRENT_USER_QUERY from '../../../../../client/user/graphql/CurrentUserQuery.graphql';
 
+/*
 import gql from 'graphql-tag';  
 
 var CURRENT_USER_QUERY = gql`
@@ -50,11 +51,11 @@ query currentUser {
     ...UserInfo
   }
 }
-
 `
-
+*/
 
 export default async function getCurrentUser(req, res) {
+  /*
   const schema = require('../../../../api/schema').default;
   const schemaLink = new SchemaLink({ schema, context: await modules.createContext(req, res) });
   const client = createApolloClient({
@@ -63,4 +64,6 @@ export default async function getCurrentUser(req, res) {
   });
 
   return await client.query({ query: CURRENT_USER_QUERY }); 
+  */
+ return 1;
 }
