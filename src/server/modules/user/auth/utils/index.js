@@ -2,7 +2,7 @@ import { SchemaLink } from 'apollo-link-schema';
 import modules from '../../../index.ts';
 import { isApiExternal, apiUrl } from '../../../../net';
 import createApolloClient from '../../../../../common/createApolloClient';
-import CURRENT_USER_QUERY from '../../../../../client/modules/user/graphql/CurrentUserQuery.graphql';
+import CURRENT_USER_QUERY from '../../../../../client/user/graphql/CurrentUserQuery.graphql';
 
 /*
 import gql from 'graphql-tag';  
