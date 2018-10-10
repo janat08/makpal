@@ -1,20 +1,35 @@
 {
   "presets": [
-    "env",
-    "react",
-    "stage-0",
-    "flow"
-  ],
-  "plugins": [
-    "transform-class-properties",
-    "syntax-dynamic-import",
-    "syntax-jsx",
-    "babel-plugin-inline-import",
-    ["transform-runtime",
+    [
+      "@babel/env",
       {
-          "polyfill": false,
-          "regenerator": true
-      }],
-    ["transform-react-jsx", {"pragma": "Snabbdom.createElement"}]
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ],
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-react",
+    "@babel/preset-typescript"
   ],
+  "plugins" : [
+    [
+      "module-resolver",
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "root": [
+          "./src/"
+        ]
+      }
+    ],
+    "import-graphql",
+    "@babel/proposal-class-properties"
+  ]
 }

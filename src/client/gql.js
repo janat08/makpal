@@ -19,7 +19,7 @@ import UsersSubscription from './user/graphql/UsersSubscription.graphql';
 
 //COUNTER
 import AddServerCounter from './graphql/counter/AddCounter.graphql'
-
+/*
 import gql from 'graphql-tag';  
 
 
@@ -57,3 +57,4 @@ export const COUNTER  = Counter,
       // // COUNTER
       ADDSERVERCOUNTER = gql`${AddServerCounter}`
 export {LOGOUT}
+*/

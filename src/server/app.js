@@ -5,7 +5,7 @@ import compression from 'compression';
 import path from 'path';
 import config from 'config';
 import morgan from 'morgan';
-import url from 'url'
+import url from 'url';
 
 import getLog from './utils/logger';
 import modules from './modules/index.ts';
