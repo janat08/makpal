@@ -10,7 +10,7 @@ import { apiUrl } from './net';
 import link from './user/access/index'
 import gql from 'graphql-tag';  
 import xs from "xstream"
-import {COUNTER, ADDCOUNTER} from './gql.js'
+// import {COUNTER, ADDCOUNTER} from './gql.js'
 
 //drivers
 import {makeCookieDriver} from 'cyclejs-cookie';

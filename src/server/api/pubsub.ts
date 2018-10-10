@@ -1,8 +1,8 @@
 import { wrapPubSub } from 'apollo-logger';
 import { PubSub } from 'graphql-subscriptions';
+import settings from 'config';
 
 import log from '../../common/log';
-import settings from 'config';
 
 const pubsub = settings.app.logging.apolloLogging
   ? wrapPubSub(new PubSub(), { logger: log.debug.bind(log) })

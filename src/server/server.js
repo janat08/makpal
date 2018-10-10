@@ -4,7 +4,7 @@ import addGraphQLSubscriptions from './api/subscriptions.ts';
 // import { serverPort } from './net';
 import app from './app';
 import log from '../common/log';
-import config from 'config'
+import config from 'config';
 
 // eslint-disable-next-line import/no-mutable-exports
 let server;
