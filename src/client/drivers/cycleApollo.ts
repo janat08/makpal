@@ -88,15 +88,21 @@ export function makeApolloDriver(client) {
 
     response$$.subscribe({})
 
-    response$$.select = (category) => {
+    // response$$.select = (category) => {
+    //   return category ?
+    //     response$$.filter(responseFilter(category)) :
+    //     response$$
+    // }
+
+    // response$$.client = client
+    var select = (category) => {
       return category ?
         response$$.filter(responseFilter(category)) :
         response$$
     }
+    var resulting = Object.assign(response$$, {select}, {client})
 
-    response$$.client = client
-
-
-    return response$$
+    return resulting 
+    response$$
   }
 }

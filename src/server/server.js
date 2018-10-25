@@ -5,7 +5,8 @@ import addGraphQLSubscriptions from './api/subscriptions.ts';
 import app from './app';
 import log from '../common/log';
 import config from 'config'
-
+require('dotenv').config()
+// console.log(process.env.SERVER_PORT)
 // eslint-disable-next-line import/no-mutable-exports
 let server;
 server = http.createServer();

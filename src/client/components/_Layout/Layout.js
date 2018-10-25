@@ -26,6 +26,8 @@ const defaultState = {
 export default function Layout(sources) {
   const {apollo, DOM, router, cookie, onion, history} = sources
 
+  console.log(123, apollo, sources)
+
   var actions = intent(DOM)
 
   var logout$ = actions.logout$.map(x=>{
