@@ -4,12 +4,12 @@ import { withApollo } from 'react-apollo';
 // import PropTypes from 'prop-types';
 
 // import { LayoutCenter } from '../../../common/components';
-import { getItem, setItem, removeItem } from '../../../common/clientStorage.web.js';
+import { getItem, setItem, removeItem } from '../../clientStorage.web.js';
 // import Feature from '../connector';
 // import settings from 'config';
 
-import REFRESH_TOKENS_MUTATION from './graphql/RefreshTokens.graphql';
-import CURRENT_USER_QUERY from '../../graphql/CurrentUserQuery.graphql';
+// import REFRESH_TOKENS_MUTATION from './graphql/RefreshTokens.graphql';
+// import CURRENT_USER_QUERY from '../../graphql/CurrentUserQuery.graphql';
 
 
 const setJWTContext = async operation => {
