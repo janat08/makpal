@@ -24,7 +24,7 @@ const defaultState = {
 
 
 export default function Layout(sources) {
-  const {apollo, DOM, router, cookie, onion, history} = sources
+  const {apollo, DOM, router, cookie, state, history} = sources
 
   var actions = intent(DOM)
 
@@ -106,18 +106,15 @@ export default function Layout(sources) {
   var lastRouteCookie$ = xs.merge(xs.of(lastRouteCookie("/")), authRedirectBack$)
 
 
-  const PS = extractSinks(page$, ['DOM', 'onion', 'router', 'apollo']);
+  const PS = extractSinks(page$, ['DOM', 'state', 'router', 'apollo']);
   const vdom$ = view(PS.DOM, history$, hasLoggedIn$);
-  // vdom$.debug("vdom").subscribe({})
-  const reducer$ = xs.merge(initReducer$, PS.onion);
-  onion.state$.debug("states").subscribe({})
+  const reducer$ = xs.merge(initReducer$, PS.state);
+
   return {
     DOM: vdom$,
-    onion: reducer$,
+    state: reducer$,
     apollo: xs.merge(PS.apollo, currentUser$),
     router: PS.router,
     cookie: xs.merge(lastRouteCookie$)
-    // router: xs.of({pathname: "/login", state: {some: "state"}}).startWith({pathname: "/login", state: {some: "state"}})
-
   };
 }

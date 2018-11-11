@@ -8,11 +8,11 @@ import Snabbdom from 'snabbdom-pragma';
 // export default function Login(sources) {
 //   const actions = intent(sources.DOM);
 //   const reducer$ = model(actions);
-//   const vdom$ = view(sources.onion.state$);
+//   const vdom$ = view(sources.state.stream);
 
 //   return {
 //     DOM: vdom$,
-//     onion: reducer$, 
+//     state: reducer$, 
 //   };
 // } 
 
@@ -35,6 +35,6 @@ export default function Home(sources) {
   // const reducer$ = xs.merge(initReducer$, );
   return {
     DOM: vdom$,
-    // onion: reducer$,
+    // state: reducer$,
   };
 }

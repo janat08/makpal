@@ -16,7 +16,7 @@ import {COUNTER, ADDCOUNTER} from './gql.js'
 import {makeCookieDriver} from 'cyclejs-cookie';
 import {routerify} from 'cyclic-router';
 import {makeApolloDriver} from './drivers/cycleApollo.js'
-import onionify from 'cycle-onionify';
+import {withState} from '@cycle/state';
 import {makeDOMDriver} from '@cycle/dom';
 import {captureClicks, makeHistoryDriver} from '@cycle/history'
 
@@ -30,8 +30,7 @@ const client = createApolloClient({
 //////////////
 
 
-const main = routerify(onionify(Layout), switchPath, {omitHistory: false});
-// const main = onionify(Layout);
+const main = routerify(withState(Layout), switchPath, {omitHistory: false});
 
 run(main, {
   DOM: makeDOMDriver('#app'),

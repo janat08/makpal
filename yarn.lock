@@ -148,6 +148,14 @@
     "@cycle/run" "^4.4.0"
     xstream "^11.7.0"
 
+"@cycle/isolate@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@cycle/isolate/-/isolate-4.1.0.tgz#b40b5cc4e11f7ba36e03974dafba8749613f0e1d"
+  integrity sha512-nnuBqXZdak4fGeYWQFoXC4zmmTFYhIfArTKCpU5XmIgF4aqD0cQg02QBobczn86EJO7SpIuWUh7l8FF5IL4pNw==
+  dependencies:
+    "@cycle/run" "^5.1.0"
+    xstream "^11.7.0"
+
 "@cycle/run@*", "@cycle/run@4.4.0", "@cycle/run@^4.1.0", "@cycle/run@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@cycle/run/-/run-4.4.0.tgz#8013702548b1992f665b9f2f42882996871ccf8f"
@@ -169,6 +177,24 @@
   integrity sha512-7cPVAFQMuOhV8qUO2AU2076opzy/7ldHsitP7EeZ22tOhd2GNsKf0TN52CZ6uVUh0cOySZs6e877aFm5Tw2+WA==
   dependencies:
     xstream "10.x || 11.x"
+
+"@cycle/run@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@cycle/run/-/run-5.1.0.tgz#f2af7459a0809d4d97ae0dbce45b1194610208c5"
+  integrity sha512-zBjLl91JbGJt4TVqWnYXKvqgxDDZldjQeF71s6wOiY/Nt0RffaUACg5QkwNoHGLkFalBMp3Kmt+TNNONeA2N9w==
+  dependencies:
+    quicktask "1.1.0"
+    xstream "10.x || 11.x"
+
+"@cycle/state@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@cycle/state/-/state-1.0.0.tgz#3d4fa86fc9098607178d2d8299f7739779428269"
+  integrity sha512-Uma3uDwWlAj5UBGbYKKrZQ+5Mkh3uJ6zLPG8aWMDdax/0zW4BiI6Fiw+Qy59vbApAcyy4cFVSjxBL+S04KhMJw==
+  dependencies:
+    "@cycle/isolate" "^4.1.0"
+    "@cycle/run" "^5.1.0"
+    quicktask "1.1.0"
+    xstream ">=11"
 
 "@cycle/storage@^5.0.3":
   version "5.0.3"
@@ -10711,7 +10737,7 @@ xml@^1.0.1:
   resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
   integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
-xstream@*, "xstream@10.x || 11.x", xstream@11.x, xstream@>=10, xstream@^11.7.0:
+xstream@*, "xstream@10.x || 11.x", xstream@11.x, xstream@>=10, xstream@>=11, xstream@^11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/xstream/-/xstream-11.7.0.tgz#6557e9710e1ab05ae28b6902af41745250d32e36"
   integrity sha512-wO3TXiQd2/1UZNVsixDIcQgAN6TU4sGH7qIXvs1CRp1kgtkpU8YTfyKt/z/Z1psqcGnR0cJJxHaCnBxtktLx9w==

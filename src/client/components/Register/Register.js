@@ -10,7 +10,7 @@ export default function ForgotPassword(sources) {
   const action = {...intent(DOM), result$: apollo.select("register").flatten().map(x=>x.data.login)}
 
   const register$ = action.submit$.map(x=>{
-    return onion.state$.map(x=>{
+    return state.stream.map(x=>{
       if (x.pass !== x.passVerify){
         return xs.of({})
       }
@@ -24,14 +24,14 @@ export default function ForgotPassword(sources) {
   action.result$.debug().subscribe({})
 
   const reducer$ = model(action)
-  const vdom$ = view(sources.onion.state$)
+  const vdom$ = view(sources.state.stream)
 
   //link back to previous route instead of just redirecting
 
   return {
     // router: action$.register$.map(x=>{console.log("routing"); return x}).mapTo({pathname: "/", state: {some:"state"}}).mapTo("/"),
     DOM: vdom$,
-    onion: reducer$,
+    state: reducer$,
     apollo: register$,
   };
 }

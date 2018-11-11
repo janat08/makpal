@@ -9,5 +9,5 @@ export default function(childScope){
             return ({...state, [childScope]: scopedChildState, authRedirectBack: childState.authRedirectBack})
         }
     }
-    return {onion: lens}
+    return {state: lens}
 }
