@@ -15,7 +15,7 @@ import Home from "../Home/Home.jsx"
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js"
 import Register from "../Register/Register.js"
 
-import { LOGIN, COUNTER, CURRENTUSER } from '/gql.js';
+import { LOGIN, COUNTER, CURRENTUSER, LOGOUT } from '/gql.js';
 
 
 const defaultState = {
@@ -25,19 +25,25 @@ const defaultState = {
 
 export default function Layout(sources) {
   const {apollo, DOM, router, cookie, state, history} = sources
-
+  window.apollo = apollo.client
   var actions = intent(DOM)
-
   var logout$ = actions.logout$.map(x=>{
-    apollo.cache.reset()
+    apollo.client.resetStore()
+    console.log('logging')
+    return {
+      mutation: LOGOUT,
+      category: "logout",
+    }
   })
+
+  logout$.debug("logout").subscribe({})
 
   var currentUser$ = xs.of({
     query: CURRENTUSER,
     category: "currentUser"
   })
-
-  var hasLoggedIn$ = apollo.select("currentUser").flatten().map(x=>x.result && x.result.id?true:false)
+//  && x.result.id?true:false
+  var hasLoggedIn$ = apollo.select("currentUser").flatten().map(x=>x.result && x )
   // hasLoggedIn$.map(x=>{
   //   console.log(apollo, "apollo")
   //   apollo.client.cache.reset()
@@ -113,7 +119,7 @@ export default function Layout(sources) {
   return {
     DOM: vdom$,
     state: reducer$,
-    apollo: xs.merge(PS.apollo, currentUser$),
+    apollo: xs.merge(PS.apollo, currentUser$, logout$),
     router: PS.router,
     cookie: xs.merge(lastRouteCookie$)
   };

@@ -24,15 +24,12 @@
     "prod:build-server": "cd src/ && cross-env npx babel '**/*.{js,jsx}' --no-babelrc --presets react,node8 --plugins transform-class-properties,syntax-dynamic-import --out-dir '../dist' --ignore test.js",
     "prod:copy-files": "cross-env npx copyfiles -u 1 'src/static/**/*' dist",
     "prod:serve": "cross-env NODE_ENV=production node dist/server/",
-    "test": "npm run lint && npm run test:unit && npm run test:e2e",
-    "testCI": "yarn test:unit",
+    "test": "npm run lint && npm run test:unit",
+    "e2e:dev": "testcafe-live -e -c 1 'chrome' test/e2e/ --src src", 
+    "test:firefox:headless": "testcafe -e 'firefox:headless' test/e2e/",
+    "test:chrome:headless": "testcafe -e 'chrome:headless' test/e2e/",
     "lint": "npx eslint --ext jsx,js src test",
     "test:unit": "npx jest --config test/unit-test/jest.config.js",
-    "1test:e2e": "npm run prod:build && cross-env NODE_ENV=test node-while -s dist/server/index.js -r \"node node_modules/cypress/bin/cypress run\"",
-    "1test:e2e:dev": "npx cypress open --env env=production",
-    "1test:watch": "npm-watch",
-    "1test:quick": "npm run lint && npm run test:unit",
-    "test:e2e": "testee test.html --browsers=firefox --reporter=XUnit > testresults.xml",
     "todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note"
   },
   "browser": {
@@ -172,6 +169,9 @@
     "regenerator-runtime": "^0.11.1",
     "rimraf": "^2.6.2",
     "snabbdom-to-html": "^5.1.0",
+    "testcafe": "^0.23.1",
+    "testcafe-live": "^0.1.4",
+    "testcafe-reporter-xunit": "^2.1.0",
     "wait-on": "^2.1.0"
   },
   "keywords": [

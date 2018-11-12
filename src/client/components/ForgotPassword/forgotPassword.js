@@ -17,7 +17,6 @@ export default function ForgotPassword({DOM, state, apollo}) {
       })
     }).flatten().take(1)
   }).flatten()
-  action.result$.debug().subscribe({})
   
   const reducer$ = model(action)
   const vdom$ = view(state.stream)
@@ -26,7 +25,6 @@ export default function ForgotPassword({DOM, state, apollo}) {
   .compose(delay(1000))
   
   return {
-    // router: action$.register$.map(x=>{console.log("routing"); return x}).mapTo({pathname: "/", state: {some:"state"}}).mapTo("/"),
     DOM: vdom$,
     state: reducer$,
     apollo: submitForgotPass$,

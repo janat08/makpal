@@ -39,7 +39,7 @@ run(main, {
   cookie: makeCookieDriver(),
 }); 
 
-
+export default {main}
 
 /////////////////////SERVICE WORKER CODE
 // if('serviceWorker' in navigator) {

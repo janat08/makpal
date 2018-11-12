@@ -21,7 +21,6 @@ export default function ForgotPassword(sources) {
       })
     }).flatten().take(1)
   }).flatten()
-  action.result$.debug().subscribe({})
 
   const reducer$ = model(action)
   const vdom$ = view(sources.state.stream)
@@ -29,7 +28,6 @@ export default function ForgotPassword(sources) {
   //link back to previous route instead of just redirecting
 
   return {
-    // router: action$.register$.map(x=>{console.log("routing"); return x}).mapTo({pathname: "/", state: {some:"state"}}).mapTo("/"),
     DOM: vdom$,
     state: reducer$,
     apollo: register$,

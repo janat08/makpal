@@ -1,10 +1,12 @@
 import xs from 'xstream'
 
 const responseFilter = category => response$ => {
-  // console.log(response$.options, "optionsss")
   return response$.options && (response$.options.category === category || response$.options.operationName === category)
-
 }
+
+//TODOS, TODO::, TODO:
+//convert to not use select()
+//use getOperationAST from graphql
 
 const producer = observable => {
   let subscription
@@ -21,24 +23,6 @@ const producer = observable => {
     }
   }
 }
-
-// const createApolloStore = client =>
-//   createStore(
-//     combineReducers({ apollo: client.reducer() }),
-//     {},
-//     applyMiddleware(client.middleware())
-//   )
-
-// function apolloObserver(options) {
-//   const observer = options.subscription? client.subscribe(options) : client.watchQuery(options)
-//   const response$ = xs.create(producer(observer))
-//     .map(results => {
-//       const key = Object.keys(results.data)[0]
-//       return Object.assign(results, {results: results.data[key]}, {observer})
-//     })
-//   response$.options = options
-//   return response$
-// }
 
 function appendGraphOperationNameToOptions (options) {
   var operationType = Object.keys(options).filter(x => x == "query" || x == "subscription" || x == "mutation")[0]
@@ -61,7 +45,6 @@ export function makeApolloDriver(client) {
         return Object.assign(results, { result: results.data[key] }, { observer: observer })
       })
     response$.options = appendGraphOperationNameToOptions(options)
-    // console.log(options, response$.options)
   return response$
   }
 
