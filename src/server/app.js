@@ -23,7 +23,7 @@ for (const applyMiddleware of modules.middlewares) {
 } 
 
 //logging
-const log = getLog();  
+// const log = getLog();  
 if (config.logIncomingHttpRequests) {
   const incomingLog = getLog('INCOMING');
   app.use(morgan('short', { stream: { write: message => incomingLog.info(message.trim()) } }));

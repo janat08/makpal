@@ -1,11 +1,12 @@
+
 import xs from 'xstream';
 import Snabbdom from 'snabbdom-pragma';
 
 
 function navigation(pathname, hasLoggedIn) {
-  var sessionState = hasLoggedIn? 
-  (<a class="logoutJs" href="#" style={pathname.startsWith('/logout') ? 'font-weight:bold' : ''}>Log out</a>)
-  : (<a class="loginJs" href="/login" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Log in</a>)
+  var sessionState = hasLoggedIn ?
+    (<a className="logoutJs" href="#" style={pathname.startsWith('/logout') ? 'font-weight:bold' : ''}>Log out</a>)
+    : (<a className="loginJs" href="/login" style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}>Log in</a>)
 
   return (
     <nav>
@@ -30,7 +31,6 @@ function navigation(pathname, hasLoggedIn) {
 
 export default function view(vdom$, path$, hasLoggedIn$) {
   return xs.combine(vdom$, path$, hasLoggedIn$).map(([vdom, { pathname }, hasLoggedIn]) =>{
-    // console.log(results)
     return (<div className="main-wrapper">
       <header>
         <h1>makpal</h1>

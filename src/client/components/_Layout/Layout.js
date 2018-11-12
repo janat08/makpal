@@ -15,7 +15,7 @@ import Home from "../Home/Home.jsx"
 import ForgotPassword from "../ForgotPassword/ForgotPassword.js"
 import Register from "../Register/Register.js"
 
-import { LOGIN, COUNTER, CURRENTUSER } from '/gql.js';
+import { LOGIN, COUNTER, CURRENTUSER, LOGOUT } from '/gql.js';
 
 
 const defaultState = {
@@ -24,20 +24,26 @@ const defaultState = {
 
 
 export default function Layout(sources) {
-  const {apollo, DOM, router, cookie, onion} = sources
-
+  const {apollo, DOM, router, cookie, state, history} = sources
+  window.apollo = apollo.client
   var actions = intent(DOM)
-
   var logout$ = actions.logout$.map(x=>{
-    apollo.cache.reset()
+    apollo.client.resetStore()
+    console.log('logging')
+    return {
+      mutation: LOGOUT,
+      category: "logout",
+    }
   })
+
+  logout$.debug("logout").subscribe({})
 
   var currentUser$ = xs.of({
     query: CURRENTUSER,
     category: "currentUser"
   })
-
-  var hasLoggedIn$ = apollo.select("currentUser").flatten().map(x=>x.result.id?true:false)
+//  && x.result.id?true:false
+  var hasLoggedIn$ = apollo.select("currentUser").flatten().map(x=>x.result && x )
   // hasLoggedIn$.map(x=>{
   //   console.log(apollo, "apollo")
   //   apollo.client.cache.reset()
@@ -106,17 +112,15 @@ export default function Layout(sources) {
   var lastRouteCookie$ = xs.merge(xs.of(lastRouteCookie("/")), authRedirectBack$)
 
 
-  const PS = extractSinks(page$, ['DOM', 'onion', 'router', 'apollo']);
+  const PS = extractSinks(page$, ['DOM', 'state', 'router', 'apollo']);
   const vdom$ = view(PS.DOM, history$, hasLoggedIn$);
-  const reducer$ = xs.merge(initReducer$, PS.onion);
-  onion.state$.debug("states").subscribe({})
+  const reducer$ = xs.merge(initReducer$, PS.state);
+
   return {
     DOM: vdom$,
-    onion: reducer$,
-    apollo: xs.merge(PS.apollo, currentUser$),
+    state: reducer$,
+    apollo: xs.merge(PS.apollo, currentUser$, logout$),
     router: PS.router,
     cookie: xs.merge(lastRouteCookie$)
-    // router: xs.of({pathname: "/login", state: {some: "state"}}).startWith({pathname: "/login", state: {some: "state"}})
-
   };
 }

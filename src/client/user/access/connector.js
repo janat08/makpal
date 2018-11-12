@@ -9,7 +9,6 @@ export default class {
     this.dataRootComponent = combine(arguments, arg => arg.dataRootComponent);
     this.login = combine(arguments, arg => arg.login);
     this.logout = combine(arguments, arg => arg.logout);
-    console.log(this.login)
   }
 
   async doLogin(client) {

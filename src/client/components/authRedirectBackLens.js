@@ -5,9 +5,8 @@ export default function(childScope){
         set: (state, childState) => {
             var scopedChildState = Object.assign({}, childState)
             delete scopedChildState.authRedirectBack
-            console.log(scopedChildState, state,childState, childScope)
             return ({...state, [childScope]: scopedChildState, authRedirectBack: childState.authRedirectBack})
         }
     }
-    return {onion: lens}
+    return {state: lens}
 }

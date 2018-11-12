@@ -5,11 +5,11 @@ import xs from 'xstream';
 import {FORGOTPASSWORD} from '../../gql'
 import delay from 'xstream/extra/delay'
 
-export default function ForgotPassword({DOM, onion, apollo}) {
+export default function ForgotPassword({DOM, state, apollo}) {
   const action = {...intent(DOM), result$: apollo.select("forgotPass").flatten().map(x=>x.data.forgotPassword)}
   
   const submitForgotPass$ = action.submit$.map(x=>{
-    return onion.state$.map(x=>{
+    return state.stream.map(x=>{
       return xs.of({
         mutation:  FORGOTPASSWORD,
         variables: {input: {email: x.email}},
@@ -17,18 +17,16 @@ export default function ForgotPassword({DOM, onion, apollo}) {
       })
     }).flatten().take(1)
   }).flatten()
-  action.result$.debug().subscribe({})
   
   const reducer$ = model(action)
-  const vdom$ = view(onion.state$)
+  const vdom$ = view(state.stream)
 
-  const passwordResetBegun$ = onion.state$.filter(x=>x.completed)
+  const passwordResetBegun$ = state.stream.filter(x=>x.completed)
   .compose(delay(1000))
   
   return {
-    // router: action$.register$.map(x=>{console.log("routing"); return x}).mapTo({pathname: "/", state: {some:"state"}}).mapTo("/"),
     DOM: vdom$,
-    onion: reducer$,
+    state: reducer$,
     apollo: submitForgotPass$,
   };
 }
