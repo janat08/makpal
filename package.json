@@ -25,11 +25,11 @@
     "prod:copy-files": "cross-env npx copyfiles -u 1 'src/static/**/*' dist",
     "prod:serve": "cross-env NODE_ENV=production node dist/server/",
     "test": "npm run lint && npm run test:unit",
-    "e2e:dev": "testcafe-live -e -c 1 'chrome' test/e2e/ --src src", 
+    "e2e:dev": "testcafe-live -e -c 1 'chrome' test/e2e/ --src src",
     "test:firefox:headless": "testcafe -e 'firefox:headless' test/e2e/",
     "test:chrome:headless": "testcafe -e 'chrome:headless' test/e2e/",
     "lint": "npx eslint --ext jsx,js src test",
-    "test:unit": "npx jest --config test/unit-test/jest.config.js",
+    "test:unit": "npx jest --config test/unit/jest.config.js",
     "todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note"
   },
   "browser": {
@@ -80,7 +80,6 @@
     "apollo-server-express": "^2.0.5",
     "apollo-utilities": "^1.0.20",
     "arangojs": "^6.4.0",
-    "babel-preset-flow": "^6.23.0",
     "bcryptjs": "^2.4.3",
     "caller-callsite": "^2.0.0",
     "compression": "^1.7.3",
@@ -125,6 +124,7 @@
     "xstream": "*"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.9",
     "autoprefixer": "^7.2.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -172,6 +172,8 @@
     "testcafe": "^0.23.1",
     "testcafe-live": "^0.1.4",
     "testcafe-reporter-xunit": "^2.1.0",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.6",
     "wait-on": "^2.1.0"
   },
   "keywords": [

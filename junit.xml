@@ -1,2 +1,6 @@
-<testsuites name="jest tests" tests="0" failures="0" time="0.016">
+<testsuites name="jest tests" tests="1" failures="0" time="3.621">
+  <testsuite name="pages/Home" errors="0" failures="0" skipped="0" timestamp="2018-11-12T06:53:57" time="1.008" tests="1">
+    <testcase classname="pages/Home should render content" name="pages/Home should render content" time="0.004">
+    </testcase>
+  </testsuite>
 </testsuites>
