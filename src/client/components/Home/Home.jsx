@@ -17,24 +17,24 @@ import Snabbdom from 'snabbdom-pragma';
 // } 
 
 export default function Home(sources) {
-  const vdom$ = xs.of((
-    <div> 
-      <h1>Home</h1>
-      <h3>A wellness and longevity site</h3>
-    </div>
-  ))
+	const vdom$ = xs.of((
+		<div> 
+			<h1>Home</h1>
+			<h3>A wellness and longevity site</h3>
+		</div>
+	));
   
-  // const initReducer$ = xs.of(function initReducer(prevState) {
-  //   if (prevState) {
-  //     return prevState; 
-  //   } else { 
-  //     return {count: 0};
-  //   }
-  // });
+	// const initReducer$ = xs.of(function initReducer(prevState) {
+	//   if (prevState) {
+	//     return prevState; 
+	//   } else { 
+	//     return {count: 0};
+	//   }
+	// });
 
-  // const reducer$ = xs.merge(initReducer$, );
-  return {
-    DOM: vdom$,
-    // state: reducer$,
-  };
+	// const reducer$ = xs.merge(initReducer$, );
+	return {
+		DOM: vdom$,
+		// state: reducer$,
+	};
 }

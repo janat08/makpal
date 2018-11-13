@@ -1,0 +1,48 @@
+//the rootDir/outDir are falsy, and in fact client should be bundled separately
+//the rootDir must encompass all code such as common folder, therefore
+//separate client config extending this one is deleted
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+    },
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es5",
+    "sourceMap": true,
+    "jsx": "react",
+    "jsxFactory": "Snabbdom.createElement",
+    "noImplicitReturns": true,
+    "strict": true,
+    "strictFunctionTypes": false,
+    "allowJs": true,
+    "lib": [
+      "esnext",
+      "es6",
+      "dom"
+    ],
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "config",
+    "test",
+  ],
+  "resolve": {
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx"
+    ]
+  },
+  //disables paths
+  // "include": [
+  //   "src/**/*.ts",
+  //   "typings/*.d.ts"
+  // ],
+}

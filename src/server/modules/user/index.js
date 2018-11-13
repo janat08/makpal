@@ -10,22 +10,22 @@ import Feature from '../connector.ts';
 import resources from './locales';
 
 const createContextFunc = async ({ context: { user } }) => ({
-  User,
-  user,
-  auth: {
-    isAuthenticated: !!user,
-    scope: user ? scopes[user.role] : null
-  }
+	User,
+	user,
+	auth: {
+		isAuthenticated: !!user,
+		scope: user ? scopes[user.role] : null
+	}
 });
 
 export default new Feature(access, auth, {
-  schema,
-  createResolversFunc: resolvers,
-  createContextFunc,
-  middleware: app => {
-    if (config.user.auth.password.sendConfirmationEmail) {
-      app.get('/confirmation/:token', confirmMiddleware);
-    }
-  },
-  localization: { ns: 'user', resources }
+	schema,
+	createResolversFunc: resolvers,
+	createContextFunc,
+	middleware: app => {
+		if (config.user.auth.password.sendConfirmationEmail) {
+			app.get('/confirmation/:token', confirmMiddleware);
+		}
+	},
+	localization: { ns: 'user', resources }
 });

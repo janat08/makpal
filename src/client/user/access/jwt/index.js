@@ -13,117 +13,117 @@ import { getItem, setItem, removeItem } from '../../clientStorage.web.js';
 
 
 const setJWTContext = async operation => {
-  const accessToken = await getItem('accessToken');
-  const headers =
+	const accessToken = await getItem('accessToken');
+	const headers =
     ['login', 'refreshTokens'].indexOf(operation.operationName) < 0 && accessToken
-      ? { Authorization: `Bearer ${accessToken}` }
-      : {};
-  operation.setContext(context => ({
-    ...context,
-    headers
-  }));
+    	? { Authorization: `Bearer ${accessToken}` }
+    	: {};
+	operation.setContext(context => ({
+		...context,
+		headers
+	}));
 };
 
 let apolloClient;
 
 const saveTokens = async ({ accessToken, refreshToken }) => {
-  await setItem('accessToken', accessToken);
-  await setItem('refreshToken', refreshToken);
+	await setItem('accessToken', accessToken);
+	await setItem('refreshToken', refreshToken);
 };
 
 const removeTokens = async () => {
-  await removeItem('accessToken');
-  await removeItem('refreshToken');
+	await removeItem('accessToken');
+	await removeItem('refreshToken');
 };
 
 const JWTLink = new ApolloLink((operation, forward) => {
-  return new Observable(observer => {
-    let sub, retrySub;
-    const queue = [];
-    (async () => {
-      // Optimisation: imitate server response with empty user if no JWT token present in local storage
-      if (
-        // !settings.user.auth.access.session.enabled &&
-        !true &&
+	return new Observable(observer => {
+		let sub, retrySub;
+		const queue = [];
+		(async () => {
+			// Optimisation: imitate server response with empty user if no JWT token present in local storage
+			if (
+			// !settings.user.auth.access.session.enabled &&
+				!true &&
         operation.operationName === 'currentUser' &&
         !(await getItem('refreshToken'))
-      ) {
-        observer.next({ data: { currentUser: null } });
-        observer.complete();
-        return;
-      }
+			) {
+				observer.next({ data: { currentUser: null } });
+				observer.complete();
+				return;
+			}
 
-      await setJWTContext(operation);
-      try {
-        sub = forward(operation).subscribe({
-          next: result => {
-            const promise = (async () => {
-              if (operation.operationName === 'login') {
-                if (result.data.login.tokens && !result.data.login.errors) {
-                  const {
-                    data: {
-                      login: {
-                        tokens: { accessToken, refreshToken }
-                      }
-                    }
-                  } = result;
-                  await saveTokens({ accessToken, refreshToken });
-                } else {
-                  await removeTokens();
-                }
-              }
-              observer.next(result);
-            })();
-            queue.push(promise);
-            if (queue.length > 100) {
-              Promise.all(queue).then(() => {
-                queue.length = 0;
-              });
-            }
-          },
-          error: networkError => {
-            (async () => {
-              if (networkError.response && networkError.response.status === 401) {
-                try {
-                  const {
-                    data: {
-                      refreshTokens: { accessToken, refreshToken }
-                    }
-                  } = await apolloClient.mutate({
-                    mutation: REFRESH_TOKENS_MUTATION,
-                    variables: { refreshToken: await getItem('refreshToken') }
-                  });
-                  await saveTokens({ accessToken, refreshToken });
-                  // Retry current operation
-                  await setJWTContext(operation);
-                  retrySub = forward(operation).subscribe(observer);
-                } catch (e) {
-                  // We have received error during refresh - drop tokens and return original request result
-                  await removeTokens();
-                  observer.error(networkError);
-                }
-              } else {
-                observer.error(networkError);
-              }
-            })();
-          },
-          complete: () => {
-            Promise.all(queue).then(() => {
-              queue.length = 0;
-              observer.complete();
-            });
-          }
-        });
-      } catch (e) {
-        observer.error(e);
-      }
-    })();
+			await setJWTContext(operation);
+			try {
+				sub = forward(operation).subscribe({
+					next: result => {
+						const promise = (async () => {
+							if (operation.operationName === 'login') {
+								if (result.data.login.tokens && !result.data.login.errors) {
+									const {
+										data: {
+											login: {
+												tokens: { accessToken, refreshToken }
+											}
+										}
+									} = result;
+									await saveTokens({ accessToken, refreshToken });
+								} else {
+									await removeTokens();
+								}
+							}
+							observer.next(result);
+						})();
+						queue.push(promise);
+						if (queue.length > 100) {
+							Promise.all(queue).then(() => {
+								queue.length = 0;
+							});
+						}
+					},
+					error: networkError => {
+						(async () => {
+							if (networkError.response && networkError.response.status === 401) {
+								try {
+									const {
+										data: {
+											refreshTokens: { accessToken, refreshToken }
+										}
+									} = await apolloClient.mutate({
+										mutation: REFRESH_TOKENS_MUTATION,
+										variables: { refreshToken: await getItem('refreshToken') }
+									});
+									await saveTokens({ accessToken, refreshToken });
+									// Retry current operation
+									await setJWTContext(operation);
+									retrySub = forward(operation).subscribe(observer);
+								} catch (e) {
+									// We have received error during refresh - drop tokens and return original request result
+									await removeTokens();
+									observer.error(networkError);
+								}
+							} else {
+								observer.error(networkError);
+							}
+						})();
+					},
+					complete: () => {
+						Promise.all(queue).then(() => {
+							queue.length = 0;
+							observer.complete();
+						});
+					}
+				});
+			} catch (e) {
+				observer.error(e);
+			}
+		})();
 
-    return () => {
-      if (sub) sub.unsubscribe();
-      if (retrySub) retrySub.unsubscribe();
-    };
-  });
+		return () => {
+			if (sub) sub.unsubscribe();
+			if (retrySub) retrySub.unsubscribe();
+		};
+	});
 });
 
 // TODO: shouldn't be needed at all when React Apollo will allow rendering
@@ -194,5 +194,5 @@ const JWTLink = new ApolloLink((operation, forward) => {
 //     : {}
 // );
 
-export default JWTLink
-export {removeTokens}
+export default JWTLink;
+export {removeTokens};

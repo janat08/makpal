@@ -44,4 +44,4 @@ extend type Mutation {
 
   register(input: RegisterUserInput!): UserPayload!
 }
-`
+`;

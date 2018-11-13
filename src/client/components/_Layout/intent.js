@@ -1,6 +1,6 @@
 export default function (dom){
-    return {
-        logout$: dom.select('.logoutJs').events('click'),
+	return {
+		logout$: dom.select('.logoutJs').events('click'),
 
-    }
+	};
 }

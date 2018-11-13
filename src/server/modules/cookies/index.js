@@ -4,7 +4,7 @@ import cookiesMiddleware from 'universal-cookie-express';
 import Feature from '../connector.ts';
 
 export default new Feature({
-  beforeware: app => {
-    app.use(cookiesMiddleware());
-  }
+	beforeware: app => {
+		app.use(cookiesMiddleware());
+	}
 });

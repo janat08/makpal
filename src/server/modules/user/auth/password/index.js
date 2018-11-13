@@ -4,11 +4,11 @@ import Feature from '../connector';
 import config from 'config';
 
 export default new Feature(
-  config.user.auth.password.enabled
-    ? {
-        schema,
-        createResolversFunc: resolvers
-      }
-    : {}
+	config.user.auth.password.enabled
+		? {
+			schema,
+			createResolversFunc: resolvers
+		}
+		: {}
 );
  
