@@ -161,4 +161,4 @@ type UpdateUserPayload {
   mutation: String!
   node: User!
 }
-`
+`;

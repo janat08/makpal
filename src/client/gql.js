@@ -18,42 +18,42 @@ import UsersQuery from './user/graphql/UsersQuery.graphql';
 import UsersSubscription from './user/graphql/UsersSubscription.graphql'; 
 
 //COUNTER
-import AddServerCounter from './graphql/counter/AddCounter.graphql'
+import AddServerCounter from './graphql/counter/AddCounter.graphql';
 
 import gql from 'graphql-tag';  
 
 
-var UserProfiled = `${User}${Profile}`
+var UserProfiled = `${User}${Profile}`;
 const LOGOUT = gql`
   mutation logout { 
     logout
   }
-`
+`;
 var Counter = gql`
 query serverCounterQuery { 
   serverCounter {
     amount
   }
-}`
+}`;
 
 // export const login = gql`${LOGIN}${UserProfiled}`
  
 export const COUNTER  = Counter,
-      // // USERS
-      LOGIN = gql`${Login}${UserProfiled}`,
-      CURRENTUSER = gql`${CurrentUserQuery}${UserProfiled}`,
-      REGISTER = gql`${Register}${UserProfiled}`,
-      RESETPASSWORD = gql`${ResetPassword}`,
-      ADDUSER = gql`${AddUser}${UserProfiled}`,
-      DELETEUSER = gql`${DeleteUser}`,
-      EDITUSER = gql`${EditUser}${UserProfiled}`,
-      FORGOTPASSWORD = gql`${ForgotPassword}`,
-      // updateFilter = gql`${UPDATEFILTER}${USERSSTATE}`,
-      // updateOrderBy = gql`${UPDATEORDERBY}${USERSSTATE}`,
-      USERQUERY = gql`${UserQuery}${UserProfiled}`,
-      USERSQUERY = gql`${UsersQuery}${UserProfiled}`,
-      // usersStateQuery = gql`${USERSSTATE}${USERSSTATEQUERY}`,
-      USERSSUBSCRIPTION = gql`${UsersSubscription}${UserProfiled}`,
-      // // COUNTER
-      ADDSERVERCOUNTER = gql`${AddServerCounter}`
-export {LOGOUT}
+	// // USERS
+	LOGIN = gql`${Login}${UserProfiled}`,
+	CURRENTUSER = gql`${CurrentUserQuery}${UserProfiled}`,
+	REGISTER = gql`${Register}${UserProfiled}`,
+	RESETPASSWORD = gql`${ResetPassword}`,
+	ADDUSER = gql`${AddUser}${UserProfiled}`,
+	DELETEUSER = gql`${DeleteUser}`,
+	EDITUSER = gql`${EditUser}${UserProfiled}`,
+	FORGOTPASSWORD = gql`${ForgotPassword}`,
+	// updateFilter = gql`${UPDATEFILTER}${USERSSTATE}`,
+	// updateOrderBy = gql`${UPDATEORDERBY}${USERSSTATE}`,
+	USERQUERY = gql`${UserQuery}${UserProfiled}`,
+	USERSQUERY = gql`${UsersQuery}${UserProfiled}`,
+	// usersStateQuery = gql`${USERSSTATE}${USERSSTATEQUERY}`,
+	USERSSUBSCRIPTION = gql`${UsersSubscription}${UserProfiled}`,
+	// // COUNTER
+	ADDSERVERCOUNTER = gql`${AddServerCounter}`;
+export {LOGOUT};

@@ -1,30 +1,30 @@
 import {run} from '@cycle/run';
 import storageDriver from '@cycle/storage';
-import storageify from "cycle-storageify";
+import storageify from 'cycle-storageify';
 import Layout from './components/_Layout/Layout.js';
 import switchPath from 'switch-path';
 import Cookies from 'universal-cookie';
-import createApolloClient from '/../common/createApolloClient';
+import createApolloClient from '~/common/createApolloClient';
 import { apiUrl } from './net';
 // import modules from './modules/index';
-import link from './user/access/index'
+import link from './user/access/index';
 import gql from 'graphql-tag';  
-import xs from "xstream"
-import {COUNTER, ADDCOUNTER} from './gql.js'
+import xs from 'xstream';
+import {COUNTER, ADDCOUNTER} from './gql.js';
 
 //drivers
 import {makeCookieDriver} from 'cyclejs-cookie';
 import {routerify} from 'cyclic-router';
-import {makeApolloDriver} from './drivers/cycleApollo.js'
+import {makeApolloDriver} from './drivers/cycleApollo.js';
 import {withState} from '@cycle/state';
 import {makeDOMDriver} from '@cycle/dom';
-import {captureClicks, makeHistoryDriver} from '@cycle/history'
+import {captureClicks, makeHistoryDriver} from '@cycle/history';
 
 const client = createApolloClient({
-  apiUrl, 
-  links: link,
-  // connectionParams: modules.connectionParams, //for uploading images
-  // clientResolvers: modules.resolvers
+	apiUrl, 
+	links: link,
+	// connectionParams: modules.connectionParams, //for uploading images
+	// clientResolvers: modules.resolvers
 });
 
 //////////////
@@ -33,13 +33,13 @@ const client = createApolloClient({
 const main = routerify(withState(Layout), switchPath, {omitHistory: false});
 
 run(main, {
-  DOM: makeDOMDriver('#app'),
-  history: captureClicks(makeHistoryDriver()),
-  apollo: makeApolloDriver (client),
-  cookie: makeCookieDriver(),
+	DOM: makeDOMDriver('#app'),
+	history: captureClicks(makeHistoryDriver()),
+	apollo: makeApolloDriver (client),
+	cookie: makeCookieDriver(),
 }); 
 
-export default {main}
+export default {main};
 
 /////////////////////SERVICE WORKER CODE
 // if('serviceWorker' in navigator) {
