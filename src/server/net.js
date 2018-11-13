@@ -1,7 +1,7 @@
 import url from 'url';
-import config from 'config'
+import config from 'config';
 
-var {port, API_URL } = config
+var {port, API_URL } = config;
 
 export const serverPort = process.env.PORT || port;
 export const isApiExternal = !!url.parse(API_URL).protocol;

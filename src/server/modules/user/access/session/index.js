@@ -8,58 +8,58 @@ import User from '../../sql';
 import config from 'config';
 
 const grant = async (user, req) => {
-  const session = {
-    ...req.session,
-    userId: user.id
-  };
+	const session = {
+		...req.session,
+		userId: user.id
+	};
 
-  req.session = writeSession(req, session);
+	req.session = writeSession(req, session);
 };
 
 const getCurrentUser = async ({ req }) => {
-  if (req && req.session.userId) {
-    return await User.getUser(req.session.userId);
-  }
+	if (req && req.session.userId) {
+		return await User.getUser(req.session.userId);
+	}
 };
 
 const attachSession = req => {
-  if (req) {
-    req.session = readSession(req);
-    if (!req.session) {
-      req.session = createSession(req);
-    } else {
-      if (!isApiExternal && req.path === "localhost:4000") {
-        if (req.universalCookies.get('x-token') !== req.session.csrfToken) {
-          req.session = createSession(req);
-          throw new Error('CSRF token validation failed');
-        }
-      }
-    }
-  }
+	if (req) {
+		req.session = readSession(req);
+		if (!req.session) {
+			req.session = createSession(req);
+		} else {
+			if (!isApiExternal && req.path === 'localhost:4000') {
+				if (req.universalCookies.get('x-token') !== req.session.csrfToken) {
+					req.session = createSession(req);
+					throw new Error('CSRF token validation failed');
+				}
+			}
+		}
+	}
 };
 
 const createContextFunc = async ({ req, connectionParams, webSocket, context }) => {
-  attachSession(req);
-  const user = context.user || (await getCurrentUser({ req, connectionParams, webSocket }));
-  const auth = {
-    isAuthenticated: !!user,
-    scope: user ? scopes[user.role] : null
-  };
+	attachSession(req);
+	const user = context.user || (await getCurrentUser({ req, connectionParams, webSocket }));
+	const auth = {
+		isAuthenticated: !!user,
+		scope: user ? scopes[user.role] : null
+	};
 
-  return {
-    User,
-    user,
-    auth
-  };
+	return {
+		User,
+		user,
+		auth
+	};
 };
 
 export default new Feature(
-  config.user.auth.access.session.enabled
-    ? {
-        grant,
-        schema,
-        createResolversFunc: resolvers,
-        createContextFunc
-      }
-    : {}
+	config.user.auth.access.session.enabled
+		? {
+			grant,
+			schema,
+			createResolversFunc: resolvers,
+			createContextFunc
+		}
+		: {}
 );

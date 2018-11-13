@@ -6,9 +6,9 @@ import LOGOUT from './graphql/Logout.graphql';
 const logout = client => client.mutate({ mutation: LOGOUT });
 
 export default new Feature(
-  settings.user.auth.access.session.enabled
-    ? {
-        logout
-      }
-    : {}
+	settings.user.auth.access.session.enabled
+		? {
+			logout
+		}
+		: {}
 );
