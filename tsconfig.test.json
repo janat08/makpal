@@ -1,0 +1,22 @@
+//the rootDir/outDir are falsy, and in fact client should be bundled separately
+//the rootDir must encompass all code such as common folder, therefore
+//separate client config extending this one is deleted
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+	  "lib": [
+		"esnext",
+		"es6",
+		"dom"
+	  ],
+	},
+	"include": [
+	  "src/**/*.spec.ts",
+	  "src/**/*.test.ts",
+	],
+	//disables paths
+	// "include": [
+	//   "src/**/*.ts",
+	//   "typings/*.d.ts"
+	// ],
+  }

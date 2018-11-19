@@ -1,4 +1,4 @@
-import {run} from '@cycle/run';
+import { run } from '@cycle/run';
 import storageDriver from '@cycle/storage';
 import storageify from 'cycle-storageify';
 import Layout from './components/_Layout/Layout.js';
@@ -8,38 +8,38 @@ import createApolloClient from '~/common/createApolloClient';
 import { apiUrl } from './net';
 // import modules from './modules/index';
 import link from './user/access/index';
-import gql from 'graphql-tag';  
+import gql from 'graphql-tag';
 import xs from 'xstream';
-import {COUNTER, ADDCOUNTER} from './gql.js';
+import { COUNTER, ADDCOUNTER } from './gql.js';
+import Snabbdom from 'snabbdom-pragma';
 
 //drivers
-import {makeCookieDriver} from 'cyclejs-cookie';
-import {routerify} from 'cyclic-router';
-import {makeApolloDriver} from './drivers/cycleApollo.js';
-import {withState} from '@cycle/state';
-import {makeDOMDriver} from '@cycle/dom';
-import {captureClicks, makeHistoryDriver} from '@cycle/history';
+import { makeCookieDriver } from 'cyclejs-cookie';
+import { routerify } from 'cyclic-router';
+import { makeApolloDriver } from './drivers/cycleApollo/cycleApollo.js';
+import { withState } from '@cycle/state';
+import { makeDOMDriver } from '@cycle/dom';
+import { captureClicks, makeHistoryDriver } from '@cycle/history';
 
 const client = createApolloClient({
-	apiUrl, 
-	links: link,
+	apiUrl,
+	links: link
 	// connectionParams: modules.connectionParams, //for uploading images
 	// clientResolvers: modules.resolvers
 });
 
 //////////////
 
-
-const main = routerify(withState(Layout), switchPath, {omitHistory: false});
+const main = routerify(withState(Layout), switchPath, { omitHistory: false });
 
 run(main, {
 	DOM: makeDOMDriver('#app'),
 	history: captureClicks(makeHistoryDriver()),
-	apollo: makeApolloDriver (client),
-	cookie: makeCookieDriver(),
-}); 
+	apollo: makeApolloDriver(client),
+	cookie: makeCookieDriver()
+});
 
-export default {main};
+export default { main };
 
 /////////////////////SERVICE WORKER CODE
 // if('serviceWorker' in navigator) {
@@ -47,7 +47,7 @@ export default {main};
 //            .register('./sw.js')
 //            .then(function() { console.log('Service Worker Registered'); })
 //            .catch(err=>console.log(err));
-// } 
+// }
 
 // var deferredPrompt
 // var registration

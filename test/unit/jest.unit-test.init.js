@@ -10,10 +10,13 @@ import React from 'react';
 // configure({ adapter: new Adapter() });
 
 //expose common functions used in tests
-//yes, globals are bad, but; 
+//yes, globals are bad, but;
 // a) this is only in our tests, not production code
 // b) these would be imported in every test anyway making them implicit globals
 global.React = React;
 global.shallow = shallow;
 global.render = render;
 global.mount = mount;
+
+//test
+jest.setTimeout(2);

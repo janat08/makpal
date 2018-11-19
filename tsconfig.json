@@ -30,7 +30,9 @@
     "node_modules",
     "dist",
     "config",
-    "test",
+	"test",
+	"src/**/*.spec.ts",
+	"src/**/*.test.ts",
   ],
   "resolve": {
     "extensions": [

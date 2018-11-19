@@ -15,24 +15,22 @@ import Home from '../Home/Home.jsx';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.js';
 import Register from '../Register/Register.js';
 
-import { LOGIN, COUNTER, CURRENTUSER, LOGOUT } from '/gql.js';
-
+import { LOGIN, COUNTER, CURRENTUSER, LOGOUT } from '../../gql.js';
 
 const defaultState = {
 	//used to tell how many times back to redirect
 };
 
-
 export default function Layout(sources) {
-	const {apollo, DOM, router, cookie, state, history} = sources;
+	const { apollo, DOM, router, cookie, state, history } = sources;
 	window.apollo = apollo.client;
 	var actions = intent(DOM);
-	var logout$ = actions.logout$.map(x=>{
+	var logout$ = actions.logout$.map(x => {
 		apollo.client.resetStore();
 		console.log('logging');
 		return {
 			mutation: LOGOUT,
-			category: 'logout',
+			category: 'logout'
 		};
 	});
 
@@ -43,7 +41,7 @@ export default function Layout(sources) {
 		category: 'currentUser'
 	});
 	//  && x.result.id?true:false
-	var hasLoggedIn$ = apollo.select('currentUser').flatten().map(x=>x.result && x );
+	var hasLoggedIn$ = apollo.select('currentUser').map(x => x.result && x);
 	// hasLoggedIn$.map(x=>{
 	//   console.log(apollo, "apollo")
 	//   apollo.client.cache.reset()
@@ -59,12 +57,20 @@ export default function Layout(sources) {
 		'/login': { '/': Login },
 		'/forgotPassword': ForgotPassword,
 		'/register': Register,
-		'*': function () { return { DOM: xs.of((<div><h1> 404</h1> <h4> doesn't exist</h4></div>)) }; }
+		'*': function() {
+			return {
+				DOM: xs.of(
+					<div>
+						<h1> 404</h1> <h4> doesn't exist</h4>
+					</div>
+				)
+			};
+		}
 	});
 
-	const initReducer$ = xs.of(prevState => (
-		prevState === undefined ? defaultState : prevState
-	));
+	const initReducer$ = xs.of(
+		prevState => (prevState === undefined ? defaultState : prevState)
+	);
 
 	const history$ = history;
 
@@ -75,42 +81,45 @@ export default function Layout(sources) {
 		if (filterAuthRoutes(true, 'path')({ path })) {
 			return isolate(value, 'auth')(newSources);
 		}
-		// return isolate(value, authRedirectBackLens("page"))(newSources);   
+		// return isolate(value, authRedirectBackLens("page"))(newSources);
 		return isolate(value, `${path}`)(newSources);
 	});
 
 	function filterAuthRoutes(inOrOut = true, key) {
-		return (item) => {
+		return item => {
 			switch (item[key]) {
 			case '/login':
 			case '/forgotPassword':
 			case '/register':
 				return inOrOut;
 				//simply for experimenting, as cookied will be used instead for this
-				// return isolate(value, authRedirectBackLens("page"))(newSources);   
+				// return isolate(value, authRedirectBackLens("page"))(newSources);
 			default:
 				return !inOrOut;
 			}
-
 		};
 	}
 
 	//tracks last route
-	const authRedirectBack$ = routes$.filter(filterAuthRoutes(false, 'path')).map(({ path }) => {
-		return lastRouteCookie(path);
-	});
+	const authRedirectBack$ = routes$
+		.filter(filterAuthRoutes(false, 'path'))
+		.map(({ path }) => {
+			return lastRouteCookie(path);
+		});
 
 	function lastRouteCookie(val) {
 		return {
 			key: 'lastRouteOutsideAuth',
 			value: val,
 			settings: {
-				expires: 3, // expiring in 30 days
+				expires: 3 // expiring in 30 days
 			}
 		};
 	}
-	var lastRouteCookie$ = xs.merge(xs.of(lastRouteCookie('/')), authRedirectBack$);
-
+	var lastRouteCookie$ = xs.merge(
+		xs.of(lastRouteCookie('/')),
+		authRedirectBack$
+	);
 
 	const PS = extractSinks(page$, ['DOM', 'state', 'router', 'apollo']);
 	const vdom$ = view(PS.DOM, history$, hasLoggedIn$);
