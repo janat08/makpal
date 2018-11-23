@@ -1,4 +1,3 @@
-
 export default `type FieldError {
   field: String!
   message: String!

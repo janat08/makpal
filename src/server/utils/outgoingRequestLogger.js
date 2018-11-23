@@ -2,26 +2,30 @@
  Allows logging of all OUTGOING http requests from the node instance
  Can be really useful when debugging
 */
-const {config} = global
-import globalLog from 'global-request-logger';
-import getLog from './logger';
+const { config } = global;
+import globalLog from "global-request-logger";
+import getLog from "./logger";
 
+const log = getLog("OUTGOING");
 
-const log = getLog('OUTGOING');
-
-function logNetworkData(request, response){
-	let url = request.protocol + '//' + request.hostname + request.path + (request.query ? '?'+ request.query : '');
-	if(response.statusCode >= 400){
+function logNetworkData(request, response) {
+	let url =
+		request.protocol +
+		"//" +
+		request.hostname +
+		request.path +
+		(request.query ? "?" + request.query : "");
+	if (response.statusCode >= 400) {
 		log.error(request.method, url, response.statusCode);
-		log.error('Request=', request);
-		log.error('Response=', response);
-	}else{
+		log.error("Request=", request);
+		log.error("Response=", response);
+	} else {
 		log.info(request.method, url, response.statusCode);
 	}
 }
 
-if(config.logOutgoingHttpRequests){
+if (config.logOutgoingHttpRequests) {
 	globalLog.initialize();
-	globalLog.on('success', logNetworkData);
-	globalLog.on('error', logNetworkData);
+	globalLog.on("success", logNetworkData);
+	globalLog.on("error", logNetworkData);
 }

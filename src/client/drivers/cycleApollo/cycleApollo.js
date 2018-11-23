@@ -1,7 +1,7 @@
-import xs from 'xstream';
-import { adapt } from '@cycle/run/lib/adapt';
+import xs from "xstream";
+import { adapt } from "@cycle/run/lib/adapt";
 
-const responseFilter = category => response$ => {
+const responseFilter = (category) => (response$) => {
 	return (
 		response$.options &&
 		(response$.options.category === category ||
@@ -15,7 +15,7 @@ const responseFilter = category => response$ => {
 // select by operation name
 // observer and original object added into response, while first data entry got remapped under result
 // returns flattened results under driver property derived from template option
-const producer = observable => {
+const producer = (observable) => {
 	let subscription;
 	return {
 		start(listener) {
@@ -33,13 +33,13 @@ const producer = observable => {
 
 export function appendGraphOperationNameToOptions(options) {
 	var operationType = Object.keys(options).filter(
-		x => x == 'query' || x == 'subscription' || x == 'mutation'
+		(x) => x == "query" || x == "subscription" || x == "mutation"
 	)[0];
 	var operationNameField = options[operationType].definitions[0].name;
 	var operationName = operationNameField ? operationNameField.value : false;
 	if (!options || (!options.category && !operationName)) {
 		throw new Error(
-			'Neither category, nor operation name has been defined, so .select() won\'t trigger. Perhaps something went wrong'
+			"Neither category, nor operation name has been defined, so .select() won't trigger. Perhaps something went wrong"
 		);
 	}
 	return Object.assign(options, { operationName: operationName });
@@ -51,7 +51,7 @@ export function makeApolloDriver(client, template = []) {
 		const observer = options.subscription
 			? client.subscribe(options)
 			: client.watchQuery(options);
-		const response$ = xs.create(producer(observer)).map(results => {
+		const response$ = xs.create(producer(observer)).map((results) => {
 			const key = Object.keys(results.data)[0];
 			return Object.assign(
 				results,
@@ -65,23 +65,26 @@ export function makeApolloDriver(client, template = []) {
 
 	return function apolloDriver(input$) {
 		const queryResponse$ = input$
-			.filter(input => input.query && !input.subscription)
+			.filter((input) => input.query && !input.subscription)
 			.map(apolloObserver);
 
-		const mutation$ = input$.filter(input => input.mutation).map(options => {
-			const response$ = xs.from(client.mutate(options));
-			response$.options = appendGraphOperationNameToOptions(options);
-			return adapt(response$);
-		});
+		const mutation$ = input$
+			.filter((input) => input.mutation)
+			.map((options) => {
+				const response$ = xs.from(client.mutate(options));
+				response$.options = appendGraphOperationNameToOptions(options);
+				return adapt(response$);
+			});
 
 		const subscription$ = input$
-			.filter(input => input.subscription)
+			.filter((input) => input.subscription)
 			.map(apolloObserver);
 
-		const clientOperations$ = input$.filter(input => input.op).map(x => {
-			
-			return xs.from(client[x.op](x.param));
-		});
+		const clientOperations$ = input$
+			.filter((input) => input.op)
+			.map((x) => {
+				return xs.from(client[x.op](x.param));
+			});
 
 		const response$$ = xs.merge(
 			queryResponse$,
@@ -92,7 +95,7 @@ export function makeApolloDriver(client, template = []) {
 
 		response$$.subscribe({});
 
-		const select = category => {
+		const select = (category) => {
 			return category
 				? adapt(response$$.filter(responseFilter(category)).flatten())
 				: adapt(response$$);

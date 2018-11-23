@@ -1,10 +1,14 @@
-import jwt from 'jsonwebtoken';
-import createTokens from './createTokens';
-const {config} = global
+import jwt from "jsonwebtoken";
+import createTokens from "./createTokens";
+const { config } = global;
 
 export default () => ({
 	Mutation: {
-		async refreshTokens(obj, { refreshToken: inputRefreshToken }, { User, res }) {
+		async refreshTokens(
+			obj,
+			{ refreshToken: inputRefreshToken },
+			{ User, res }
+		) {
 			const { user: id } = jwt.decode(inputRefreshToken);
 
 			const user = await User.getUserWithPassword(id);
@@ -17,7 +21,11 @@ export default () => ({
 				throw e;
 			}
 
-			const [accessToken, refreshToken] = await createTokens(user, config.user.secret, refreshSecret);
+			const [accessToken, refreshToken] = await createTokens(
+				user,
+				config.user.secret,
+				refreshSecret
+			);
 
 			return {
 				accessToken,

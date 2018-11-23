@@ -1,10 +1,10 @@
-import { ApolloServer, AuthenticationError } from 'apollo-server-express';
-import { formatResponse } from 'apollo-logger';
-import 'isomorphic-fetch';
+import { ApolloServer, AuthenticationError } from "apollo-server-express";
+import { formatResponse } from "apollo-logger";
+import "isomorphic-fetch";
 
-import modules from './modules/index.ts';
-import schema from './api/schema.ts';
-import log from '../common/log';
+import modules from "./modules/index.ts";
+import schema from "./api/schema.ts";
+import log from "../common/log";
 
 export default () => {
 	return new ApolloServer({
@@ -14,27 +14,36 @@ export default () => {
 			req,
 			res
 		}),
-		formatError: error => {
-			return error.message === 'Not Authenticated!'
+		formatError: (error) => {
+			return error.message === "Not Authenticated!"
 				? new AuthenticationError(error)
 				: error;
 		},
 		formatResponse: (response, options) =>
 			config.app.logging.apolloLogging
-				? formatResponse({ logger: log.debug.bind(log) }, response, options)
+				? formatResponse(
+						{ logger: log.debug.bind(log) },
+						response,
+						options
+				  )
 				: response,
 		tracing: !!config.engine.apiKey,
 		cacheControl: !!config.engine.apiKey,
 		engine: config.engine.apiKey
 			? {
-				apiKey: config.engine.apiKey
+					apiKey: config.engine.apiKey
 			  }
 			: false,
 		playground: {
 			tabs: [
 				{
-					endpoint: '/graphql',
-					query: '{\n' + '  serverCounter {\n' + '    amount\n' + '  }\n' + '}'
+					endpoint: "/graphql",
+					query:
+						"{\n" +
+						"  serverCounter {\n" +
+						"    amount\n" +
+						"  }\n" +
+						"}"
 				}
 			]
 		}

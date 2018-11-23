@@ -12,7 +12,7 @@ export default class FieldError {
 	}
 
 	getErrors() {
-		return Object.keys(this.errors).map(field => ({
+		return Object.keys(this.errors).map((field) => ({
 			field,
 			message: this.errors[field]
 		}));

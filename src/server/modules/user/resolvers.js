@@ -1,25 +1,28 @@
 /*eslint-disable no-unused-vars*/
-import { pick } from 'lodash';
-import jwt from 'jsonwebtoken';
-import withAuth from 'graphql-auth';
-import { withFilter } from 'graphql-subscriptions';
+import { pick } from "lodash";
+import jwt from "jsonwebtoken";
+import withAuth from "graphql-auth";
+import { withFilter } from "graphql-subscriptions";
 
-import FieldError from '../../../common/FieldError';
+import FieldError from "../../../common/FieldError";
 const { config } = global;
 
-const USERS_SUBSCRIPTION = 'users_subscription';
+const USERS_SUBSCRIPTION = "users_subscription";
 
-export default pubsub => ({
+export default (pubsub) => ({
 	Query: {
-		users: withAuth(['user:view:all'], (obj, { orderBy, filter }, { User }) => {
-			return User.getUsers(orderBy, filter);
-		}),
+		users: withAuth(
+			["user:view:all"],
+			(obj, { orderBy, filter }, { User }) => {
+				return User.getUsers(orderBy, filter);
+			}
+		),
 		user: withAuth(
 			() => {
-				return ['user:view:self'];
+				return ["user:view:self"];
 			},
 			(obj, { id }, { user, User, req: { t } }) => {
-				if (user.id === id || user.role === 'admin') {
+				if (user.id === id || user.role === "admin") {
 					try {
 						return { user: User.getUser(id) };
 					} catch (e) {
@@ -28,7 +31,7 @@ export default pubsub => ({
 				}
 
 				const e = new FieldError();
-				e.setError('user', t('user:accessDenied'));
+				e.setError("user", t("user:accessDenied"));
 				return { user: null, errors: e.getErrors() };
 			}
 		),
@@ -67,29 +70,38 @@ export default pubsub => ({
 		addUser: withAuth(
 			(obj, args, { User, user }) => {
 				return user.id !== args.input.id
-					? ['user:create']
-					: ['user:create:self'];
+					? ["user:create"]
+					: ["user:create:self"];
 			},
 			async (
 				obj,
 				{ input },
-				{ User, user, req: { universalCookies }, mailer, req, req: { t } }
+				{
+					User,
+					user,
+					req: { universalCookies },
+					mailer,
+					req,
+					req: { t }
+				}
 			) => {
 				try {
 					const e = new FieldError();
 
-					const userExists = await User.getUserByUsername(input.username);
+					const userExists = await User.getUserByUsername(
+						input.username
+					);
 					if (userExists) {
-						e.setError('username', t('user:usernameIsExisted'));
+						e.setError("username", t("user:usernameIsExisted"));
 					}
 
 					const emailExists = await User.getUserByEmail(input.email);
 					if (emailExists) {
-						e.setError('email', t('user:emailIsExisted'));
+						e.setError("email", t("user:emailIsExisted"));
 					}
 
 					if (input.password.length < 8) {
-						e.setError('password', t('user:passwordLength'));
+						e.setError("password", t("user:passwordLength"));
 					}
 
 					e.throwIf();
@@ -98,7 +110,10 @@ export default pubsub => ({
 					await User.editUserProfile({ id: createdUserId, ...input });
 
 					if (config.user.auth.certificate.enabled) {
-						await User.editAuthCertificate({ id: createdUserId, ...input });
+						await User.editAuthCertificate({
+							id: createdUserId,
+							...input
+						});
 					}
 
 					const user = await User.getUser(createdUserId);
@@ -111,20 +126,24 @@ export default pubsub => ({
 					) {
 						// async email
 						jwt.sign(
-							{ user: pick(user, 'id') },
+							{ user: pick(user, "id") },
 							config.user.secret,
-							{ expiresIn: '1d' },
+							{ expiresIn: "1d" },
 							(err, emailToken) => {
-								const encodedToken = Buffer.from(emailToken).toString('base64');
+								const encodedToken = Buffer.from(
+									emailToken
+								).toString("base64");
 								const url = `${__WEBSITE_URL__}/confirmation/${encodedToken}`;
 								mailer.sendMail({
-									from: `${config.app.name} <${process.env.EMAIL_USER}>`,
+									from: `${config.app.name} <${
+										process.env.EMAIL_USER
+									}>`,
 									to: user.email,
-									subject: 'Your account has been created',
+									subject: "Your account has been created",
 									html: `<p>Hi, ${user.username}!</p>
                 <p>Welcome to ${
-	config.app.name
-	}. Please click the following link to confirm your email:</p>
+					config.app.name
+				}. Please click the following link to confirm your email:</p>
                 <p><a href="${url}">${url}</a></p>
                 <p>Below are your login information</p>
                 <p>Your email is: ${user.email}</p>
@@ -136,7 +155,7 @@ export default pubsub => ({
 
 					pubsub.publish(USERS_SUBSCRIPTION, {
 						usersUpdated: {
-							mutation: 'CREATED',
+							mutation: "CREATED",
 							node: user
 						}
 					});
@@ -150,27 +169,29 @@ export default pubsub => ({
 		editUser: withAuth(
 			(obj, args, { User, user }) => {
 				return user.id !== args.input.id
-					? ['user:update']
-					: ['user:update:self'];
+					? ["user:update"]
+					: ["user:update:self"];
 			},
 			async (obj, { input }, { User, user, req: { t } }) => {
-				const isAdmin = () => user.role === 'admin';
+				const isAdmin = () => user.role === "admin";
 				const isSelf = () => user.id === input.id;
 				try {
 					const e = new FieldError();
-					const userExists = await User.getUserByUsername(input.username);
+					const userExists = await User.getUserByUsername(
+						input.username
+					);
 
 					if (userExists && userExists.id !== input.id) {
-						e.setError('username', t('user:usernameIsExisted'));
+						e.setError("username", t("user:usernameIsExisted"));
 					}
 
 					const emailExists = await User.getUserByEmail(input.email);
 					if (emailExists && emailExists.id !== input.id) {
-						e.setError('email', t('user:emailIsExisted'));
+						e.setError("email", t("user:emailIsExisted"));
 					}
 
 					if (input.password && input.password.length < 8) {
-						e.setError('password', t('user:passwordLength'));
+						e.setError("password", t("user:passwordLength"));
 					}
 
 					e.throwIf();
@@ -178,7 +199,12 @@ export default pubsub => ({
 					const userInfo =
 						!isSelf() && isAdmin()
 							? input
-							: pick(input, ['id', 'username', 'email', 'password']);
+							: pick(input, [
+									"id",
+									"username",
+									"email",
+									"password"
+							  ]);
 
 					await User.editUser(userInfo);
 					await User.editUserProfile(input);
@@ -189,7 +215,7 @@ export default pubsub => ({
 					const user = await User.getUser(input.id);
 					pubsub.publish(USERS_SUBSCRIPTION, {
 						usersUpdated: {
-							mutation: 'UPDATED',
+							mutation: "UPDATED",
 							node: user
 						}
 					});
@@ -202,14 +228,16 @@ export default pubsub => ({
 		),
 		deleteUser: withAuth(
 			(obj, args, { User, user }) => {
-				return user.id !== args.id ? ['user:delete'] : ['user:delete:self'];
+				return user.id !== args.id
+					? ["user:delete"]
+					: ["user:delete:self"];
 			},
 			async (obj, { id }, context) => {
 				const {
 					User,
 					req: { t }
 				} = context;
-				const isAdmin = () => context.user.role === 'admin';
+				const isAdmin = () => context.user.role === "admin";
 				const isSelf = () => context.user.id === id;
 
 				try {
@@ -217,28 +245,33 @@ export default pubsub => ({
 					const user = await User.getUser(id);
 
 					if (!user) {
-						e.setError('delete', t('user:userIsNotExisted'));
+						e.setError("delete", t("user:userIsNotExisted"));
 						e.throwIf();
 					}
 
 					if (isSelf()) {
-						e.setError('delete', t('user:userCannotDeleteYourself'));
+						e.setError(
+							"delete",
+							t("user:userCannotDeleteYourself")
+						);
 						e.throwIf();
 					}
 
 					const isDeleted =
-						!isSelf() && isAdmin() ? await User.deleteUser(id) : false;
+						!isSelf() && isAdmin()
+							? await User.deleteUser(id)
+							: false;
 
 					if (isDeleted) {
 						pubsub.publish(USERS_SUBSCRIPTION, {
 							usersUpdated: {
-								mutation: 'DELETED',
+								mutation: "DELETED",
 								node: user
 							}
 						});
 						return { user };
 					} else {
-						e.setError('delete', t('user:userCouldNotDeleted'));
+						e.setError("delete", t("user:userCouldNotDeleted"));
 						e.throwIf();
 					}
 				} catch (e) {
@@ -261,16 +294,20 @@ export default pubsub => ({
 						!!node.isActive === isActive &&
 						(!role || role === node.role) &&
 						(!searchText ||
-							node.username.toUpperCase().includes(searchText.toUpperCase()) ||
-							node.email.toUpperCase().includes(searchText.toUpperCase()));
+							node.username
+								.toUpperCase()
+								.includes(searchText.toUpperCase()) ||
+							node.email
+								.toUpperCase()
+								.includes(searchText.toUpperCase()));
 
 					switch (mutation) {
-					case 'DELETED':
-						return true;
-					case 'CREATED':
-						return checkByFilter;
-					case 'UPDATED':
-						return !checkByFilter;
+						case "DELETED":
+							return true;
+						case "CREATED":
+							return checkByFilter;
+						case "UPDATED":
+							return !checkByFilter;
 					}
 				}
 			)

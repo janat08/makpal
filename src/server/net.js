@@ -1,4 +1,4 @@
-import url from 'url';
+import url from "url";
 
 var { port, __API_URL__ } = global.config;
 
