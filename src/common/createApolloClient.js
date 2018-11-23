@@ -51,8 +51,8 @@ const createApolloClient = ({
 	const queryLink = createNetLink
 		? createNetLink(apiUrl)
 		: new BatchHttpLink({
-			uri: apiUrl,
-			credentials: "include"
+				uri: apiUrl,
+				credentials: "include"
 		  });
 
 	let apiLink = queryLink;
@@ -70,8 +70,8 @@ const createApolloClient = ({
 			typeof global !== "undefined"
 				? global
 				: typeof window !== "undefined"
-					? window
-					: {};
+				? window
+				: {};
 		const webSocketImpl = globalVar.WebSocket || globalVar.MozWebSocket;
 
 		const wsClient = new SubscriptionClient(

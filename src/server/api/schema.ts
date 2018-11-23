@@ -1,8 +1,8 @@
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from "graphql-tools";
 
-import rootSchemaDef from './rootSchema.js';
-import modules from '../modules/index.ts'; 
-import pubsub from './pubsub.ts';
+import rootSchemaDef from "./rootSchema.js";
+import modules from "../modules/index.ts";
+import pubsub from "./pubsub.ts";
 
 // console.log(modules.schemas)
 // import gql from 'graphql-tag';
@@ -12,12 +12,12 @@ import pubsub from './pubsub.ts';
 //   # Logout user
 //   logout: String
 // }
-// ` 
+// `
 
 // [rootSchemaDef].concat(modules.schemas)
-const executableSchema = makeExecutableSchema({ 
-  typeDefs: rootSchemaDef,
-  resolvers: modules.createResolvers(pubsub)
+const executableSchema = makeExecutableSchema({
+	typeDefs: rootSchemaDef,
+	resolvers: modules.createResolvers(pubsub)
 });
 
-export default executableSchema; 
+export default executableSchema;

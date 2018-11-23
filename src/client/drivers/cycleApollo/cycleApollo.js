@@ -77,7 +77,9 @@ export function makeApolloDriver(client, template = []) {
 			});
 
 		const subscription$ = input$
-			.filter((input) => input.subscription)
+			.filter((input) => {
+				return input.subscription;
+			})
 			.map(apolloObserver);
 
 		const clientOperations$ = input$
