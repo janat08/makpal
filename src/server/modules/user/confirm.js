@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from './sql';
-import config from 'config';
+const { config } = global;
 
 export default async (req, res) => {
 	try {

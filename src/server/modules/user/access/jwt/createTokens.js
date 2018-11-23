@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { pick } from 'lodash';
 
-import config from 'config';
+const {config} = global
 
 const createTokens = async (user, secret, refreshSecret) => {
 	let tokenUser = pick(user, ['id', 'username', 'role']);

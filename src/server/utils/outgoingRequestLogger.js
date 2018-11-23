@@ -2,7 +2,7 @@
  Allows logging of all OUTGOING http requests from the node instance
  Can be really useful when debugging
 */
-import config from 'config';
+const {config} = global
 import globalLog from 'global-request-logger';
 import getLog from './logger';
 

@@ -6,7 +6,7 @@ files (see config/default.js) so they can be easily configured per environment.
 import path from 'path';
 import winston, {config as winstonConfig} from 'winston';
 import callerCallsite from 'caller-callsite';
-import config from 'config';
+const {config} = global
 import util from 'util';
 
 import colors from './terminalColors';

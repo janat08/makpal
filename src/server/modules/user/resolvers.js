@@ -5,7 +5,7 @@ import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 
 import FieldError from '../../../common/FieldError';
-import config from 'config';
+const { config } = global;
 
 const USERS_SUBSCRIPTION = 'users_subscription';
 
@@ -66,9 +66,15 @@ export default pubsub => ({
 	Mutation: {
 		addUser: withAuth(
 			(obj, args, { User, user }) => {
-				return user.id !== args.input.id ? ['user:create'] : ['user:create:self'];
+				return user.id !== args.input.id
+					? ['user:create']
+					: ['user:create:self'];
 			},
-			async (obj, { input }, { User, user, req: { universalCookies }, mailer, req, req: { t } }) => {
+			async (
+				obj,
+				{ input },
+				{ User, user, req: { universalCookies }, mailer, req, req: { t } }
+			) => {
 				try {
 					const e = new FieldError();
 
@@ -97,23 +103,35 @@ export default pubsub => ({
 
 					const user = await User.getUser(createdUserId);
 
-					if (mailer && config.user.auth.password.sendAddNewUserEmail && !emailExists && req) {
+					if (
+						mailer &&
+						config.user.auth.password.sendAddNewUserEmail &&
+						!emailExists &&
+						req
+					) {
 						// async email
-						jwt.sign({ user: pick(user, 'id') }, config.user.secret, { expiresIn: '1d' }, (err, emailToken) => {
-							const encodedToken = Buffer.from(emailToken).toString('base64');
-							const url = `${__WEBSITE_URL__}/confirmation/${encodedToken}`;
-							mailer.sendMail({
-								from: `${config.app.name} <${process.env.EMAIL_USER}>`,
-								to: user.email,
-								subject: 'Your account has been created',
-								html: `<p>Hi, ${user.username}!</p>
-                <p>Welcome to ${config.app.name}. Please click the following link to confirm your email:</p>
+						jwt.sign(
+							{ user: pick(user, 'id') },
+							config.user.secret,
+							{ expiresIn: '1d' },
+							(err, emailToken) => {
+								const encodedToken = Buffer.from(emailToken).toString('base64');
+								const url = `${__WEBSITE_URL__}/confirmation/${encodedToken}`;
+								mailer.sendMail({
+									from: `${config.app.name} <${process.env.EMAIL_USER}>`,
+									to: user.email,
+									subject: 'Your account has been created',
+									html: `<p>Hi, ${user.username}!</p>
+                <p>Welcome to ${
+	config.app.name
+	}. Please click the following link to confirm your email:</p>
                 <p><a href="${url}">${url}</a></p>
                 <p>Below are your login information</p>
                 <p>Your email is: ${user.email}</p>
                 <p>Your password is: ${input.password}</p>`
-							});
-						});
+								});
+							}
+						);
 					}
 
 					pubsub.publish(USERS_SUBSCRIPTION, {
@@ -131,7 +149,9 @@ export default pubsub => ({
 		),
 		editUser: withAuth(
 			(obj, args, { User, user }) => {
-				return user.id !== args.input.id ? ['user:update'] : ['user:update:self'];
+				return user.id !== args.input.id
+					? ['user:update']
+					: ['user:update:self'];
 			},
 			async (obj, { input }, { User, user, req: { t } }) => {
 				const isAdmin = () => user.role === 'admin';
@@ -155,7 +175,10 @@ export default pubsub => ({
 
 					e.throwIf();
 
-					const userInfo = !isSelf() && isAdmin() ? input : pick(input, ['id', 'username', 'email', 'password']);
+					const userInfo =
+						!isSelf() && isAdmin()
+							? input
+							: pick(input, ['id', 'username', 'email', 'password']);
 
 					await User.editUser(userInfo);
 					await User.editUserProfile(input);
@@ -203,7 +226,8 @@ export default pubsub => ({
 						e.throwIf();
 					}
 
-					const isDeleted = !isSelf() && isAdmin() ? await User.deleteUser(id) : false;
+					const isDeleted =
+						!isSelf() && isAdmin() ? await User.deleteUser(id) : false;
 
 					if (isDeleted) {
 						pubsub.publish(USERS_SUBSCRIPTION, {
@@ -234,11 +258,11 @@ export default pubsub => ({
 					} = variables;
 
 					const checkByFilter =
-            !!node.isActive === isActive &&
-            (!role || role === node.role) &&
-            (!searchText ||
-              node.username.toUpperCase().includes(searchText.toUpperCase()) ||
-              node.email.toUpperCase().includes(searchText.toUpperCase()));
+						!!node.isActive === isActive &&
+						(!role || role === node.role) &&
+						(!searchText ||
+							node.username.toUpperCase().includes(searchText.toUpperCase()) ||
+							node.email.toUpperCase().includes(searchText.toUpperCase()));
 
 					switch (mutation) {
 					case 'DELETED':

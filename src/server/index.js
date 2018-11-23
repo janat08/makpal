@@ -1,5 +1,7 @@
-import log from '../common/log';
-import './server';
+global.config = process.environment;
+require('~/common/defineGlobalVars');
+const log = require('../common/log');
+require('./server');
 
 process.on('uncaughtException', ex => {
 	log.error(ex, 'broke');
