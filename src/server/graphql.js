@@ -6,6 +6,12 @@ import modules from "./modules/index.ts";
 import schema from "./api/schema.ts";
 import log from "../common/log";
 
+const mocks = {
+	Int: () => 15,
+	Float: () => 22.1,
+	String: () => "Hello World"
+};
+
 export default () => {
 	return new ApolloServer({
 		schema,
@@ -22,16 +28,16 @@ export default () => {
 		formatResponse: (response, options) =>
 			config.app.logging.apolloLogging
 				? formatResponse(
-						{ logger: log.debug.bind(log) },
-						response,
-						options
+					{ logger: log.debug.bind(log) },
+					response,
+					options
 				  )
 				: response,
 		tracing: !!config.engine.apiKey,
 		cacheControl: !!config.engine.apiKey,
 		engine: config.engine.apiKey
 			? {
-					apiKey: config.engine.apiKey
+				apiKey: config.engine.apiKey
 			  }
 			: false,
 		playground: {
@@ -46,6 +52,8 @@ export default () => {
 						"}"
 				}
 			]
-		}
+		},
+		mocks,
+		mockEntireSchema: false
 	});
 };
