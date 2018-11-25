@@ -2,8 +2,8 @@ import { ApolloServer, AuthenticationError } from "apollo-server-express";
 import { formatResponse } from "apollo-logger";
 import "isomorphic-fetch";
 
-import modules from "./modules/index.ts";
-import schema from "./api/schema.ts";
+import modules from "./modules/index";
+import schema from "./api/schema";
 import log from "../common/log";
 
 const mocks = {

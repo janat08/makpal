@@ -6,7 +6,7 @@ import resolvers from "./resolvers";
 import scopes from "./scopes";
 const { config } = global;
 import User from "./sql";
-import Feature from "../connector.ts";
+import Feature from "../connector";
 import resources from "./locales";
 
 const createContextFunc = async ({ context: { user } }) => ({

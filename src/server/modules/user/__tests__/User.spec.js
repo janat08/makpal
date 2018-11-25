@@ -1,11 +1,15 @@
 /*eslint-disable no-unused-vars*/
 import "~/common/codeModChai";
-// import { getApollo } from "../../../testHelpers/integrationSetup";
-// import { login, logout } from "../testHelpers";
+import { getApollo } from "../../../testHelpers/integrationSetup";
+import { login, logout } from "../testHelpers";
 
 import { USER_QUERY, CURRENT_USER } from "~/client/gql.js";
 
-describe.skip("User API works", () => {
+const step = it,
+	before = beforeAll,
+	after = afterAll;
+
+describe("User API works", () => {
 	let apollo;
 
 	beforeAll(() => {

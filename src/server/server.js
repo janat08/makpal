@@ -1,5 +1,5 @@
 import http from "http";
-import addGraphQLSubscriptions from "./api/subscriptions.ts";
+import addGraphQLSubscriptions from "./api/subscriptions";
 
 // import { serverPort } from './net';
 import app from "./app";

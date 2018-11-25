@@ -7,7 +7,7 @@ import morgan from "morgan";
 import url from "url";
 
 import getLog from "./utils/logger";
-import modules from "./modules/index.ts";
+import modules from "./modules/index";
 import createApolloServer from "./graphql";
 const { config } = global;
 

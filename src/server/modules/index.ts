@@ -1,6 +1,6 @@
 import cookies from "./cookies";
 // import i18n from './i18n';
-import counter from "./counter/index.ts";
+import counter from "./counter/index";
 // import post from './post';
 // import upload from './upload';
 import user from "./user";
@@ -10,6 +10,6 @@ import user from "./user";
 // import graphqlTypes from './graphqlTypes';
 // import './debug';
 
-import Feature from "./connector.ts";
+import Feature from "./connector";
 // export default new Feature(cookies, i18n, counter, post, upload, user, subscription, contact, mailer, graphqlTypes);
 export default new Feature(cookies, user, counter);
