@@ -32,7 +32,8 @@
 		"test:unit": "npx jest --config test/unit/jest.config.js",
 		"lint": "npx eslint --ext jsx,js src test --fix",
 		"todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note",
-		"format": "prettier --config ./.prettierrc.json --write \"src/**/*.@(js|jsx|ts|tsx)\""
+		"format": "prettier --config ./.prettierrc.json --write \"src/**/*.@(js|jsx|ts|tsx)\"",
+		"codemod:Chai:ApolloUniversal": "jest-codemods"
 	},
 	"watch": {
 		"test:quick": {

@@ -2,7 +2,7 @@ import intent from "./intent";
 import model from "./model";
 import view from "./view.jsx";
 import xs from "xstream";
-import { FORGOTPASSWORD } from "../../gql";
+import { FORGOT_PASSWORD } from "../../gql";
 import delay from "xstream/extra/delay";
 
 export default function ForgotPassword({ DOM, state, apollo }) {
@@ -16,7 +16,7 @@ export default function ForgotPassword({ DOM, state, apollo }) {
 			return state.stream
 				.map((x) => {
 					return xs.of({
-						mutation: FORGOTPASSWORD,
+						mutation: FORGOT_PASSWORD,
 						variables: { input: { email: x.email } },
 						category: "forgotPass"
 					});

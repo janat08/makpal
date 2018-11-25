@@ -47,7 +47,7 @@ export const COUNTER = Counter,
 		${Login}
 		${UserProfiled}
 	`,
-	CURRENTUSER = gql`
+	CURRENT_USER = gql`
 		${CurrentUserQuery}
 		${UserProfiled}
 	`,
@@ -55,40 +55,40 @@ export const COUNTER = Counter,
 		${Register}
 		${UserProfiled}
 	`,
-	RESETPASSWORD = gql`
+	RESET_PASSWORD = gql`
 		${ResetPassword}
 	`,
-	ADDUSER = gql`
+	ADD_USER = gql`
 		${AddUser}
 		${UserProfiled}
 	`,
-	DELETEUSER = gql`
+	DELETE_USER = gql`
 		${DeleteUser}
 	`,
-	EDITUSER = gql`
+	EDIT_USER = gql`
 		${EditUser}
 		${UserProfiled}
 	`,
-	FORGOTPASSWORD = gql`
+	FORGOT_PASSWORD = gql`
 		${ForgotPassword}
 	`,
 	// updateFilter = gql`${UPDATEFILTER}${USERSSTATE}`,
 	// updateOrderBy = gql`${UPDATEORDERBY}${USERSSTATE}`,
-	USERQUERY = gql`
+	USER_QUERY = gql`
 		${UserQuery}
 		${UserProfiled}
 	`,
-	USERSQUERY = gql`
+	USERS_QUERY = gql`
 		${UsersQuery}
 		${UserProfiled}
 	`,
 	// usersStateQuery = gql`${USERSSTATE}${USERSSTATEQUERY}`,
-	USERSSUBSCRIPTION = gql`
+	USERS_SUBSCRIPTION = gql`
 		${UsersSubscription}
 		${UserProfiled}
 	`,
 	// // COUNTER
-	ADDSERVERCOUNTER = gql`
+	ADD_SERVER_COUNTER = gql`
 		${AddServerCounter}
 	`;
 export { LOGOUT };
