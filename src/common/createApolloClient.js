@@ -98,6 +98,7 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 
 	const linkState = withClientState({ ...clientResolvers, cache });
 
+	console.log(links);
 	const allLinks = [...(links || []), linkState, apiLink];
 
 	// if (settings.app.logging.apolloLogging && (!__TEST__ || typeof window !== 'undefined')) {
