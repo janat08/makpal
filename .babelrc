@@ -2,9 +2,10 @@
   "presets": [
     "env",
     "react",
-    "stage-0",
+    "stage-0"
   ],
   "plugins": [
+    "import-graphql",
     "transform-class-properties",
     "syntax-dynamic-import",
     "syntax-jsx",

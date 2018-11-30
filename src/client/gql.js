@@ -25,7 +25,10 @@ import gql from 'graphql-tag';
 // TO SEE CHANGES REFLECTED FROM WITHIN .grpahql files, you have to modify this fail for cache to be invalidated
 //IMPORTANT//IMPOTANT/IMPORTANT//IMPOTANT/IMPORTANT//IMPOTANT/IMPORTANT//IMPOTANT
 
-var UserProfiled = `${User}${Profile}`;
+var UserProfiled = gql`
+	${User},
+	${Profile}
+`;
 const LOGOUT = gql`
 	mutation logout {
 		logout
@@ -37,58 +40,84 @@ var Counter = gql`
 			amount
 		}
 	}
+
+	${Login}
+
+	${LOGOUT}
 `;
 
 // export const login = gql`${LOGIN}${UserProfiled}`
 
-export const COUNTER = Counter,
-	// // USERS
-	LOGIN = gql`
+// test graphql import
+console.log('graphql import');
+console.log('before test');
+console.log(Counter);
+console.log('after test');
+console.log('import success');
+
+
+console.log(`${Login}`);
+console.log('before test');
+export const test = gql`
+	${Login}
+	${LOGOUT}
+`;
+console.log(test);
+console.log('after test');
+
+export const COUNTER = Counter;
+// // USERS
+// there has syntax error, because Login is parsed graphql
+console.log('counter',COUNTER);
+export const LOGIN = gql`
 		${Login}
-		${UserProfiled}
-	`,
-	CURRENTUSER = gql`
+	`;
+console.log('login',LOGIN);
+console.log(CurrentUserQuery);
+console.log(UserProfiled);
+export const CURRENTUSER = gql`
 		${CurrentUserQuery}
 		${UserProfiled}
-	`,
-	REGISTER = gql`
+	`;
+console.log('current',CURRENTUSER);
+export const	REGISTER = gql`
 		${Register}
 		${UserProfiled}
-	`,
-	RESETPASSWORD = gql`
+	`;
+export const	RESETPASSWORD = gql`
 		${ResetPassword}
-	`,
-	ADDUSER = gql`
+	`;
+export const	ADDUSER = gql`
 		${AddUser}
 		${UserProfiled}
-	`,
-	DELETEUSER = gql`
+	`;
+export const	DELETEUSER = gql`
 		${DeleteUser}
-	`,
-	EDITUSER = gql`
+	`;
+export const	EDITUSER = gql`
 		${EditUser}
 		${UserProfiled}
-	`,
-	FORGOTPASSWORD = gql`
+	`;
+export const	FORGOTPASSWORD = gql`
 		${ForgotPassword}
-	`,
-	// updateFilter = gql`${UPDATEFILTER}${USERSSTATE}`,
-	// updateOrderBy = gql`${UPDATEORDERBY}${USERSSTATE}`,
-	USERQUERY = gql`
+	`;
+// updateFilter = gql`${UPDATEFILTER}${USERSSTATE}`,
+// updateOrderBy = gql`${UPDATEORDERBY}${USERSSTATE}`,
+export const	USERQUERY = gql`
 		${UserQuery}
 		${UserProfiled}
-	`,
-	USERSQUERY = gql`
+	`;
+export const	USERSQUERY = gql`
 		${UsersQuery}
 		${UserProfiled}
-	`,
-	// usersStateQuery = gql`${USERSSTATE}${USERSSTATEQUERY}`,
-	USERSSUBSCRIPTION = gql`
+	`;
+// usersStateQuery = gql`${USERSSTATE}${USERSSTATEQUERY}`,
+export const	USERSSUBSCRIPTION = gql`
 		${UsersSubscription}
 		${UserProfiled}
-	`,
-	// // COUNTER
-	ADDSERVERCOUNTER = gql`
+	`;
+// // COUNTER
+export const	ADDSERVERCOUNTER = gql`
 		${AddServerCounter}
 	`;
 export { LOGOUT };
