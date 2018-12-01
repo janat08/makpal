@@ -25,10 +25,15 @@ import gql from 'graphql-tag';
 // TO SEE CHANGES REFLECTED FROM WITHIN .grpahql files, you have to modify this fail for cache to be invalidated
 //IMPORTANT//IMPOTANT/IMPORTANT//IMPOTANT/IMPORTANT//IMPOTANT/IMPORTANT//IMPOTANT
 
-var UserProfiled = gql`
-	${User},
-	${Profile}
-`;
+
+console.log('user',User);
+
+
+const UserProfiled = User;
+
+
+
+
 const LOGOUT = gql`
 	mutation logout {
 		logout
@@ -74,7 +79,6 @@ export const LOGIN = gql`
 	`;
 console.log('login',LOGIN);
 console.log(CurrentUserQuery);
-console.log(UserProfiled);
 export const CURRENTUSER = gql`
 		${CurrentUserQuery}
 		${UserProfiled}
