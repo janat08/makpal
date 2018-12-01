@@ -28,7 +28,17 @@ import gql from 'graphql-tag';
 
 console.log('user',User);
 
+/**
+ * 
+ * const UserProfiled = gql`
+ * 		${User}
+ * 		${Profile}
+ * `
+ * this don't throw erro, but this object seems same to User object from console.log, it confuse me.....
+ * 
+ */
 
+// throw error
 const UserProfiled = User;
 
 
