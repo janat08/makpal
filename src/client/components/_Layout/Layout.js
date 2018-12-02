@@ -12,8 +12,8 @@ import authRedirectBackLens from '../authRedirectBackLens.js';
 // // PAGES
 import Login from '../Login/login.js';
 import Home from '../Home/Home.jsx';
-import ForgotPassword from '../ForgotPassword/ForgotPassword.js';
-import Register from '../Register/Register.js';
+import ForgotPassword from '../ForgotPassword/forgotPassword';
+import Register from '../Register/Register';
 
 import { LOGIN, COUNTER, CURRENTUSER, LOGOUT } from '../../gql.js';
 
