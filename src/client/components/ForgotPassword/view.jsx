@@ -1,6 +1,6 @@
 import Snabbdom from 'snabbdom-pragma';
 import xs from 'xstream';
-import SSO from '../views/sso';
+import SSO from '../views/SSO';
 
 export default function view(state$) {
 	return state$.map(state=>{
