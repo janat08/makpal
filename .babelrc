@@ -26,7 +26,7 @@
       {
         "regenerator": true
       }],
-      ["@babel/plugin-transform-react-jsx", {"pragma": "Snabbdom.createElement"}],
+    ["@babel/plugin-transform-react-jsx", {"pragma": "Snabbdom.createElement"}],
     ["babel-plugin-root-import", {
       "paths": [{
         "rootPathPrefix": "~",

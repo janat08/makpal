@@ -1,5 +1,5 @@
 import { SchemaLink } from 'apollo-link-schema';
-import modules from '../../../index.ts';
+import modules from '../../../index';
 import { isApiExternal, apiUrl } from '../../../../net';
 import createApolloClient from '../../../../../common/createApolloClient';
 // import CURRENT_USER_QUERY from '../../../../../../client/src/modules/user/graphql/CurrentUserQuery.graphql';

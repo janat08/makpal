@@ -2,9 +2,9 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { Server } from 'http';
 
-import schema from './schema.ts';
+import schema from './schema';
 import log from '../../common/log';
-import modules from '../modules/index.ts';
+import modules from '../modules/index';
 
 let subscriptionServer: SubscriptionServer;
 
