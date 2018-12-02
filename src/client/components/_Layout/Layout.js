@@ -10,7 +10,7 @@ import notificationLens from '../notificationLens.js';
 import authRedirectBackLens from '../authRedirectBackLens.js';
 
 // // PAGES
-import Login from '../Login/Login.js';
+import Login from '../Login/login.js';
 import Home from '../Home/Home.jsx';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.js';
 import Register from '../Register/Register.js';
