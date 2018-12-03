@@ -166,7 +166,7 @@
     "fixme": "^0.4.4",
     "github-markdown-css": "^2.10.0",
     "html-looks-like": "^1.0.3",
-    "jest": "^21.2.1",
+    "jest": "^23.6.0",
     "jest-junit": "^5.1.0",
     "jsverify": "^0.8.3",
     "lint-staged": "^7.0.3",
@@ -184,7 +184,7 @@
     "testcafe": "^0.23.1",
     "testcafe-live": "^0.1.4",
     "testcafe-reporter-xunit": "^2.1.0",
-    "ts-jest": "^23.10.4",
+    "ts-jest": "^23.10.5",
     "typescript": "^3.1.6",
     "wait-on": "^2.1.0"
   },
@@ -212,6 +212,18 @@
     ],
     "failFast": true,
     "babel": "inherit"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   },
   "nyc": {
     "include": [
