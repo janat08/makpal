@@ -1,5 +1,5 @@
-import * as assert from 'assert';
-import { Observable, of, never, interval, empty } from 'rxjs';
+import * as assert from "assert";
+import { Observable, of, never, interval, empty } from "rxjs";
 import {
 	map,
 	mergeMap,
@@ -9,25 +9,25 @@ import {
 	take,
 	delay,
 	mergeAll
-} from 'rxjs/operators';
-import { setup, run as globalRun } from '@cycle/rxjs-run';
-import { HTTPSource, makeHTTPDriver } from '../../src/rxjs';
-import { runTests as runCommon } from './common';
+} from "rxjs/operators";
+import { setup, run as globalRun } from "@cycle/rxjs-run";
+import { HTTPSource, makeHTTPDriver } from "../../src/rxjs";
+import { runTests as runCommon } from "./common";
 
-const uri = '//' + window.location.host;
+const uri = "//" + window.location.host;
 runCommon(uri);
 
-(global as any).mocha.globals(['Cyclejs']);
+(global as any).mocha.globals(["Cyclejs"]);
 
-describe('HTTP Driver in the browser', function() {
-	it('should be able to emit progress events on the response stream', function(done) {
+describe("HTTP Driver in the browser", function() {
+	it("should be able to emit progress events on the response stream", function(done) {
 		function main(_sources: { HTTP: HTTPSource }) {
 			return {
 				HTTP: of({
-					url: uri + '/querystring',
-					method: 'GET',
+					url: uri + "/querystring",
+					method: "GET",
 					progress: true,
-					query: { foo: 102030, bar: 'Pub' }
+					query: { foo: 102030, bar: "Pub" }
 				})
 			};
 		}
@@ -36,20 +36,23 @@ describe('HTTP Driver in the browser', function() {
 
 		response$$.subscribe({
 			next: function(response$) {
-				assert.strictEqual(response$.request.url, uri + '/querystring');
-				assert.strictEqual(response$.request.method, 'GET');
-				assert.strictEqual((response$.request.query as any).foo, 102030);
-				assert.strictEqual((response$.request.query as any).bar, 'Pub');
+				assert.strictEqual(response$.request.url, uri + "/querystring");
+				assert.strictEqual(response$.request.method, "GET");
+				assert.strictEqual(
+					(response$.request.query as any).foo,
+					102030
+				);
+				assert.strictEqual((response$.request.query as any).bar, "Pub");
 				let progressEventHappened = false;
 				response$.subscribe(function(response) {
-					if (response.type === 'progress') {
-						assert.strictEqual(typeof response.total, 'number');
+					if (response.type === "progress") {
+						assert.strictEqual(typeof response.total, "number");
 						progressEventHappened = true;
 					} else {
 						assert.strictEqual(progressEventHappened, true);
 						assert.strictEqual(response.status, 200);
-						assert.strictEqual(response.body.foo, '102030');
-						assert.strictEqual(response.body.bar, 'Pub');
+						assert.strictEqual(response.body.foo, "102030");
+						assert.strictEqual(response.body.bar, "Pub");
 						done();
 					}
 				});
@@ -59,13 +62,13 @@ describe('HTTP Driver in the browser', function() {
 		run();
 	});
 
-	it('should return binary response when responseType option is arraybuffer', function(done) {
+	it("should return binary response when responseType option is arraybuffer", function(done) {
 		function main(_sources: { HTTP: HTTPSource }) {
 			return {
 				HTTP: of({
-					url: uri + '/binary',
-					method: 'GET',
-					responseType: 'arraybuffer'
+					url: uri + "/binary",
+					method: "GET",
+					responseType: "arraybuffer"
 				})
 			};
 		}
@@ -74,9 +77,9 @@ describe('HTTP Driver in the browser', function() {
 
 		const response$$ = sources.HTTP.select();
 		response$$.subscribe(function(response$) {
-			assert.strictEqual(response$.request.url, uri + '/binary');
-			assert.strictEqual(response$.request.method, 'GET');
-			assert.strictEqual(response$.request.responseType, 'arraybuffer');
+			assert.strictEqual(response$.request.url, uri + "/binary");
+			assert.strictEqual(response$.request.method, "GET");
+			assert.strictEqual(response$.request.responseType, "arraybuffer");
 			response$.subscribe(function(response) {
 				assert.strictEqual(response.status, 200);
 				assert.deepStrictEqual(
@@ -89,13 +92,13 @@ describe('HTTP Driver in the browser', function() {
 		run();
 	});
 
-	it('should return binary response when responseType option is blob', function(done) {
+	it("should return binary response when responseType option is blob", function(done) {
 		function main(_sources: { HTTP: HTTPSource }) {
 			return {
 				HTTP: of({
-					url: uri + '/binary',
-					method: 'GET',
-					responseType: 'blob'
+					url: uri + "/binary",
+					method: "GET",
+					responseType: "blob"
 				})
 			};
 		}
@@ -104,21 +107,21 @@ describe('HTTP Driver in the browser', function() {
 
 		const response$$ = sources.HTTP.select();
 		response$$.subscribe(function(response$) {
-			assert.strictEqual(response$.request.url, uri + '/binary');
-			assert.strictEqual(response$.request.method, 'GET');
-			assert.strictEqual(response$.request.responseType, 'blob');
+			assert.strictEqual(response$.request.url, uri + "/binary");
+			assert.strictEqual(response$.request.method, "GET");
+			assert.strictEqual(response$.request.responseType, "blob");
 			response$.subscribe(function(response) {
 				assert.strictEqual(response.status, 200);
 				const fr = new FileReader();
-				fr.onload = ev => {
+				fr.onload = (ev) => {
 					assert.deepStrictEqual(
 						new Uint8Array(fr.result as ArrayBuffer),
 						new Uint8Array([1, 2, 3])
 					);
 					done();
 				};
-				fr.onerror = ev => {
-					done('should not be called');
+				fr.onerror = (ev) => {
+					done("should not be called");
 				};
 				fr.readAsArrayBuffer(response.body);
 			});
@@ -126,20 +129,20 @@ describe('HTTP Driver in the browser', function() {
 		run();
 	});
 
-	it('should not have cross-driver race conditions, A (#592)', function(done) {
+	it("should not have cross-driver race conditions, A (#592)", function(done) {
 		this.timeout(10000);
 
 		function child(_sources: any, num: any) {
-			const vdom$ = _sources.HTTP.select('cat').pipe(
+			const vdom$ = _sources.HTTP.select("cat").pipe(
 				mergeAll(),
-				map((res: any) => 'My name is ' + res.text)
+				map((res: any) => "My name is " + res.text)
 			);
 
 			const request$ =
 				num === 1
 					? of({
-						category: 'cat',
-						url: uri + '/hello'
+							category: "cat",
+							url: uri + "/hello"
 					  })
 					: never();
 
@@ -152,13 +155,13 @@ describe('HTTP Driver in the browser', function() {
 		function mainHTTPThenDOM(_sources: any) {
 			const sinks$ = interval(1000).pipe(
 				take(6),
-				map(i => {
+				map((i) => {
 					if (i % 2 === 1) {
 						return child(_sources, i);
 					} else {
 						return {
 							HTTP: empty(),
-							DOM: of('')
+							DOM: of("")
 						};
 					}
 				}),
@@ -168,16 +171,16 @@ describe('HTTP Driver in the browser', function() {
 
 			// order of sinks is important
 			return {
-				HTTP: sinks$.pipe(switchMap(sinks => sinks.HTTP)),
-				DOM: sinks$.pipe(switchMap(sinks => sinks.DOM))
+				HTTP: sinks$.pipe(switchMap((sinks) => sinks.HTTP)),
+				DOM: sinks$.pipe(switchMap((sinks) => sinks.DOM))
 			};
 		}
 
 		const expectedDOMSinks = [
-			/* HTTP then DOM: */ '',
-			'My name is Hello World',
-			'',
-			''
+			/* HTTP then DOM: */ "",
+			"My name is Hello World",
+			"",
+			""
 		];
 
 		function domDriver(sink: any) {
@@ -200,20 +203,20 @@ describe('HTTP Driver in the browser', function() {
 		}, 8500);
 	});
 
-	it('should not have cross-driver race conditions, B (#592)', function(done) {
+	it("should not have cross-driver race conditions, B (#592)", function(done) {
 		this.timeout(10000);
 
 		function child(_sources: any, num: any) {
-			const vdom$ = _sources.HTTP.select('cat').pipe(
+			const vdom$ = _sources.HTTP.select("cat").pipe(
 				mergeAll(),
-				map((res: any) => 'My name is ' + res.text)
+				map((res: any) => "My name is " + res.text)
 			);
 
 			const request$ =
 				num === 1
 					? of({
-						category: 'cat',
-						url: uri + '/hello'
+							category: "cat",
+							url: uri + "/hello"
 					  })
 					: never();
 
@@ -226,13 +229,13 @@ describe('HTTP Driver in the browser', function() {
 		function mainDOMThenHTTP(_sources: any) {
 			const sinks$ = interval(1000).pipe(
 				take(6),
-				map(i => {
+				map((i) => {
 					if (i % 2 === 1) {
 						return child(_sources, i);
 					} else {
 						return {
 							HTTP: empty(),
-							DOM: of('')
+							DOM: of("")
 						};
 					}
 				}),
@@ -242,16 +245,16 @@ describe('HTTP Driver in the browser', function() {
 
 			// order of sinks is important
 			return {
-				DOM: sinks$.pipe(switchMap(sinks => sinks.DOM)),
-				HTTP: sinks$.pipe(switchMap(sinks => sinks.HTTP))
+				DOM: sinks$.pipe(switchMap((sinks) => sinks.DOM)),
+				HTTP: sinks$.pipe(switchMap((sinks) => sinks.HTTP))
 			};
 		}
 
 		const expectedDOMSinks = [
-			/* DOM then HTTP: */ '',
-			'My name is Hello World',
-			'',
-			''
+			/* DOM then HTTP: */ "",
+			"My name is Hello World",
+			"",
+			""
 		];
 
 		function domDriver(sink: any) {
@@ -274,23 +277,23 @@ describe('HTTP Driver in the browser', function() {
 		}, 8500);
 	});
 
-	it('should not remember past responses when selecting', function(done) {
+	it("should not remember past responses when selecting", function(done) {
 		this.timeout(4000);
 
 		function main(_sources: any) {
 			const test$ = of(null).pipe(
 				delay(1000),
 				mergeMap(() =>
-					_sources.HTTP.select('cat').pipe(
+					_sources.HTTP.select("cat").pipe(
 						mergeAll(),
-						map((res: any) => 'I should not show this, ' + res.text)
+						map((res: any) => "I should not show this, " + res.text)
 					)
 				)
 			);
 
 			const request$ = of({
-				category: 'cat',
-				url: uri + '/hello'
+				category: "cat",
+				url: uri + "/hello"
 			});
 
 			return {
@@ -303,7 +306,7 @@ describe('HTTP Driver in the browser', function() {
 			sink.addListener({
 				next: (s: any) => {
 					console.log(s);
-					done('No data should come through the Test sink');
+					done("No data should come through the Test sink");
 				},
 				error: (err: any) => {
 					done(err);

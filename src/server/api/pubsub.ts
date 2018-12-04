@@ -1,11 +1,11 @@
-import { wrapPubSub } from 'apollo-logger';
-import { PubSub } from 'graphql-subscriptions';
+import { wrapPubSub } from "apollo-logger";
+import { PubSub } from "graphql-subscriptions";
 
-import log from '../../common/log';
-import settings from 'config';
+import log from "../../common/log";
+const { config } = global;
 
-const pubsub = settings.app.logging.apolloLogging
-  ? wrapPubSub(new PubSub(), { logger: log.debug.bind(log) })
-  : new PubSub();
+const pubsub = config.app.logging.apolloLogging
+	? wrapPubSub(new PubSub(), { logger: log.debug.bind(log) })
+	: new PubSub();
 
 export default pubsub;

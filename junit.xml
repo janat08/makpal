@@ -1,68 +1,21 @@
-<testsuites name="jest tests" tests="6" failures="2" time="1.803">
-  <testsuite name="apolloDriver" errors="0" failures="2" skipped="2" timestamp="2018-11-18T11:31:31" time="1.733" tests="6">
-    <testcase classname="apolloDriver will filter queries with select()" name="apolloDriver will filter queries with select()" time="0.016">
+<testsuites name="jest tests" tests="7" failures="0" time="1.485">
+  <testsuite name="apolloDriver" errors="0" failures="0" skipped="3" timestamp="2018-12-01T09:56:40" time="1.443" tests="7">
+    <testcase classname="apolloDriver will filter queries with select()" name="apolloDriver will filter queries with select()" time="0.006">
     </testcase>
-    <testcase classname="apolloDriver will select by name given to operation in gql string" name="apolloDriver will select by name given to operation in gql string" time="0.009">
-      <failure>Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-    at C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:64:21
-    at setTimeout (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\p_timeout.js:21:150)
-    at Timeout.callback [as _onTimeout] (C:\Users\user\dev\react-head\node_modules\jsdom\lib\jsdom\browser\Window.js:523:19)
-    at ontimeout (timers.js:498:11)
-    at tryOnTimeout (timers.js:323:5)
-    at Timer.listOnTimeout (timers.js:290:5)</failure>
-      <failure>Error: Failed: completed
-    at stackFormatter (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\expectation_result_factory.js:49:427)
-    at expectationResultFactory (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\expectation_result_factory.js:49:591)
-    at Spec.Object.&lt;anonymous&gt;.Spec.addExpectationResult (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine\Spec.js:73:70)
-    at Env.fail (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine\Env.js:510:25)
-    at Function.next.fail (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:42:22)
-    at Object.complete (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:150:53)
-    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:834:18)
-    at Flatten.Object.&lt;anonymous&gt;.Flatten.less (C:\Users\user\dev\react-head\node_modules\xstream\index.js:515:15)
-    at Flatten.Object.&lt;anonymous&gt;.Flatten._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:534:14)
-    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:834:18)
-    at Filter.Object.&lt;anonymous&gt;.Filter._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:464:11)
-    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:840:22)
-    at Merge.Object.&lt;anonymous&gt;.Merge._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:138:15)
-    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:834:18)
-    at MapOp.Object.&lt;anonymous&gt;.MapOp._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:656:11)
-    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:834:18)
-    at Filter.Object.&lt;anonymous&gt;.Filter._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:464:11)
-    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\index.js:840:22)
-    at C:\Users\user\dev\react-head\node_modules\@cycle\run\lib\cjs\internals.js:84:81
-    at Array.forEach (&lt;anonymous&gt;)
-    at Object.disposeSinkProxies (C:\Users\user\dev\react-head\node_modules\@cycle\run\lib\cjs\internals.js:84:30)
-    at Object.disposeEngine [as dispose] (C:\Users\user\dev\react-head\node_modules\@cycle\run\lib\cjs\index.js:111:21)
-    at dispose (C:\Users\user\dev\react-head\node_modules\@cycle\run\lib\cjs\index.js:54:20)
-    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:121:9)
-    at Object.asyncFn (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine_async.js:122:61)
-    at resolve (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:46:12)
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:34:499)
-    at promise.then (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:74:39)
-    at &lt;anonymous&gt;</failure>
+    <testcase classname="apolloDriver will select by name given to operation in gql string" name="apolloDriver will select by name given to operation in gql string" time="0.144">
     </testcase>
-    <testcase classname="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" name="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" time="0.003">
+    <testcase classname="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" name="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" time="0.002">
+    </testcase>
+    <testcase classname="apolloDriver will accept async operations to be performed on client" name="apolloDriver will accept async operations to be performed on client" time="0.031">
+    </testcase>
+    <testcase classname="apolloDriver adapt works" name="apolloDriver adapt works" time="0">
+      <skipped/>
     </testcase>
     <testcase classname="apolloDriver will rerun watchQuery after storeReset with empty results" name="apolloDriver will rerun watchQuery after storeReset with empty results" time="0">
       <skipped/>
     </testcase>
     <testcase classname="apolloDriver should not remember past responses when selecting" name="apolloDriver should not remember past responses when selecting" time="0">
       <skipped/>
-    </testcase>
-    <testcase classname="apolloDriver will accept async operations to be performed on client" name="apolloDriver will accept async operations to be performed on client" time="0.023">
-      <failure>TypeError: Cannot read property &apos;Symbol(observable)&apos; of undefined
-    at Function.Object.&lt;anonymous&gt;.Stream.from (C:\Users\user\dev\react-head\node_modules\xstream\index.js:1059:25)
-    at MapOp.f (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.js:92:29)
-    at _try (C:\Users\user\dev\react-head\node_modules\xstream\index.js:31:18)
-    at MapOp.Object.&lt;anonymous&gt;.MapOp._n (C:\Users\user\dev\react-head\node_modules\xstream\index.js:641:17)
-    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\index.js:797:18)
-    at Filter.Object.&lt;anonymous&gt;.Filter._n (C:\Users\user\dev\react-head\node_modules\xstream\index.js:452:11)
-    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\index.js:803:22)
-    at Immediate.&lt;anonymous&gt; (C:\Users\user\dev\react-head\node_modules\@cycle\run\lib\cjs\internals.js:60:61)
-    at runCallback (timers.js:810:20)
-    at tryOnImmediate (timers.js:768:5)
-    at processImmediate [as _immediateCallback] (timers.js:745:5)</failure>
     </testcase>
   </testsuite>
 </testsuites>

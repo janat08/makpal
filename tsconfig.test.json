@@ -4,19 +4,16 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-	  "lib": [
-		"esnext",
-		"es6",
-		"dom"
-	  ],
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["src/*"]
+		},
+		"lib": ["esnext", "es6", "dom"]
 	},
-	"include": [
-	  "src/**/*.spec.ts",
-	  "src/**/*.test.ts",
-	],
+	"include": ["src/**/*.spec.ts", "src/**/*.test.ts"]
 	//disables paths
 	// "include": [
 	//   "src/**/*.ts",
 	//   "typings/*.d.ts"
 	// ],
-  }
+}
