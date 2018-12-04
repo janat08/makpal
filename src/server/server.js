@@ -3,8 +3,7 @@ import addGraphQLSubscriptions from "./api/subscriptions";
 
 // import { serverPort } from './net';
 import app from './app';
-import log from '../common/log';
-import config from 'config';
+import log from '~/common/log';
 
 // eslint-disable-next-line import/no-mutable-exports
 let server;

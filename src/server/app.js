@@ -3,7 +3,6 @@ import favicon from 'serve-favicon';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import path from 'path';
-import config from 'config';
 import morgan from 'morgan';
 import url from 'url';
 

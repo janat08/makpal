@@ -206,13 +206,13 @@
       "ts",
       "tsx",
       "js",
-    "transform": {
-  },
-    ],
       "jsx"
+    ],
+    "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+  },
   "nyc": {
     "include": [
       "src/client/**/*.js",
