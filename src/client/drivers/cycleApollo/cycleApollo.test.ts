@@ -223,7 +223,7 @@ describe("apolloDriver", function() {
 			done();
 		}, 2000);
 	}, 4000); //from 277 on index.ts of http/test/browser
-	it("will accept async operations to be performed on client", (done) => {
+	it.skip("will accept async operations to be performed on client", (done) => {
 		// client.writeQuery({
 		// 	query: HERO,
 		// 	data: { hero: { __typename: 'Human', name: 'asdff' } }
@@ -266,45 +266,22 @@ describe("apolloDriver", function() {
 
 		dispose = run(main, { apollo: makeApolloDriver(client) });
 	});
-	// it('adapt works', function(done) {
-	// 	function main(_sources: any) {
-	// 		console.log(_sources, _sources.apollo);
-	// 		_sources.apollo.select().pipe(
-	// 			mergeAll(),
-	// 			map((res: any) => console.log('runnnnnnnnnnnnnnnnnnnning'))
-	// 		);
-	// 		const test$ = of(null).pipe(
-	// 			delay(1000),
-	// 			mergeMap(() =>
-	// 				_sources.apollo.select('cat').pipe(
-	// 					mergeAll(),
-	// 					map((res: any) => 'I should not show this, ' + res.text)
-	// 				)
-	// 			)
-	// 		);
+	it.skip("adapt works", function(done) {
+		function main(_sources: any) {
+			of(1)
+			expect(_sources.apollo.select()).tohaveProperty()
 
-	// 		const request$ = of({
-	// 			category: 'cat',
-	// 			query: HERO
-	// 		});
+			return {			};
+		}
 
-	// 		return {
-	// 			apollo: request$
-	// 		};
-	// 	}
+		var select = () => {
+			return adapt(xs.of("asdf"));
+		};
 
-	// 	var select = () => {
-	// 		return adapt(xs.of('asdf'));
-	// 	};
-
-	// 	dispose = runRxjs(main, {
-	// 		apollo: () => {
-	// 			return { select };
-	// 		}
-	// 	});
-
-	// 	setTimeout(() => {
-	// 		done();
-	// 	}, 2000);
-	// });
+		dispose = runRxjs(main, {
+			apollo: () => {
+				return { select };
+			}
+		});
+	});
 });

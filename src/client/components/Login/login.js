@@ -1,9 +1,9 @@
-import intent from './intent';
-import model from './model';
-import view from './view.jsx';
-import xs from 'xstream';
-import { LOGIN, CURRENTUSER } from '../../gql';
-import delay from 'xstream/extra/delay';
+import intent from "./intent";
+import model from "./model";
+import view from "./view.jsx";
+import xs from "xstream";
+import { LOGIN, CURRENT_USER } from "../../gql";
+import delay from "xstream/extra/delay";
 
 export default function Login({ DOM, state, apollo }) {
 	const action = {
@@ -32,7 +32,7 @@ export default function Login({ DOM, state, apollo }) {
 				op: 'writeQuery',
 				cat: 'writeLogin',
 				param: {
-					query: CURRENTUSER,
+					query: CURRENT_USER,
 					data: { currentUser: x.user }
 				}
 			});
@@ -43,8 +43,8 @@ export default function Login({ DOM, state, apollo }) {
 		.select('writeLogin')
 		.map(x => {
 			return xs.of({
-				query: CURRENTUSER,
-				category: 'currentUser'
+				query: CURRENT_USER,
+				category: "currentUser"
 			});
 		})
 		.flatten();

@@ -15,7 +15,7 @@ import Home from '../Home/Home.jsx';
 import ForgotPassword from '../ForgotPassword/ForgotPassword.js';
 import Register from '../Register/Register.js';
 
-import { LOGIN, COUNTER, CURRENTUSER, LOGOUT } from '../../gql.js';
+import { LOGIN, COUNTER, CURRENT_USER, LOGOUT } from "../../gql.js";
 
 const defaultState = {
 	//used to tell how many times back to redirect
@@ -37,8 +37,8 @@ export default function Layout(sources) {
 	logout$.debug('logout').subscribe({});
 
 	var currentUser$ = xs.of({
-		query: CURRENTUSER,
-		category: 'currentUser'
+		query: CURRENT_USER,
+		category: "currentUser"
 	});
 	//  && x.result.id?true:false
 	var hasLoggedIn$ = apollo.select('currentUser').map(x => x.result && x);
@@ -88,9 +88,9 @@ export default function Layout(sources) {
 	function filterAuthRoutes(inOrOut = true, key) {
 		return item => {
 			switch (item[key]) {
-			case '/login':
-			case '/forgotPassword':
-			case '/register':
+			case "/login":
+			case "/forgotPassword":
+			case "/register":
 				return inOrOut;
 				//simply for experimenting, as cookied will be used instead for this
 				// return isolate(value, authRedirectBackLens("page"))(newSources);
