@@ -1,13 +1,13 @@
-import access from './access';
-import auth from './auth';
-import confirmMiddleware from './confirm';
-import schema from './schema';
-import resolvers from './resolvers';
-import scopes from './scopes';
-import config from 'config';
-import User from './sql';
-import Feature from '../connector.ts';
-import resources from './locales';
+import access from "./access";
+import auth from "./auth";
+import confirmMiddleware from "./confirm";
+import schema from "./schema";
+import resolvers from "./resolvers";
+import scopes from "./scopes";
+const { config } = global;
+import User from "./sql";
+import Feature from "../connector";
+import resources from "./locales";
 
 const createContextFunc = async ({ context: { user } }) => ({
 	User,

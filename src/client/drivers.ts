@@ -10,9 +10,9 @@ import switchPath from "switch-path";
 // import storageDriver from '@cycle/storage';
 
 import { makeCookieDriver } from "cyclejs-cookie";
-import { makeApolloDriver } from "./drivers/cycleApollo.ts";
-import createApolloClient from "/../common/createApolloClient.js";
-import link from "./modules/user/access/index";
+import { makeApolloDriver } from "./drivers/cycleApollo/cycleApollo";
+import createApolloClient from "~/common/createApolloClient.js";
+import link from "./user/access/index";
 import { apiUrl } from "./net";
 
 import { Component } from "./interfaces";

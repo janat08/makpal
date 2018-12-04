@@ -1,18 +1,11 @@
 import WebSocket from "ws";
 
 import createApolloClient from "~/common/createApolloClient";
-// import '../../knexdata';
-// import knex from '../sql/connector';
 
 let server;
 let apollo;
 
-before(async () => {
-	// require('babel-register')({ presets: ['env'] });
-
-	// await knex.migrate.latest();
-	// await knex.seed.run();
-
+beforeAll(async () => {
 	server = await require("../server").default;
 
 	global.WebSocket = WebSocket;
@@ -21,7 +14,7 @@ before(async () => {
 	});
 });
 
-after(() => {
+afterAll(() => {
 	if (server) {
 		server.close();
 		delete global.__TEST_SESSION__;

@@ -1,8 +1,8 @@
 import { makeExecutableSchema } from "graphql-tools";
 
 import rootSchemaDef from "./rootSchema.js";
-import modules from "../modules/index.ts";
-import pubsub from "./pubsub.ts";
+import modules from "../modules/index";
+import pubsub from "./pubsub";
 
 // console.log(modules.schemas)
 // import gql from 'graphql-tag';
