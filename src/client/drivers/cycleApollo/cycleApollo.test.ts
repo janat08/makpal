@@ -107,12 +107,6 @@ describe("apolloDriver", function() {
 			// @ts-ignore
 			link: new SchemaLink({ schema })
 		});
-
-		// client.writeQuery({
-		// 	query: HERO,
-		// 	data: { hero: { __typename: 'Human', name: 'asdff' } }
-		// });
-		// client.query({ query: HERO }).then(x => console.log(x));
 	});
 	beforeEach(async function() {
 		setAdapt((x) => x);
@@ -176,9 +170,68 @@ describe("apolloDriver", function() {
 			"Neither category, nor operation name has been defined, so .select() won't trigger. Perhaps something went wrong"
 		);
 	});
+	it("will accept async operations to be performed on client", (done) => {
+		function main(sources) {
+			var query$ = xs.of({
+				query: HERO,
+				category: "asdf"
+			});
+
+			var manipulate$ = xs.of({
+				cat: "wQ",
+				op: function(client) {
+					var param = {
+						query: HERO,
+						data: { hero: { __typename: "Human", name: "asdff" } }
+					};
+					var a = client.writeQuery(param);
+					return null;
+				}
+			});
+
+			var then$ = sources.apollo
+				.select("wQ")
+				.mapTo(query$)
+				.flatten();
+
+			sources.apollo.select("asdf").subscribe({
+				next(result) {
+					heroTest(result, "asdff");
+					done();
+				},
+				error: done.fail,
+				complete: () => done.fail("completed")
+			});
+
+			return {
+				apollo: xs.merge(manipulate$, then$)
+			};
+		}
+
+		dispose = run(main, { apollo: makeApolloDriver(client) });
+	}, 3000);
+	it.skip("adapt works", function(done) {
+		function main(_sources: any) {
+			of(1);
+			expect(_sources.apollo.select()).toHaveProperty(null);
+
+			return {};
+		}
+
+		var select = () => {
+			return adapt(xs.of("asdf"));
+		};
+
+		dispose = runRxjs(main, {
+			apollo: () => {
+				return { select };
+			}
+		});
+	});
 	it.skip("will rerun watchQuery after storeReset with empty results", () => {
 		expect(true).toBe(true);
 	});
+	//coppied from http driver on cyclejs repository
 	it.skip("should not remember past responses when selecting", function(done) {
 		function main(_sources: any) {
 			const test$ = of(null).pipe(
@@ -223,65 +276,4 @@ describe("apolloDriver", function() {
 			done();
 		}, 2000);
 	}, 4000); //from 277 on index.ts of http/test/browser
-	it.skip("will accept async operations to be performed on client", (done) => {
-		// client.writeQuery({
-		// 	query: HERO,
-		// 	data: { hero: { __typename: 'Human', name: 'asdff' } }
-		// });
-		// client.query({ query: HERO }).then(x => console.log(x));
-		function main(sources) {
-			var query$ = xs.of({
-				query: HERO,
-				category: "asdf"
-			});
-
-			var then$ = sources.apollo
-				.select("wQ")
-				.map((x) => query$)
-				.flatten();
-
-			sources.apollo.select("asdf").subscribe({
-				next(result) {
-					console.log(result);
-					heroTest(result, "asdff");
-					done();
-				},
-				error: done.fail,
-				complete: () => done.fail("completed")
-			});
-
-			var manipulate$ = xs.of({
-				cat: "wQ",
-				op: "writeQuery",
-				param: {
-					query: HERO,
-					data: { hero: { __typename: "Human", name: "asdff" } }
-				}
-			});
-
-			return {
-				apollo: xs.merge(manipulate$, then$)
-			};
-		}
-
-		dispose = run(main, { apollo: makeApolloDriver(client) });
-	});
-	it.skip("adapt works", function(done) {
-		function main(_sources: any) {
-			of(1)
-			expect(_sources.apollo.select()).tohaveProperty()
-
-			return {			};
-		}
-
-		var select = () => {
-			return adapt(xs.of("asdf"));
-		};
-
-		dispose = runRxjs(main, {
-			apollo: () => {
-				return { select };
-			}
-		});
-	});
 });
