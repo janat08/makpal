@@ -2,14 +2,14 @@ import http from "http";
 import addGraphQLSubscriptions from "./api/subscriptions";
 
 // import { serverPort } from './net';
-import app from './app';
-import log from '../common/log';
+import app from "./app";
+import log from "../common/log";
 const { config } = global;
 
 // eslint-disable-next-line import/no-mutable-exports
 let server;
 server = http.createServer();
-server.on('request', app);
+server.on("request", app);
 
 addGraphQLSubscriptions(server);
 
@@ -23,16 +23,16 @@ addGraphQLSubscriptions(server);
 //   app.emit('ready');
 // });
 
-const serverPromise = new Promise(resolve => {
+const serverPromise = new Promise((resolve) => {
 	server.listen(config.port, () => {
 		log.info(`API is now running on port ${config.port}`);
 		//'ready' is a hook used by the e2e (integration) tests (see node-while)
-		server.emit('ready');
+		server.emit("ready");
 		resolve(server);
 	});
 });
 
-server.on('close', () => {
+server.on("close", () => {
 	server = undefined;
 });
 
@@ -46,11 +46,11 @@ if (module.hot) {
 			log(error.stack);
 		}
 	});
-	module.hot.accept(['./app'], () => {
-		server.removeAllListeners('request');
-		server.on('request', app);
+	module.hot.accept(["./app"], () => {
+		server.removeAllListeners("request");
+		server.on("request", app);
 	});
-	module.hot.accept(['./api/subscriptions'], () => {
+	module.hot.accept(["./api/subscriptions"], () => {
 		try {
 			addGraphQLSubscriptions(server);
 		} catch (error) {

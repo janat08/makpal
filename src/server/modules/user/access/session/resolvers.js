@@ -1,4 +1,4 @@
-import { writeSession } from './sessions';
+import { writeSession } from "./sessions";
 
 export default () => ({
 	Mutation: {
@@ -6,7 +6,7 @@ export default () => ({
 			const session = { ...req.session };
 
 			delete session.userId;
-			console.log('logging out');
+			console.log("logging out");
 			req.session = writeSession(req, session);
 		}
 	}

@@ -1,4 +1,4 @@
-import { getApollo } from '../../../testHelpers/integrationSetup';
+import { getApollo } from "../../../testHelpers/integrationSetup";
 
 import { LOGIN, LOGOUT } from "~/client/gql.js";
 
@@ -8,4 +8,5 @@ export const login = async (usernameOrEmail = "admin", password = "admin123") =>
 		variables: { input: { usernameOrEmail, password } }
 	});
 
-export const logout = async () => await getApollo().mutate({ mutation: LOGOUT });
+export const logout = async () =>
+	await getApollo().mutate({ mutation: LOGOUT });

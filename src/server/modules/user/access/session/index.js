@@ -1,10 +1,10 @@
-import { writeSession, createSession, readSession } from './sessions';
-import { isApiExternal } from '../../../../net';
-import Feature from '../connector';
-import schema from './schema.js';
-import resolvers from './resolvers';
-import scopes from '../../scopes';
-import User from '../../sql';
+import { writeSession, createSession, readSession } from "./sessions";
+import { isApiExternal } from "../../../../net";
+import Feature from "../connector";
+import schema from "./schema.js";
+import resolvers from "./resolvers";
+import scopes from "../../scopes";
+import User from "../../sql";
 const { __API_URL__ } = global.config;
 
 const grant = async (user, req) => {
@@ -22,16 +22,19 @@ const getCurrentUser = async ({ req }) => {
 	}
 };
 
-const attachSession = req => {
+const attachSession = (req) => {
 	if (req) {
 		req.session = readSession(req);
 		if (!req.session) {
 			req.session = createSession(req);
 		} else {
 			if (!isApiExternal && req.path === __API_URL__) {
-				if (req.universalCookies.get('x-token') !== req.session.csrfToken) {
+				if (
+					req.universalCookies.get("x-token") !==
+					req.session.csrfToken
+				) {
 					req.session = createSession(req);
-					throw new Error('CSRF token validation failed');
+					throw new Error("CSRF token validation failed");
 				}
 			}
 		}
@@ -63,10 +66,10 @@ const createContextFunc = async ({
 export default new Feature(
 	config.user.auth.access.session.enabled
 		? {
-			grant,
-			schema,
-			createResolversFunc: resolvers,
-			createContextFunc
+				grant,
+				schema,
+				createResolversFunc: resolvers,
+				createContextFunc
 		  }
 		: {}
 );

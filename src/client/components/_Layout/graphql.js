@@ -1,4 +1,3 @@
-
 // counterQuery$.subscribe(ab)
 // counterQuery2$.subscribe(ab)
 
@@ -16,39 +15,41 @@
 // client.watchQuery({query: gql`${COUNTER}`}).then(x=>console.log("current", x))
 // })
 
-
 const query$ = xs.of({
-	mutation:  LOGIN,
-	variables: {input: {usernameOrEmail: 'asdf', password: 'asdf'}},
-	category: 'allusers'
+	mutation: LOGIN,
+	variables: { input: { usernameOrEmail: "asdf", password: "asdf" } },
+	category: "allusers"
 });
 
 const counterUpdated$ = xs.of({
 	subscription: true,
-	query: gql`subscription onCounterUpdated {
-      counterUpdated {
-        amount
-      }
-    }`,
-	category: 'sub'
+	query: gql`
+		subscription onCounterUpdated {
+			counterUpdated {
+				amount
+			}
+		}
+	`,
+	category: "sub"
 });
 
 const counter$ = xs.of({
 	query: COUNTER,
-	category: 'counter',
+	category: "counter",
 	pollingInterval: 500
 });
 
-
 var ab = {
-	next: s => {console.log('new counted', s);},
-	complete: s => {console.log('counter done');}
+	next: (s) => {
+		console.log("new counted", s);
+	},
+	complete: (s) => {
+		console.log("counter done");
+	}
 };
-  
 
 // const subscription$ = sources.apollo.select('sub')
 //   .flatten()
-
 
 // const response$ = sources.apollo.select('allusers')
 //   .flatten()
@@ -58,7 +59,6 @@ var ab = {
 
 // const counterQuery2$ = sources.apollo.select('counter')
 //   .flatten()
-
 
 // let results$ = sources.apollo
 // .flatMap(r$ => r$

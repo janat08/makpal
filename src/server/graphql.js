@@ -1,6 +1,6 @@
-import { ApolloServer, AuthenticationError } from 'apollo-server-express';
-import { formatResponse } from 'apollo-logger';
-import 'isomorphic-fetch';
+import { ApolloServer, AuthenticationError } from "apollo-server-express";
+import { formatResponse } from "apollo-logger";
+import "isomorphic-fetch";
 
 import modules from "./modules/index";
 import schema from "./api/schema";
@@ -20,8 +20,8 @@ export default () => {
 			req,
 			res
 		}),
-		formatError: error => {
-			return error.message === 'Not Authenticated!'
+		formatError: (error) => {
+			return error.message === "Not Authenticated!"
 				? new AuthenticationError(error)
 				: error;
 		},
@@ -37,14 +37,19 @@ export default () => {
 		cacheControl: !!config.engine.apiKey,
 		engine: config.engine.apiKey
 			? {
-				apiKey: config.engine.apiKey
+					apiKey: config.engine.apiKey
 			  }
 			: false,
 		playground: {
 			tabs: [
 				{
-					endpoint: '/graphql',
-					query: '{\n' + '  serverCounter {\n' + '    amount\n' + '  }\n' + '}'
+					endpoint: "/graphql",
+					query:
+						"{\n" +
+						"  serverCounter {\n" +
+						"    amount\n" +
+						"  }\n" +
+						"}"
 				}
 			]
 		},

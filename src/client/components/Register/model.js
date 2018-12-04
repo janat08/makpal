@@ -1,49 +1,56 @@
-import xs from 'xstream';
+import xs from "xstream";
 
 var allFieldsInAuth = {
-	name: '',
-	pass: '',
-	passVerify: '',
-	email: '',
+	name: "",
+	pass: "",
+	passVerify: "",
+	email: "",
 	completed: true
 };
 export default function model(actions) {
-	const initReducer$ = xs.of(prevState => {
+	const initReducer$ = xs.of((prevState) => {
 		var init = {
-			name: '',
-			pass: '',
-			passVerify: '',
-			email: '',
-			error: '',
+			name: "",
+			pass: "",
+			passVerify: "",
+			email: "",
+			error: "",
 			completed: false
 		};
-		return prevState === undefined ? init : Object.assign({}, init, prevState);
+		return prevState === undefined
+			? init
+			: Object.assign({}, init, prevState);
 	});
 
 	const fields$ = xs
-		.merge(actions.name$, actions.pass$, actions.passVerify$, actions.email$)
-		.map(val => prev => ({ ...prev, ...val }));
+		.merge(
+			actions.name$,
+			actions.pass$,
+			actions.passVerify$,
+			actions.email$
+		)
+		.map((val) => (prev) => ({ ...prev, ...val }));
 
-	const passwordVerified$ = actions.submit$.mapTo(prev => {
+	const passwordVerified$ = actions.submit$.mapTo((prev) => {
 		return {
 			...prev,
-			error: prev.passVerify == prev.pass ? '' : 'verifiedPassword'
+			error: prev.passVerify == prev.pass ? "" : "verifiedPassword"
 		};
 	});
 
-	const completed$ = actions.result$.map(x => {
+	const completed$ = actions.result$.map((x) => {
 		if (x.errors != null) {
-			return prev => ({ ...prev, error: x.errors[0].message });
+			return (prev) => ({ ...prev, error: x.errors[0].message });
 		} else if (x.user && x.user.id) {
-			return prev => ({ ...prev, ...allFieldsInAuth });
+			return (prev) => ({ ...prev, ...allFieldsInAuth });
 		}
 	});
 
-	const facebook$ = actions.facebook$.mapTo(prev => {
-		window.location = '/auth/facebook';
+	const facebook$ = actions.facebook$.mapTo((prev) => {
+		window.location = "/auth/facebook";
 	});
-	const google$ = actions.google$.mapTo(prev => {
-		window.location = '/auth/google';
+	const google$ = actions.google$.mapTo((prev) => {
+		window.location = "/auth/google";
 	});
 
 	return xs.merge(

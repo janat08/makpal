@@ -1,14 +1,14 @@
-import { getOperationAST } from 'graphql';
-import { BatchHttpLink } from 'apollo-link-batch-http';
-import { ApolloLink } from 'apollo-link';
-import { withClientState } from 'apollo-link-state';
-import { WebSocketLink } from 'apollo-link-ws';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { LoggingLink } from 'apollo-logger';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
-import ApolloClient from 'apollo-client';
-import ApolloCacheRouter from 'apollo-cache-router';
-import { hasDirectives } from 'apollo-utilities';
+import { getOperationAST } from "graphql";
+import { BatchHttpLink } from "apollo-link-batch-http";
+import { ApolloLink } from "apollo-link";
+import { withClientState } from "apollo-link-state";
+import { WebSocketLink } from "apollo-link-ws";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { LoggingLink } from "apollo-logger";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+import ApolloClient from "apollo-client";
+import ApolloCacheRouter from "apollo-cache-router";
+import { hasDirectives } from "apollo-utilities";
 //doesn't work
 // import config from "config";
 // var {__TEST__} = config
@@ -18,12 +18,21 @@ import { hasDirectives } from 'apollo-utilities';
 var __TEST__ = false;
 var __SSR__ = false;
 
-const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, clientResolvers }) => {
+const createApolloClient = ({
+	apiUrl,
+	createNetLink,
+	links,
+	connectionParams,
+	clientResolvers
+}) => {
 	const netCache = new InMemoryCache();
 	const localCache = new InMemoryCache();
 	const cache = ApolloCacheRouter.override(
-		ApolloCacheRouter.route([netCache, localCache], document => {
-			if (hasDirectives(['client'], document) || getOperationAST(document).name.value === 'GeneratedClientQuery') {
+		ApolloCacheRouter.route([netCache, localCache], (document) => {
+			if (
+				hasDirectives(["client"], document) ||
+				getOperationAST(document).name.value === "GeneratedClientQuery"
+			) {
 				// Pass all @client queries and @client defaults to localCache
 				return [localCache];
 			} else {
@@ -47,7 +56,7 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 		  });
 
 	let apiLink = queryLink;
-	if (apiUrl && (__TEST__ || typeof navigator !== 'undefined' || false)) {
+	if (apiUrl && (__TEST__ || typeof navigator !== "undefined" || false)) {
 		let finalConnectionParams = {};
 		if (connectionParams) {
 			for (const connectionParam of connectionParams) {
@@ -55,7 +64,7 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 			}
 		}
 
-		const wsUri = apiUrl.replace(/^http/, 'ws');
+		const wsUri = apiUrl.replace(/^http/, "ws");
 
 		const globalVar =
 			typeof global !== "undefined"
@@ -92,9 +101,14 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 		});
 
 		apiLink = ApolloLink.split(
-			operation => {
-				const operationAST = getOperationAST(operation.query, operation.operationName);
-				return !!operationAST && operationAST.operation === 'subscription';
+			(operation) => {
+				const operationAST = getOperationAST(
+					operation.query,
+					operation.operationName
+				);
+				return (
+					!!operationAST && operationAST.operation === "subscription"
+				);
 			},
 			new WebSocketLink(wsClient),
 			queryLink
@@ -110,12 +124,12 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 	//   allLinks.unshift(new LoggingLink({ logger: log.debug.bind(log) }));
 	// }
 
-	const clientParams = { 
+	const clientParams = {
 		link: ApolloLink.from(allLinks),
 		cache
 	};
 	if (__SSR__ && !__TEST__) {
-		if (typeof window !== 'undefined' && window.__APOLLO_STATE__) {
+		if (typeof window !== "undefined" && window.__APOLLO_STATE__) {
 			clientParams.initialState = window.__APOLLO_STATE__;
 		} else {
 			clientParams.ssrMode = true;
@@ -126,7 +140,7 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 	if (__TEST__) {
 		clientParams.defaultOptions = {
 			query: {
-				fetchPolicy: 'no-cache'
+				fetchPolicy: "no-cache"
 			}
 		};
 	}
@@ -134,7 +148,7 @@ const createApolloClient = ({ apiUrl, createNetLink, links, connectionParams, cl
 	const client = new ApolloClient(clientParams);
 	client.onResetStore(linkState.writeDefaults);
 
-	if (typeof window !== 'undefined' && window.__APOLLO_STATE__) {
+	if (typeof window !== "undefined" && window.__APOLLO_STATE__) {
 		cache.restore(window.__APOLLO_STATE__);
 	}
 

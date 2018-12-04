@@ -8,16 +8,18 @@ import delay from "xstream/extra/delay";
 export default function Login({ DOM, state, apollo }) {
 	const action = {
 		...intent(DOM),
-		result$: apollo.select('login').map(x => x.data.login)
+		result$: apollo.select("login").map((x) => x.data.login)
 	};
 
 	const submitLogin$ = action.submit$
-		.map(x => {
+		.map((x) => {
 			return state.stream
-				.map(x => {
+				.map((x) => {
 					return xs.of({
 						mutation: LOGIN,
-						variables: { input: { usernameOrEmail: x.name, password: x.pass } }
+						variables: {
+							input: { usernameOrEmail: x.name, password: x.pass }
+						}
 						// category: 'login'
 					});
 				})
@@ -27,10 +29,10 @@ export default function Login({ DOM, state, apollo }) {
 		.flatten();
 
 	var writeLogin$ = action.result$
-		.map(x => {
+		.map((x) => {
 			return xs.of({
-				op: 'writeQuery',
-				cat: 'writeLogin',
+				op: "writeQuery",
+				cat: "writeLogin",
 				param: {
 					query: CURRENT_USER,
 					data: { currentUser: x.user }
@@ -40,8 +42,8 @@ export default function Login({ DOM, state, apollo }) {
 		.flatten();
 
 	var testUser$ = apollo
-		.select('writeLogin')
-		.map(x => {
+		.select("writeLogin")
+		.map((x) => {
 			return xs.of({
 				query: CURRENT_USER,
 				category: "currentUser"
@@ -50,15 +52,15 @@ export default function Login({ DOM, state, apollo }) {
 		.flatten();
 
 	apollo
-		.select('currentUser')
-		.debug('current')
+		.select("currentUser")
+		.debug("current")
 		.subscribe({});
 
 	const reducer$ = model(action);
 	const vdom$ = view(state.stream);
 
 	const hasLoggedIn$ = state.stream
-		.filter(x => x.completed)
+		.filter((x) => x.completed)
 		.compose(delay(1000));
 
 	return {

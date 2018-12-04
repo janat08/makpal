@@ -1,33 +1,35 @@
-import xs from 'xstream';
+import xs, { map, merge } from "xstream";
 
-var init = { name: '', pass: '', error: '', complete: false };
+var init = { name: "", pass: "", error: "", complete: false };
 var allFieldsInAuth = {
-	name: '',
-	pass: '',
-	passVerify: '',
-	email: '',
+	name: "",
+	pass: "",
+	passVerify: "",
+	email: "",
 	completed: true
 };
 export default function model(actions) {
-	const initReducer$ = xs.of(prevState => {
-		return prevState === undefined ? init : Object.assign({}, init, prevState);
+	const initReducer$ = xs.of((prevState) => {
+		return prevState === undefined
+			? init
+			: Object.assign({}, init, prevState);
 	});
 	const fields$ = xs
 		.merge(actions.name$, actions.pass$)
-		.map(val => prev => ({ ...prev, ...val }));
+		.map((val) => (prev) => ({ ...prev, ...val }));
 
-	const facebook$ = actions.facebook$.mapTo(prev => {
-		window.location = '/auth/facebook';
+	const facebook$ = actions.facebook$.mapTo((prev) => {
+		window.location = "/auth/facebook";
 	});
-	const google$ = actions.google$.mapTo(prev => {
-		window.location = '/auth/google';
+	const google$ = actions.google$.mapTo((prev) => {
+		window.location = "/auth/google";
 	});
 
-	const completed$ = actions.result$.map(x => {
+	const completed$ = actions.result$.map((x) => {
 		if (x.errors != null) {
-			return prev => ({ ...prev, error: x.errors[0].message });
+			return (prev) => ({ ...prev, error: x.errors[0].message });
 		} else if (x.user && x.user.id) {
-			return prev => ({ ...prev, ...allFieldsInAuth });
+			return (prev) => ({ ...prev, ...allFieldsInAuth });
 		}
 	});
 

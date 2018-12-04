@@ -1,11 +1,11 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 function filterField(field, param) {
-	return function (object) {
+	return function(object) {
 		if (Array.isArray(field)) {
-			return field.reduce(function (a, x) {
+			return field.reduce(function(a, x) {
 				if (Array.isArray(param)) {
-					a = param.reduce(function (ab, xb) {
+					a = param.reduce(function(ab, xb) {
 						if (object[x] == xb) {
 							ab = true;
 						}
@@ -27,15 +27,16 @@ class User {
 	constructor() {
 		this.users = [
 			{
-				id: '1234',
-				username: 'asdf',
-				role: 'asdf',
+				id: "1234",
+				username: "asdf",
+				role: "asdf",
 				isActive: true,
-				email: 'asdf@asdf',
-				first_name: 'asdf',
-				last_name: 'asdf',
-				serial: 'asdf',
-				passwordHash: '$2a$12$GiTLGeMeaoFyzAJhQKPms.BgaGo.KI6D/Hhptw3J3gk44Fb49aMLS' //"asdf" is unecrypted and unsalted
+				email: "asdf@asdf",
+				first_name: "asdf",
+				last_name: "asdf",
+				serial: "asdf",
+				passwordHash:
+					"$2a$12$GiTLGeMeaoFyzAJhQKPms.BgaGo.KI6D/Hhptw3J3gk44Fb49aMLS" //"asdf" is unecrypted and unsalted
 			}
 		];
 		this.user = this.users[0];
@@ -45,25 +46,32 @@ class User {
 	}
 
 	async getUser(id) {
-		return this.users.filter(filterField('id', id))[0];
+		return this.users.filter(filterField("id", id))[0];
 	}
 
 	async getUserWithPassword(id) {
-		return this.users.filter(filterField('id', id))[0];
+		return this.users.filter(filterField("id", id))[0];
 	}
 
 	async getUserWithSerial(serial) {
-		return this.users.filter(filterField('serial', serial))[0];
+		return this.users.filter(filterField("serial", serial))[0];
 	}
 
 	async register({ username, email, password, role, isActive }) {
 		if (role === undefined) {
-			role = 'user';
+			role = "user";
 		}
 
 		console.log(password);
 		var passwordHashed = await bcrypt.hash(password, 12);
-		this.users.push({id: password, username, email, passwordHash: passwordHashed, role, isActive });
+		this.users.push({
+			id: password,
+			username,
+			email,
+			passwordHash: passwordHashed,
+			role,
+			isActive
+		});
 		return password;
 	}
 
@@ -130,32 +138,36 @@ class User {
 	}
 
 	async getUserByEmail(email) {
-		return this.users.filter(filterField('email', email))[0];
+		return this.users.filter(filterField("email", email))[0];
 	}
 
 	async getUserByFbIdOrEmail(id, email) {
-		return this.users.filter(filterField(['fb_id', 'email'], [id, email]))[0];
+		return this.users.filter(
+			filterField(["fb_id", "email"], [id, email])
+		)[0];
 	}
 
 	async getUserByGoogleIdOrEmail(id, email) {
-		return this.users.filter(filterField(['google_id', 'email'], [id, email]))[0];
+		return this.users.filter(
+			filterField(["google_id", "email"], [id, email])
+		)[0];
 	}
 
 	async getUserByUsername(username) {
-
-		return this.users.filter(filterField('username', username))[0];
+		return this.users.filter(filterField("username", username))[0];
 	}
 
 	async getUserByUsernameOrEmail(usernameOrEmail) {
 		// bcrypt.hash("asdf", 12).then(x=>console.log(x, "hashed"));
 		// bcrypt.compare("asdf", "$2a$12$GiTLGeMeaoFyzAJhQKPms.BgaGo.KI6D/Hhptw3J3gk44Fb49aMLS").then(x=>console.log(x, "compared"));
-		return this.users.filter(filterField(['username', 'email'], usernameOrEmail))[0];
+		return this.users.filter(
+			filterField(["username", "email"], usernameOrEmail)
+		)[0];
 	}
 }
 const userDAO = new User();
 
 export default userDAO;
-
 
 // // Actual query fetching and transformation in DB
 // class User {

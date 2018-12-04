@@ -1,10 +1,10 @@
-import facebook from './facebook';
+import facebook from "./facebook";
 // import github from './github';
-import google from './google';
-import password from './password';
+import google from "./google";
+import password from "./password";
 // import linkedin from './linkedIn';
 // import serial from './serial';
 
-import Feature from './connector';
+import Feature from "./connector";
 
 export default new Feature(facebook, google, password);

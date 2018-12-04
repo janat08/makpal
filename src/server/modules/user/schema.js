@@ -1,4 +1,3 @@
-
 export default `
 type User {
   id: Int!

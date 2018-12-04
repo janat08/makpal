@@ -1,26 +1,26 @@
-import { pick } from 'lodash';
-import passport from 'passport';
-import FacebookStrategy from 'passport-facebook';
+import { pick } from "lodash";
+import passport from "passport";
+import FacebookStrategy from "passport-facebook";
 
-import resolvers from './resolvers';
-import Feature from '../connector';
-import User from '../../sql';
-import access from '../../access';
-import getCurrentUser from '../utils';
-const {config} = global
-var {__TEST__} = config;
-let middleware; 
+import resolvers from "./resolvers";
+import Feature from "../connector";
+import User from "../../sql";
+import access from "../../access";
+import getCurrentUser from "../utils";
+const { config } = global;
+var { __TEST__ } = config;
+let middleware;
 
-if (config.user.auth.facebook.enabled && !__TEST__) { 
+if (config.user.auth.facebook.enabled && !__TEST__) {
 	passport.use(
 		new FacebookStrategy(
 			{
 				clientID: config.user.auth.facebook.clientID,
 				clientSecret: config.user.auth.facebook.clientSecret,
-				callbackURL: '/auth/facebook/callback',
+				callbackURL: "/auth/facebook/callback",
 				scope: config.user.auth.facebook.scope,
 				profileFields: config.user.auth.facebook.profileFields,
-				enableProof: true,
+				enableProof: true
 			},
 			async function(accessToken, refreshToken, profile, cb) {
 				const {
@@ -30,8 +30,12 @@ if (config.user.auth.facebook.enabled && !__TEST__) {
 					emails: [{ value }]
 				} = profile;
 				try {
-					console.log('aaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-						'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', id, value);
+					console.log(
+						"aaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+						id,
+						value
+					);
 					let user = await User.getUserByFbIdOrEmail(id, value);
 
 					if (!user) {
@@ -57,7 +61,10 @@ if (config.user.auth.facebook.enabled && !__TEST__) {
 							userId: user.id
 						});
 					}
-					return cb(null, pick(user, ['id', 'username', 'role', 'email']));
+					return cb(
+						null,
+						pick(user, ["id", "username", "role", "email"])
+					);
 				} catch (err) {
 					return cb(err, {});
 				}
@@ -65,32 +72,40 @@ if (config.user.auth.facebook.enabled && !__TEST__) {
 		)
 	);
 
-	middleware = app => {
+	middleware = (app) => {
 		app.use(passport.initialize());
-		app.get('/auth/facebook', (req, res, next) => {
-			passport.authenticate('facebook', { state: req.query.expoUrl })(req, res, next);
+		app.get("/auth/facebook", (req, res, next) => {
+			passport.authenticate("facebook", { state: req.query.expoUrl })(
+				req,
+				res,
+				next
+			);
 		});
-		app.get('/auth/facebook/callback', passport.authenticate('facebook', { session: false }), async function(req, res) {
-			const user = await User.getUser(req.user.id);
-			const redirectUrl = req.query.state;
-			const tokens = await access.grantAccess(user, req);
-			const currentUser = await getCurrentUser(req, res);
+		app.get(
+			"/auth/facebook/callback",
+			passport.authenticate("facebook", { session: false }),
+			async function(req, res) {
+				const user = await User.getUser(req.user.id);
+				const redirectUrl = req.query.state;
+				const tokens = await access.grantAccess(user, req);
+				const currentUser = await getCurrentUser(req, res);
 
-			if (redirectUrl) {
-				res.redirect(
-					redirectUrl +
-            (tokens
-            	? '?data=' +
-                JSON.stringify({
-                	tokens,
-                	user: currentUser.data
-                })
-            	: '')
-				);
-			} else {
-				res.redirect('/profile');
+				if (redirectUrl) {
+					res.redirect(
+						redirectUrl +
+							(tokens
+								? "?data=" +
+								  JSON.stringify({
+										tokens,
+										user: currentUser.data
+								  })
+								: "")
+					);
+				} else {
+					res.redirect("/profile");
+				}
 			}
-		});
+		);
 	};
 }
 

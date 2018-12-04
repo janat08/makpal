@@ -22,10 +22,10 @@ export default new Feature(access, auth, {
 	schema,
 	createResolversFunc: resolvers,
 	createContextFunc,
-	middleware: app => {
+	middleware: (app) => {
 		if (config.user.auth.password.sendConfirmationEmail) {
-			app.get('/confirmation/:token', confirmMiddleware);
+			app.get("/confirmation/:token", confirmMiddleware);
 		}
 	},
-	localization: { ns: 'user', resources }
+	localization: { ns: "user", resources }
 });
