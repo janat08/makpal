@@ -194,5 +194,5 @@ const JWTLink = new ApolloLink((operation, forward) => {
 //     : {}
 // );
 
-export default JWTLink;
+export default [JWTLink];
 export {removeTokens};

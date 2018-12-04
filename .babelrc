@@ -1,20 +1,32 @@
 {
   "presets": [
-    "env",
-    "react",
-    "stage-0",
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": [
+          ">1%",
+          "last 4 versions",
+          "Firefox ESR",
+          "not ie < 9"
+        ],
+        "esmodules": true,
+        "node": "current"
+      },
+      "useBuiltIns": "usage"
+    }],
+    "@babel/preset-react",
+    "@babel/preset-typescript"
   ],
   "plugins": [
+    "import-graphql",
     "transform-class-properties",
-    "syntax-dynamic-import",
-    "syntax-jsx",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-syntax-jsx",
     "babel-plugin-inline-import",
-    ["transform-runtime",
+    ["@babel/plugin-transform-runtime",
       {
-          "polyfill": false,
-          "regenerator": true
+        "regenerator": true
       }],
-    ["transform-react-jsx", {"pragma": "Snabbdom.createElement"}],
+    ["@babel/plugin-transform-react-jsx", {"pragma": "Snabbdom.createElement"}],
     ["babel-plugin-root-import", {
       "paths": [{
         "rootPathPrefix": "~",
