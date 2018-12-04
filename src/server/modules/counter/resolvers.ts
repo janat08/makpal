@@ -1,27 +1,30 @@
-const COUNTER_SUBSCRIPTION = 'counter_subscription';
+const COUNTER_SUBSCRIPTION = "counter_subscription";
 
 export default (pubsub: any) => ({
-  Query: {
-    serverCounter(obj: any, args: any, context: any) {
-      var a = context.Counter.counterQuery();
-      return a; {amount: a}
-    }
-  },
-  Mutation: {
-    async addServerCounter(obj: any, { amount }: any, context: any) {
-      await context.Counter.addCounter(amount);
-      const counter = await context.Counter.counterQuery();
+	Query: {
+		serverCounter(obj: any, args: any, context: any) {
+			var a = context.Counter.counterQuery();
+			return a;
+			{
+				amount: a;
+			}
+		}
+	},
+	Mutation: {
+		async addServerCounter(obj: any, { amount }: any, context: any) {
+			await context.Counter.addCounter(amount);
+			const counter = await context.Counter.counterQuery();
 
-      pubsub.publish(COUNTER_SUBSCRIPTION, {
-        counterUpdated: { amount: counter.amount }
-      });
+			pubsub.publish(COUNTER_SUBSCRIPTION, {
+				counterUpdated: { amount: counter.amount }
+			});
 
-      return counter;
-    }
-  },
-  Subscription: {
-    counterUpdated: {
-      subscribe: () => pubsub.asyncIterator(COUNTER_SUBSCRIPTION)
-    }
-  }
+			return counter;
+		}
+	},
+	Subscription: {
+		counterUpdated: {
+			subscribe: () => pubsub.asyncIterator(COUNTER_SUBSCRIPTION)
+		}
+	}
 });

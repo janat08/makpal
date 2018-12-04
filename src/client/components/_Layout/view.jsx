@@ -1,12 +1,12 @@
-import xs from 'xstream';
-import Snabbdom from 'snabbdom-pragma';
+import xs from "xstream";
+import Snabbdom from "snabbdom-pragma";
 
 function navigation(pathname, hasLoggedIn) {
 	var sessionState = hasLoggedIn ? (
 		<a
 			className="logoutJs"
 			href="#"
-			style={pathname.startsWith('/logout') ? 'font-weight:bold' : ''}
+			style={pathname.startsWith("/logout") ? "font-weight:bold" : ""}
 		>
 			Log out
 		</a>
@@ -14,7 +14,7 @@ function navigation(pathname, hasLoggedIn) {
 		<a
 			className="loginJs"
 			href="/login"
-			style={pathname.startsWith('/login') ? 'font-weight:bold' : ''}
+			style={pathname.startsWith("/login") ? "font-weight:bold" : ""}
 		>
 			Log in
 		</a>
@@ -27,7 +27,9 @@ function navigation(pathname, hasLoggedIn) {
 					<a
 						className="homeJs"
 						href="/"
-						style={pathname.startsWith('/') ? 'font-weight:bold' : ''}
+						style={
+							pathname.startsWith("/") ? "font-weight:bold" : ""
+						}
 					>
 						Makpal
 					</a>
@@ -36,7 +38,11 @@ function navigation(pathname, hasLoggedIn) {
 					<a
 						className="secondHomeJs"
 						href="/secondHome"
-						style={pathname.startsWith('/secondHome') ? 'font-weight:bold' : ''}
+						style={
+							pathname.startsWith("/secondHome")
+								? "font-weight:bold"
+								: ""
+						}
 					>
 						Makpal2
 					</a>
@@ -45,7 +51,11 @@ function navigation(pathname, hasLoggedIn) {
 				<li>
 					<a
 						href="/profile"
-						style={pathname.startsWith('/profile') ? 'font-weight:bold' : ''}
+						style={
+							pathname.startsWith("/profile")
+								? "font-weight:bold"
+								: ""
+						}
 					>
 						Profile
 					</a>
