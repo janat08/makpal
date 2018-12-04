@@ -93,7 +93,12 @@ describe("apolloDriver", function() {
 		//lightweight variant requiring custom definitions to deterministic results
 		const schema = makeExecutableSchema({ typeDefs: schemaString });
 		// Add mocks, modifies schema in place
-		addMockFunctionsToSchema({ schema });
+		const mocks = {
+			Int: () => 6,
+			Float: () => 22.1,
+			String: () => "Hello World"
+		};
+		addMockFunctionsToSchema({ schema, mocks });
 		const apolloCache = new InMemoryCache((window as any).__APOLLO_STATE__);
 		// @ts-ignore
 		client = new ApolloClient({
