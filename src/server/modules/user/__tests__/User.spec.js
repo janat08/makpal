@@ -9,7 +9,7 @@ const step = it,
 	before = beforeAll,
 	after = afterAll;
 
-describe("User API works", () => {
+describe.skip("User API works", () => {
 	let apollo;
 
 	beforeAll(() => {

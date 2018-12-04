@@ -1,20 +1,21 @@
 import xs from "xstream";
-import { adapt } from "@cycle/run/lib/adapt";
+// import { adapt } from "@cycle/run/lib/adapt";
 
 const responseFilter = (category) => (response$) => {
+	var i = response$.options;
 	return (
 		response$.options &&
-		(response$.options.category === category ||
-			response$.options.operationName === category)
+		(i.category === category || i.operationName === category)
 	);
 };
 
-//changelog
-//adapt/rxjs/most
-//subscriptions add
+// changelog
+// category alias to cat
+// callbacks to client
+// subscriptions add
 // select by operation name
 // observer and original object added into response, while first data entry got remapped under result
-// returns flattened results under driver property derived from template option
+// returns flattened results
 const producer = (observable) => {
 	let subscription;
 	return {
@@ -60,10 +61,18 @@ export function makeApolloDriver(client, template = []) {
 			);
 		});
 		response$.options = appendGraphOperationNameToOptions(options);
-		return adapt(response$);
+		return response$;
 	}
 
 	return function apolloDriver(input$) {
+		input$ = input$.map((x) => {
+			if (x.cat) {
+				x.category = x.cat;
+				delete x.cat;
+			}
+			return x;
+		});
+
 		const queryResponse$ = input$
 			.filter((input) => input.query && !input.subscription)
 			.map(apolloObserver);
@@ -73,7 +82,7 @@ export function makeApolloDriver(client, template = []) {
 			.map((options) => {
 				const response$ = xs.from(client.mutate(options));
 				response$.options = appendGraphOperationNameToOptions(options);
-				return adapt(response$);
+				return response$;
 			});
 
 		const subscription$ = input$
@@ -85,7 +94,10 @@ export function makeApolloDriver(client, template = []) {
 		const clientOperations$ = input$
 			.filter((input) => input.op)
 			.map((x) => {
-				return xs.from(client[x.op](x.param));
+				var res = x.op(client);
+				var res$ = res instanceof xs ? res : xs.of(res ? res : null);
+				res$.options = x;
+				return res$;
 			});
 
 		const response$$ = xs.merge(
@@ -98,13 +110,14 @@ export function makeApolloDriver(client, template = []) {
 		response$$.subscribe({});
 
 		const select = (category) => {
-			return category
-				? adapt(response$$.filter(responseFilter(category)).flatten())
-				: adapt(response$$);
+			var a = category
+				? response$$.filter(responseFilter(category)).flatten()
+				: response$$;
+			return a;
 		};
 
 		Object.assign(response$$, { client }, { select });
 
-		return adapt(response$$);
+		return response$$;
 	};
 }

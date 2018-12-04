@@ -1,147 +1,20 @@
-<testsuites name="jest tests" tests="8" failures="4" time="1.196">
-  <testsuite name="User API works" errors="0" failures="4" skipped="4" timestamp="2018-11-25T13:12:57" time="1.113" tests="8">
-    <testcase classname="User API works User not logged in initially" name="User API works User not logged in initially" time="0">
-      <failure>Failed: TypeScript diagnostics (customize using `[jest-config].globals.ts-jest.diagnostics` option):
-src/server/modules/counter/sql.ts:11:14 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	           ~~~~~~
-src/server/modules/counter/sql.ts:11:43 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	                                        ~~~~~~</failure>
-      <failure>TypeError: Cannot read property &apos;query&apos; of undefined
-    at _callee$ (C:\Users\user\dev\react-head\src\server\modules\user\__tests__\User.spec.js:40:21)
-    at tryCatch (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:62:40)
-    at Generator.invoke [as _invoke] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:296:22)
-    at Generator.prototype.(anonymous function) [as next] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:114:21)
-    at step (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:17:30)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:35:14
-    at new Promise (&lt;anonymous&gt;)
-    at new F (C:\Users\user\dev\react-head\node_modules\core-js\library\modules\_export.js:36:28)
-    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:14:12)
-    at Object.asyncFn (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine_async.js:124:345)
-    at resolve (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:46:12)
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:34:499)
-    at promise.then (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:74:39)
-    at &lt;anonymous&gt;
-    at process._tickCallback (internal/process/next_tick.js:188:7)</failure>
+<testsuites name="jest tests" tests="7" failures="0" time="1.485">
+  <testsuite name="apolloDriver" errors="0" failures="0" skipped="3" timestamp="2018-12-01T09:56:40" time="1.443" tests="7">
+    <testcase classname="apolloDriver will filter queries with select()" name="apolloDriver will filter queries with select()" time="0.006">
     </testcase>
-    <testcase classname="User API works Siging in as ordinary user works" name="User API works Siging in as ordinary user works" time="0">
-      <failure>Failed: TypeScript diagnostics (customize using `[jest-config].globals.ts-jest.diagnostics` option):
-src/server/modules/counter/sql.ts:11:14 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	           ~~~~~~
-src/server/modules/counter/sql.ts:11:43 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	                                        ~~~~~~</failure>
-      <failure>TypeError: Cannot read property &apos;mutate&apos; of undefined
-    at _callee$ (C:\Users\user\dev\react-head\src\server\modules\user\testHelpers\index.js:31:48)
-    at tryCatch (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:62:40)
-    at Generator.invoke [as _invoke] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:296:22)
-    at Generator.prototype.(anonymous function) [as next] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:114:21)
-    at step (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:17:30)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:35:14
-    at new Promise (&lt;anonymous&gt;)
-    at new F (C:\Users\user\dev\react-head\node_modules\core-js\library\modules\_export.js:36:28)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:14:12
-    at login (C:\Users\user\dev\react-head\src\server\modules\user\testHelpers\index.js:48:15)
-    at _callee2$ (C:\Users\user\dev\react-head\src\server\modules\user\__tests__\User.spec.js:62:37)
-    at tryCatch (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:62:40)
-    at Generator.invoke [as _invoke] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:296:22)
-    at Generator.prototype.(anonymous function) [as next] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:114:21)
-    at step (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:17:30)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:35:14
-    at new Promise (&lt;anonymous&gt;)
-    at new F (C:\Users\user\dev\react-head\node_modules\core-js\library\modules\_export.js:36:28)
-    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:14:12)
-    at Object.asyncFn (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine_async.js:124:345)
-    at resolve (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:46:12)
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:34:499)
-    at promise.then (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:74:39)
-    at &lt;anonymous&gt;
-    at process._tickCallback (internal/process/next_tick.js:188:7)</failure>
+    <testcase classname="apolloDriver will select by name given to operation in gql string" name="apolloDriver will select by name given to operation in gql string" time="0.144">
     </testcase>
-    <testcase classname="User API works Signing out as ordinary user works" name="User API works Signing out as ordinary user works" time="0">
-      <failure>Failed: TypeScript diagnostics (customize using `[jest-config].globals.ts-jest.diagnostics` option):
-src/server/modules/counter/sql.ts:11:14 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	           ~~~~~~
-src/server/modules/counter/sql.ts:11:43 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	                                        ~~~~~~</failure>
-      <failure>TypeError: Cannot read property &apos;mutate&apos; of undefined
-    at _callee2$ (C:\Users\user\dev\react-head\src\server\modules\user\testHelpers\index.js:59:48)
-    at tryCatch (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:62:40)
-    at Generator.invoke [as _invoke] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:296:22)
-    at Generator.prototype.(anonymous function) [as next] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:114:21)
-    at step (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:17:30)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:35:14
-    at new Promise (&lt;anonymous&gt;)
-    at new F (C:\Users\user\dev\react-head\node_modules\core-js\library\modules\_export.js:36:28)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:14:12
-    at logout (C:\Users\user\dev\react-head\src\server\modules\user\testHelpers\index.js:73:16)
-    at _callee3$ (C:\Users\user\dev\react-head\src\server\modules\user\__tests__\User.spec.js:88:38)
-    at tryCatch (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:62:40)
-    at Generator.invoke [as _invoke] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:296:22)
-    at Generator.prototype.(anonymous function) [as next] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:114:21)
-    at step (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:17:30)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:35:14
-    at new Promise (&lt;anonymous&gt;)
-    at new F (C:\Users\user\dev\react-head\node_modules\core-js\library\modules\_export.js:36:28)
-    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:14:12)
-    at Object.asyncFn (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine_async.js:124:345)
-    at resolve (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:46:12)
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:34:499)
-    at promise.then (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:74:39)
-    at &lt;anonymous&gt;
-    at process._tickCallback (internal/process/next_tick.js:188:7)</failure>
+    <testcase classname="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" name="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" time="0.002">
     </testcase>
-    <testcase classname="User API works Can&apos;t query user profiles as guest" name="User API works Can&apos;t query user profiles as guest" time="0.001">
-      <failure>Failed: TypeScript diagnostics (customize using `[jest-config].globals.ts-jest.diagnostics` option):
-src/server/modules/counter/sql.ts:11:14 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	           ~~~~~~
-src/server/modules/counter/sql.ts:11:43 - error TS2339: Property &apos;amount&apos; does not exist on type &apos;object&apos;.
-
-11  	this.count.amount = amount + this.count.amount;
-    	                                        ~~~~~~</failure>
-      <failure>TypeError: Cannot read property &apos;query&apos; of undefined
-    at _callee4$ (C:\Users\user\dev\react-head\src\server\modules\user\__tests__\User.spec.js:113:15)
-    at tryCatch (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:62:40)
-    at Generator.invoke [as _invoke] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:296:22)
-    at Generator.prototype.(anonymous function) [as next] (C:\Users\user\dev\react-head\node_modules\regenerator-runtime\runtime.js:114:21)
-    at step (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:17:30)
-    at C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:35:14
-    at new Promise (&lt;anonymous&gt;)
-    at new F (C:\Users\user\dev\react-head\node_modules\core-js\library\modules\_export.js:36:28)
-    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\node_modules\babel-runtime\helpers\asyncToGenerator.js:14:12)
-    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\src\server\modules\user\__tests__\User.spec.js:132:17)
-    at resolve (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:46:12)
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:34:499)
-    at promise.then (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:74:39)
-    at &lt;anonymous&gt;
-    at process._tickCallback (internal/process/next_tick.js:188:7)</failure>
+    <testcase classname="apolloDriver will accept async operations to be performed on client" name="apolloDriver will accept async operations to be performed on client" time="0.031">
     </testcase>
-    <testcase classname="User API works Tests with authenticated user Can query own user profile" name="User API works Tests with authenticated user Can query own user profile" time="0">
+    <testcase classname="apolloDriver adapt works" name="apolloDriver adapt works" time="0">
       <skipped/>
     </testcase>
-    <testcase classname="User API works Tests with authenticated user Cannot query other users profile" name="User API works Tests with authenticated user Cannot query other users profile" time="0">
+    <testcase classname="apolloDriver will rerun watchQuery after storeReset with empty results" name="apolloDriver will rerun watchQuery after storeReset with empty results" time="0">
       <skipped/>
     </testcase>
-    <testcase classname="User API works Tests with authenticated admin Can query own user profile" name="User API works Tests with authenticated admin Can query own user profile" time="0">
-      <skipped/>
-    </testcase>
-    <testcase classname="User API works Tests with authenticated admin Can query other users profile" name="User API works Tests with authenticated admin Can query other users profile" time="0">
+    <testcase classname="apolloDriver should not remember past responses when selecting" name="apolloDriver should not remember past responses when selecting" time="0">
       <skipped/>
     </testcase>
   </testsuite>
