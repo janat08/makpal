@@ -1,11 +1,11 @@
 import { writeSession, createSession, readSession } from './sessions';
 import { isApiExternal } from '../../../../net';
 import Feature from '../connector';
-import schema from './schema.js'; 
+import schema from './schema.js';
 import resolvers from './resolvers';
 import scopes from '../../scopes';
 import User from '../../sql';
-import config from 'config';
+const { __API_URL__ } = global.config;
 
 const grant = async (user, req) => {
 	const session = {
@@ -28,7 +28,7 @@ const attachSession = req => {
 		if (!req.session) {
 			req.session = createSession(req);
 		} else {
-			if (!isApiExternal && req.path === 'localhost:4000') {
+			if (!isApiExternal && req.path === __API_URL__) {
 				if (req.universalCookies.get('x-token') !== req.session.csrfToken) {
 					req.session = createSession(req);
 					throw new Error('CSRF token validation failed');
@@ -38,9 +38,16 @@ const attachSession = req => {
 	}
 };
 
-const createContextFunc = async ({ req, connectionParams, webSocket, context }) => {
+const createContextFunc = async ({
+	req,
+	connectionParams,
+	webSocket,
+	context
+}) => {
 	attachSession(req);
-	const user = context.user || (await getCurrentUser({ req, connectionParams, webSocket }));
+	const user =
+		context.user ||
+		(await getCurrentUser({ req, connectionParams, webSocket }));
 	const auth = {
 		isAuthenticated: !!user,
 		scope: user ? scopes[user.role] : null
@@ -60,6 +67,6 @@ export default new Feature(
 			schema,
 			createResolversFunc: resolvers,
 			createContextFunc
-		}
+		  }
 		: {}
 );

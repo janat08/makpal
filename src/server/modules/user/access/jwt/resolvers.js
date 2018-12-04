@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import createTokens from './createTokens';
-import config from 'config';
+const {config} = global
 
 export default () => ({
 	Mutation: {

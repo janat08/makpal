@@ -7,7 +7,7 @@ import Feature from '../connector';
 import User from '../../sql';
 import access from '../../access';
 import getCurrentUser from '../utils';
-import config from 'config';
+const {config} = global
 var {__TEST__} = config;
 let middleware; 
 

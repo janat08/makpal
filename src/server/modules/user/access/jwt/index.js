@@ -4,7 +4,7 @@ import createTokens from './createTokens';
 import resolvers from './resolvers';
 import schema from './schema.js';
 import Feature from '../connector';
-import config from 'config';
+const {config} = global
 
 const grant = async user => {
 	const refreshSecret = config.user.secret + user.passwordHash;

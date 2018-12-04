@@ -2,11 +2,13 @@ import crypto from 'crypto';
 import log from '../../../../../common/log';
 
 import { encryptSession, decryptSession } from './crypto';
-import config from 'config';
-var {__TEST__, __DEV__} = config;
+const { config } = global;
+var { __TEST__, __DEV__ } = config;
 
 export const createSession = req => {
-	const session = writeSession(req, { csrfToken: crypto.randomBytes(16).toString('hex') });
+	const session = writeSession(req, {
+		csrfToken: crypto.randomBytes(16).toString('hex')
+	});
 	return session;
 };
 
@@ -18,7 +20,9 @@ export const readSession = req => {
 			req.universalCookies.set('x-token', session.csrfToken);
 		}
 	} else {
-		session = decryptSession(req.universalCookies.get('session', { doNotParse: true }));
+		session = decryptSession(
+			req.universalCookies.get('session', { doNotParse: true })
+		);
 		if (req.headers.session) {
 			session = decryptSession(req.headers.session);
 		}

@@ -15,9 +15,15 @@ const mocks = {
 export default () => {
 	return new ApolloServer({
 		schema,
-		context: async ({ req, res }) => ({ ...(await modules.createContext(req, res)), req, res }),
+		context: async ({ req, res }) => ({
+			...(await modules.createContext(req, res)),
+			req,
+			res
+		}),
 		formatError: error => {
-			return error.message === 'Not Authenticated!' ? new AuthenticationError(error) : error;
+			return error.message === 'Not Authenticated!'
+				? new AuthenticationError(error)
+				: error;
 		},
 		formatResponse: (response, options) =>
 			config.app.logging.apolloLogging
@@ -27,9 +33,9 @@ export default () => {
 					options
 				  )
 				: response,
-		tracing: !!settings.engine.apiKey,
-		cacheControl: !!settings.engine.apiKey,
-		engine: settings.engine.apiKey
+		tracing: !!config.engine.apiKey,
+		cacheControl: !!config.engine.apiKey,
+		engine: config.engine.apiKey
 			? {
 				apiKey: config.engine.apiKey
 			  }

@@ -3,7 +3,8 @@ import addGraphQLSubscriptions from "./api/subscriptions";
 
 // import { serverPort } from './net';
 import app from './app';
-import log from '~/common/log';
+import log from '../common/log';
+const { config } = global;
 
 // eslint-disable-next-line import/no-mutable-exports
 let server;
@@ -12,7 +13,7 @@ server.on('request', app);
 
 addGraphQLSubscriptions(server);
 
-// const server = 
+// const server =
 // app.listen(config.port, function () {
 //   log.info(`Server started on port ${config.port} in ${app.get('env')} mode`);
 //   //Its very useful to output init config to console at startup but we deliberately dont dump it to

@@ -35,10 +35,6 @@
 		"codemod:Chai:ApolloUniversal": "jest-codemods"
 
   },
-  "browser": {
-    "./src/client/codeSplitMappingsSync.js": "./src/client/codeSplitMappingsAsync.js",
-    "config": "./src/client/utils/clientConfig.js"
-  },
   "watch": {
     "test:quick": {
       "patterns": [
@@ -90,7 +86,6 @@
     "caller-callsite": "^2.0.0",
     "common": "^0.2.5",
     "compression": "^1.7.3",
-    "config": "^1.31.0",
     "cookie-parser": "^1.4.3",
     "cycle-storageify": "^4.0.1",
     "cyclejs-cookie": "^0.7.4",
