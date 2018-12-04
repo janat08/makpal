@@ -1,8 +1,7 @@
 {
-  "name": "react-head-start",
+	"name": "makpal.app",
   "version": "0.9.0",
-  "description": "React App bootstrap with Server Side Rendering, Code Splitting, Hot Reloading, Redux and React Router",
-  "author": "Greg Tillbrook",
+	"description": "Cycle.js app with graphql/express/arangodb",
   "engines": {
     "node": ">=8"
   },
@@ -31,7 +30,10 @@
     "test:chrome:headless": "testcafe -e 'chrome:headless' test/e2e/",
     "test:unit": "npx jest --config test/unit/jest.config.js",
     "lint": "npx eslint --ext jsx,js src test --fix",
-    "todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note"
+    "todo": "npx fixme -i 'node_modules/**' -i '.git/**' -i 'dist/**' --skip note",
+    "format": "prettier --config ./.prettierrc.json --write \"src/**/*.@(js|jsx|ts|tsx)\"",
+		"codemod:Chai:ApolloUniversal": "jest-codemods"
+
   },
   "browser": {
     "./src/client/codeSplitMappingsSync.js": "./src/client/codeSplitMappingsAsync.js",
@@ -43,7 +45,7 @@
         "src",
         "test"
       ],
-      "extensions": "js,jsx",
+			"extensions": "js,jsx,ts,tsx",
       "quiet": false
     }
   },
@@ -70,6 +72,8 @@
     "@cycle/state": "^1.0.0",
     "@cycle/storage": "^5.0.3",
     "@cycle/time": "^0.13.0",
+    		"@types/parcel-env": "^0.0.0",
+		"apollo-cache": "^1.1.21",
     "apollo-cache-inmemory": "^1.3.9",
     "apollo-cache-router": "^1.1.6",
     "apollo-client": "^2.3.8",
@@ -99,10 +103,12 @@
     "graphql-fragments": "^0.1.0",
     "graphql-iso-date": "^3.3.0",
     "graphql-resolve-batch": "^1.0.2",
-    "graphql-subscriptions": "^0.4.4",
+		"graphql-subscriptions": "^1.0.0",
     "graphql-tag": "^2.4.2",
-    "graphql-tools": "^1.2.3",
+		"graphql-tools": "^4.0.3",
     "immutability-helper": "^2.7.1",
+    		"iterall": "^1.2.2",
+
     "jsonwebtoken": "^8.3.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.10",
@@ -115,7 +121,7 @@
     "ramda": "^0.25.0",
     "react": "16.4.1",
     "react-apollo": "^2.1.11",
-    "redux": "^4.0.0",
+    "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "serve-favicon": "^2.5.0",
     "snabbdom-pragma": "^2.7.0",
@@ -184,30 +190,13 @@
     "wait-on": "^2.1.0"
   },
   "keywords": [
-    "react",
-    "bootstrap",
-    "head start",
-    "redux",
-    "react-router",
-    "express",
-    "ssr",
-    "server side render",
-    "code splitting",
-    "hot loading",
-    "boilerplate"
+		"cyclejs",
+		"arangodb",
+		"parcel",
+		"apollo",
+		"graphql",
+		"express"
   ],
-  "ava": {
-    "files": [
-      "src/client/**/*.spec.js",
-      "src/server/**/*.spec.js"
-    ],
-    "source": [
-      "src/client/**/*.js",
-      "src/server/**/*.js"
-    ],
-    "failFast": true,
-    "babel": "inherit"
-  },
   "nyc": {
     "include": [
       "src/client/**/*.js",
@@ -230,6 +219,6 @@
       "html"
     ]
   },
-  "repository": "gregtillbrook/react-head-start",
+	"repository": "janat08/makpal",
   "license": "MIT"
 }
