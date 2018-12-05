@@ -1,26 +1,26 @@
-import { run } from "@cycle/run";
-import storageDriver from "@cycle/storage";
-import storageify from "cycle-storageify";
-import Layout from "./components/_Layout/Layout.js";
-import switchPath from "switch-path";
-import Cookies from "universal-cookie";
-import createApolloClient from "~/common/createApolloClient";
-import { apiUrl } from "./net";
+import { run } from '@cycle/run';
+import storageDriver from '@cycle/storage';
+import storageify from 'cycle-storageify';
+import Layout from './components/_Layout/Layout.js';
+import switchPath from 'switch-path';
+import Cookies from 'universal-cookie';
+import createApolloClient from '~/common/createApolloClient';
+import { apiUrl } from './net';
 // import modules from './modules/index';
-import link from "./user/access/index";
-import gql from "graphql-tag";
-import xs from "xstream";
-import { COUNTER, ADDCOUNTER } from "./gql.js";
-import Snabbdom from "snabbdom-pragma";
+import link from './user/access/index';
+import gql from 'graphql-tag';
+import xs from 'xstream';
+import { COUNTER, ADDCOUNTER } from './gql.js';
+import Snabbdom from 'snabbdom-pragma';
 // import dotenv from 'dotenv';
 
 //drivers
-import { makeCookieDriver } from "cyclejs-cookie";
-import { routerify } from "cyclic-router";
-import { makeApolloDriver } from "./drivers/cycleApollo/cycleApollo.js";
-import { withState } from "@cycle/state";
-import { makeDOMDriver } from "@cycle/dom";
-import { captureClicks, makeHistoryDriver } from "@cycle/history";
+import { makeCookieDriver } from 'cyclejs-cookie';
+import { routerify } from 'cyclic-router';
+import { makeApolloDriver } from './drivers/cycleApollo/cycleApollo.js';
+import { withState } from '@cycle/state';
+import { makeDOMDriver } from '@cycle/dom';
+import { captureClicks, makeHistoryDriver } from '@cycle/history';
 // //
 // var result = require('dotenv').config();
 // console.log(process.env || result);
@@ -37,7 +37,7 @@ const client = createApolloClient({
 const main = routerify(withState(Layout), switchPath, { omitHistory: false });
 
 run(main, {
-	DOM: makeDOMDriver("#app"),
+	DOM: makeDOMDriver('#app'),
 	history: captureClicks(makeHistoryDriver()),
 	apollo: makeApolloDriver(client),
 	cookie: makeCookieDriver()

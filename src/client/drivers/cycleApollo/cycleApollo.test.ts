@@ -1,23 +1,25 @@
 import {
 	makeApolloDriver,
 	appendGraphOperationNameToOptions
-} from "./cycleApollo.js";
-import { setup, run } from "@cycle/run";
-import runRxjs from "@cycle/rxjs-run";
-import xs, { Stream } from "xstream";
-import { setAdapt } from "@cycle/run/lib/adapt";
+} from './cycleApollo.js';
+import { setup, run } from '@cycle/run';
+import runRxjs from '@cycle/rxjs-run';
+import xs, { Stream } from 'xstream';
+import { setAdapt } from '@cycle/run/lib/adapt';
 
-import { makeExecutableSchema, addMockFunctionsToSchema } from "graphql-tools";
-import { graphql } from "graphql";
-import schemaString from "./schemaTest.js";
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { SchemaLink } from "apollo-link-schema";
-import gql from "graphql-tag";
-import { adapt } from "@cycle/run/lib/adapt";
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+import { graphql } from 'graphql';
+import schemaString from './schemaTest.js';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { SchemaLink } from 'apollo-link-schema';
+import gql from 'graphql-tag';
+import { adapt } from '@cycle/run/lib/adapt';
+
+import { a } from '~/client/drivers/cycleApollo/cycleApollo';
 
 //remember test
-import { Observable, of, never, interval, empty } from "rxjs";
+import { Observable, of, never, interval, empty } from 'rxjs';
 import {
 	map,
 	mergeMap,
@@ -27,7 +29,7 @@ import {
 	take,
 	delay,
 	mergeAll
-} from "rxjs/operators";
+} from 'rxjs/operators';
 
 let dispose = () => {};
 var client: any = {};
@@ -43,7 +45,7 @@ const HERO = gql`
 interface hero {
 	data: {
 		hero: {
-			name: "Hello World";
+			name: 'Hello World';
 		};
 	};
 }
@@ -51,7 +53,7 @@ function heroTest(x: hero, custom?: string) {
 	expect(x).toMatchObject({
 		data: {
 			hero: {
-				name: custom || "Hello World"
+				name: custom || 'Hello World'
 			}
 		}
 	});
@@ -68,10 +70,10 @@ const REVIEWEPISODE = gql`
 `;
 
 const reviewEpisodeVars = {
-	ep: "JEDI",
+	ep: 'JEDI',
 	review: {
 		stars: 5,
-		commentary: "This is a great movie!"
+		commentary: 'This is a great movie!'
 	}
 };
 
@@ -79,14 +81,14 @@ function reviewTest(x) {
 	expect(x).toMatchObject({
 		data: {
 			createReview: {
-				episode: "EMPIRE",
-				commentary: "Hello World"
+				episode: 'EMPIRE',
+				commentary: 'Hello World'
 			}
 		}
 	});
 }
 
-describe("apolloDriver", function() {
+describe('apolloDriver', function() {
 	beforeAll(() => {
 		// Make a GraphQL schema with no resolvers
 		// import { mockServer, MockList } from 'graphql-tools';
@@ -96,7 +98,7 @@ describe("apolloDriver", function() {
 		const mocks = {
 			Int: () => 6,
 			Float: () => 22.1,
-			String: () => "Hello World"
+			String: () => 'Hello World'
 		};
 		addMockFunctionsToSchema({ schema, mocks });
 		const apolloCache = new InMemoryCache((window as any).__APOLLO_STATE__);
@@ -115,47 +117,47 @@ describe("apolloDriver", function() {
 	afterEach(function() {
 		dispose();
 	});
-	it("will filter queries with select()", (done) => {
+	it('will filter queries with select()', (done) => {
 		function main(sources) {
-			sources.apollo.select("category").subscribe({
+			sources.apollo.select('category').subscribe({
 				next(result) {
 					heroTest(result);
 					done();
 				},
 				error: done.fail,
-				complete: () => done.fail("completed")
+				complete: () => done.fail('completed')
 			});
 			return {
 				apollo: xs.of({
 					query: HERO,
-					category: "category"
+					category: 'category'
 				})
 			};
 		}
 
 		dispose = run(main, { apollo: makeApolloDriver(client) });
 	});
-	it("will select by name given to operation in gql string", (done) => {
+	it('will select by name given to operation in gql string', (done) => {
 		function main(sources) {
-			sources.apollo.select("getHero").subscribe({
+			sources.apollo.select('getHero').subscribe({
 				next(result) {
 					heroTest(result);
 					done();
 				},
 				error: done.fail,
-				complete: () => done.fail("completed")
+				complete: () => done.fail('completed')
 			});
 			return {
 				apollo: xs.of({
 					query: HERO,
-					category: "asdf"
+					category: 'asdf'
 				})
 			};
 		}
 
 		dispose = run(main, { apollo: makeApolloDriver(client) });
 	});
-	it("will throw error if no category or operation name given within gql string in template or runtime, select can't occur", () => {
+	it('will throw error if no category or operation name given within gql string in template or runtime, select can\'t occur', () => {
 		expect(() =>
 			appendGraphOperationNameToOptions({
 				query: gql`
@@ -167,22 +169,22 @@ describe("apolloDriver", function() {
 				`
 			})
 		).toThrow(
-			"Neither category, nor operation name has been defined, so .select() won't trigger. Perhaps something went wrong"
+			'Neither category, nor operation name has been defined, so .select() won\'t trigger. Perhaps something went wrong'
 		);
 	});
-	it("will accept async operations to be performed on client", (done) => {
+	it('will accept async operations to be performed on client', (done) => {
 		function main(sources) {
 			var query$ = xs.of({
 				query: HERO,
-				category: "asdf"
+				category: 'asdf'
 			});
 
 			var manipulate$ = xs.of({
-				cat: "wQ",
+				cat: 'wQ',
 				op: function(client) {
 					var param = {
 						query: HERO,
-						data: { hero: { __typename: "Human", name: "asdff" } }
+						data: { hero: { __typename: 'Human', name: 'asdff' } }
 					};
 					var a = client.writeQuery(param);
 					return null;
@@ -190,17 +192,17 @@ describe("apolloDriver", function() {
 			});
 
 			var then$ = sources.apollo
-				.select("wQ")
+				.select('wQ')
 				.mapTo(query$)
 				.flatten();
 
-			sources.apollo.select("asdf").subscribe({
+			sources.apollo.select('asdf').subscribe({
 				next(result) {
-					heroTest(result, "asdff");
+					heroTest(result, 'asdff');
 					done();
 				},
 				error: done.fail,
-				complete: () => done.fail("completed")
+				complete: () => done.fail('completed')
 			});
 
 			return {
@@ -210,7 +212,7 @@ describe("apolloDriver", function() {
 
 		dispose = run(main, { apollo: makeApolloDriver(client) });
 	}, 3000);
-	it.skip("adapt works", function(done) {
+	it.skip('adapt works', function(done) {
 		function main(_sources: any) {
 			of(1);
 			expect(_sources.apollo.select()).toHaveProperty(null);
@@ -219,7 +221,7 @@ describe("apolloDriver", function() {
 		}
 
 		var select = () => {
-			return adapt(xs.of("asdf"));
+			return adapt(xs.of('asdf'));
 		};
 
 		dispose = runRxjs(main, {
@@ -228,24 +230,24 @@ describe("apolloDriver", function() {
 			}
 		});
 	});
-	it.skip("will rerun watchQuery after storeReset with empty results", () => {
+	it.skip('will rerun watchQuery after storeReset with empty results', () => {
 		expect(true).toBe(true);
 	});
 	//coppied from http driver on cyclejs repository
-	it.skip("should not remember past responses when selecting", function(done) {
+	it.skip('should not remember past responses when selecting', function(done) {
 		function main(_sources: any) {
 			const test$ = of(null).pipe(
 				delay(1000),
 				mergeMap(() =>
-					_sources.apollo.select("cat").pipe(
+					_sources.apollo.select('cat').pipe(
 						mergeAll(),
-						map((res: any) => "I should not show this, " + res.text)
+						map((res: any) => 'I should not show this, ' + res.text)
 					)
 				)
 			);
 
 			const request$ = of({
-				category: "cat",
+				category: 'cat',
 				query: HERO
 			});
 
@@ -259,7 +261,7 @@ describe("apolloDriver", function() {
 			sink.addListener({
 				next: (s: any) => {
 					console.log(s);
-					done.fail("No data should come through the Test sink");
+					done.fail('No data should come through the Test sink');
 				},
 				error: (err: any) => {
 					done(err);

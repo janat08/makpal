@@ -1,14 +1,14 @@
-import express from "express";
-import favicon from "serve-favicon";
-import cookieParser from "cookie-parser";
-import compression from "compression";
-import path from "path";
-import morgan from "morgan";
-import url from "url";
+import express from 'express';
+import favicon from 'serve-favicon';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import path from 'path';
+import morgan from 'morgan';
+import url from 'url';
 
-import getLog from "./utils/logger";
-import modules from "./modules/index";
-import createApolloServer from "./graphql";
+import getLog from './utils/logger';
+import modules from './modules/index';
+import createApolloServer from './graphql';
 const { config } = global;
 
 const app = express();
@@ -21,19 +21,21 @@ for (const applyMiddleware of modules.middlewares) {
 	applyMiddleware(app);
 }
 
+asdf;
+
 //logging
 // const log = getLog();
 if (config.logIncomingHttpRequests) {
-	const incomingLog = getLog("INCOMING");
+	const incomingLog = getLog('INCOMING');
 	app.use(
-		morgan("short", {
+		morgan('short', {
 			stream: { write: (message) => incomingLog.info(message.trim()) }
 		})
 	);
 }
 
 //dont reveal whats running server
-app.disable("x-powered-by"); //TODO: helmet
+app.disable('x-powered-by'); //TODO: helmet
 
 app.use(cookieParser());
 app.use(compression()); // GZip compress responses
@@ -46,22 +48,22 @@ const corsOptions = {
 const graphqlServer = createApolloServer();
 graphqlServer.applyMiddleware({
 	app,
-	path: "/graphql",
+	path: '/graphql',
 	cors: corsOptions
 });
 
-app.get("/graphql", () => {});
+app.get('/graphql', () => {});
 
 //static files
-app.use(favicon(path.join(__dirname, "../static/favicon.ico")));
-app.use("/", express.static(path.join(__dirname, "../static")));
+app.use(favicon(path.join(__dirname, '../static/favicon.ico')));
+app.use('/', express.static(path.join(__dirname, '../static')));
 //bundles are mapped like this so dev and prod builds both work (as dev uses src/static while prod uses dist/static)
-app.use("/bundles", express.static(path.join(__dirname, "../../dist/bundles")));
+app.use('/bundles', express.static(path.join(__dirname, '../../dist/bundles')));
 
 // //all page rendering
 // //Note: handles page routing and 404/500 error pages where necessary
-app.get("*", function(req, res) {
-	res.sendFile(path.join(__dirname, "../static/index.html"));
+app.get('*', function(req, res) {
+	res.sendFile(path.join(__dirname, '../static/index.html'));
 });
 
 // const server = app.listen(config.port, function () {

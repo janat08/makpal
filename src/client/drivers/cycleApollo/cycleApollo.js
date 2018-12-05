@@ -1,4 +1,4 @@
-import xs from "xstream";
+import xs from 'xstream';
 // import { adapt } from "@cycle/run/lib/adapt";
 
 const responseFilter = (category) => (response$) => {
@@ -8,6 +8,7 @@ const responseFilter = (category) => (response$) => {
 		(i.category === category || i.operationName === category)
 	);
 };
+asdf
 
 // changelog
 // category alias to cat
@@ -34,13 +35,13 @@ const producer = (observable) => {
 
 export function appendGraphOperationNameToOptions(options) {
 	var operationType = Object.keys(options).filter(
-		(x) => x == "query" || x == "subscription" || x == "mutation"
+		(x) => x == 'query' || x == 'subscription' || x == 'mutation'
 	)[0];
 	var operationNameField = options[operationType].definitions[0].name;
 	var operationName = operationNameField ? operationNameField.value : false;
 	if (!options || (!options.category && !operationName)) {
 		throw new Error(
-			"Neither category, nor operation name has been defined, so .select() won't trigger. Perhaps something went wrong"
+			'Neither category, nor operation name has been defined, so .select() won\'t trigger. Perhaps something went wrong'
 		);
 	}
 	return Object.assign(options, { operationName: operationName });
@@ -119,3 +120,5 @@ export function makeApolloDriver(client, template = []) {
 		return response$$;
 	};
 }
+
+export var a = 'asdf';

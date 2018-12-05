@@ -1,12 +1,131 @@
-<testsuites name="jest tests" tests="7" failures="0" time="1.485">
-  <testsuite name="apolloDriver" errors="0" failures="0" skipped="3" timestamp="2018-12-01T09:56:40" time="1.443" tests="7">
-    <testcase classname="apolloDriver will filter queries with select()" name="apolloDriver will filter queries with select()" time="0.006">
+<testsuites name="jest tests" tests="18" failures="1" time="9.755">
+  <testsuite name="Counter example API works" errors="0" failures="0" skipped="3" timestamp="2018-12-05T07:58:07" time="2.968" tests="3">
+    <testcase classname="Counter example API works Responds to counter get GraphQL query" name="Counter example API works Responds to counter get GraphQL query" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="apolloDriver will select by name given to operation in gql string" name="apolloDriver will select by name given to operation in gql string" time="0.144">
+    <testcase classname="Counter example API works Increments counter on GraphQL mutation" name="Counter example API works Increments counter on GraphQL mutation" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" name="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" time="0.002">
+    <testcase classname="Counter example API works Triggers subscription on GraphQL mutation" name="Counter example API works Triggers subscription on GraphQL mutation" time="0">
+      <skipped/>
     </testcase>
-    <testcase classname="apolloDriver will accept async operations to be performed on client" name="apolloDriver will accept async operations to be performed on client" time="0.031">
+  </testsuite>
+  <testsuite name="User API works" errors="0" failures="0" skipped="8" timestamp="2018-12-05T07:58:07" time="6.551" tests="8">
+    <testcase classname="User API works User not logged in initially" name="User API works User not logged in initially" time="0.001">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Siging in as ordinary user works" name="User API works Siging in as ordinary user works" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Signing out as ordinary user works" name="User API works Signing out as ordinary user works" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Can&apos;t query user profiles as guest" name="User API works Can&apos;t query user profiles as guest" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Tests with authenticated user Can query own user profile" name="User API works Tests with authenticated user Can query own user profile" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Tests with authenticated user Cannot query other users profile" name="User API works Tests with authenticated user Cannot query other users profile" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Tests with authenticated admin Can query own user profile" name="User API works Tests with authenticated admin Can query own user profile" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname="User API works Tests with authenticated admin Can query other users profile" name="User API works Tests with authenticated admin Can query other users profile" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="apolloDriver" errors="0" failures="1" skipped="3" timestamp="2018-12-05T07:58:06" time="7.359" tests="7">
+    <testcase classname="apolloDriver will filter queries with select()" name="apolloDriver will filter queries with select()" time="0.025">
+    </testcase>
+    <testcase classname="apolloDriver will select by name given to operation in gql string" name="apolloDriver will select by name given to operation in gql string" time="0.003">
+    </testcase>
+    <testcase classname="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" name="apolloDriver will throw error if no category or operation name given within gql string in template or runtime, select can&apos;t occur" time="0.003">
+    </testcase>
+    <testcase classname="apolloDriver will accept async operations to be performed on client" name="apolloDriver will accept async operations to be performed on client" time="0.168">
+      <failure>Error: expect(received).toMatchObject(expected)
+
+Expected value to match object:
+  {&quot;data&quot;: {&quot;hero&quot;: {&quot;name&quot;: &quot;Hello World&quot;}}}
+Received:
+  {&quot;data&quot;: {&quot;hero&quot;: {&quot;__typename&quot;: &quot;Human&quot;, &quot;name&quot;: &quot;asdff&quot;}}, &quot;loading&quot;: false, &quot;networkStatus&quot;: 7, &quot;observer&quot;: {&quot;_subscriber&quot;: [Function anonymous], &quot;isCurrentlyPolling&quot;: false, &quot;isTornDown&quot;: false, &quot;lastResult&quot;: [Circular], &quot;lastResultSnapshot&quot;: {&quot;data&quot;: {&quot;hero&quot;: {&quot;__typename&quot;: &quot;Human&quot;, &quot;name&quot;: &quot;asdff&quot;}}, &quot;loading&quot;: false, &quot;networkStatus&quot;: 7, &quot;stale&quot;: false}, &quot;observers&quot;: [{&quot;_subscription&quot;: {&quot;_cleanup&quot;: [Function anonymous], &quot;_observer&quot;: [Object], &quot;_queue&quot;: undefined, &quot;_state&quot;: &quot;running&quot;}}], &quot;options&quot;: {&quot;category&quot;: &quot;category&quot;, &quot;notifyOnNetworkStatusChange&quot;: false, &quot;query&quot;: {&quot;definitions&quot;: [[Object]], &quot;kind&quot;: &quot;Document&quot;, &quot;loc&quot;: [Object]}, &quot;variables&quot;: {}}, &quot;queryId&quot;: &quot;1&quot;, &quot;queryManager&quot;: {&quot;clientAwareness&quot;: {}, &quot;dataStore&quot;: {&quot;cache&quot;: {&quot;addTypename&quot;: true, &quot;cacheKeyRoot&quot;: [CacheKeyNode], &quot;config&quot;: [Object], &quot;data&quot;: [DepTrackingCache], &quot;maybeBroadcastWatch&quot;: [Function optimistic], &quot;optimistic&quot;: [Array], &quot;silenceBroadcast&quot;: false, &quot;storeReader&quot;: [StoreReader], &quot;storeWriter&quot;: [StoreWriter], &quot;typenameDocumentCache&quot;: [Map], &quot;watches&quot;: [Set]}}, &quot;deduplicator&quot;: {&quot;request&quot;: [Function anonymous]}, &quot;fetchQueryPromises&quot;: Map {}, &quot;idCounter&quot;: 10, &quot;link&quot;: {&quot;request&quot;: [Function anonymous]}, &quot;mutationStore&quot;: {&quot;store&quot;: {}}, &quot;onBroadcast&quot;: [Function onBroadcast], &quot;queries&quot;: Map {&quot;1&quot; =&gt; {&quot;cancel&quot;: [Function anonymous], &quot;document&quot;: [Object], &quot;invalidate&quot;: false, &quot;invalidated&quot;: false, &quot;lastRequestId&quot;: 8, &quot;listeners&quot;: [Array], &quot;newData&quot;: null, &quot;observableQuery&quot;: [Circular], &quot;subscriptions&quot;: [Array]}, &quot;4&quot; =&gt; {&quot;cancel&quot;: [Function anonymous], &quot;document&quot;: [Object], &quot;invalidate&quot;: false, &quot;invalidated&quot;: true, &quot;lastRequestId&quot;: 9, &quot;listeners&quot;: [Array], &quot;newData&quot;: [Object], &quot;observableQuery&quot;: [ObservableQuery], &quot;subscriptions&quot;: [Array]}}, &quot;queryDeduplication&quot;: true, &quot;queryIdsByName&quot;: {&quot;getHero&quot;: [&quot;1&quot;, &quot;4&quot;]}, &quot;queryStore&quot;: {&quot;store&quot;: {&quot;1&quot;: [Object], &quot;4&quot;: [Object]}}, &quot;scheduler&quot;: {&quot;inFlightQueries&quot;: {}, &quot;intervalQueries&quot;: {}, &quot;pollingTimers&quot;: {}, &quot;queryManager&quot;: [Circular], &quot;registeredQueries&quot;: {}, &quot;ssrMode&quot;: false}}, &quot;scheduler&quot;: {&quot;inFlightQueries&quot;: {}, &quot;intervalQueries&quot;: {}, &quot;pollingTimers&quot;: {}, &quot;queryManager&quot;: {&quot;clientAwareness&quot;: {}, &quot;dataStore&quot;: {&quot;cache&quot;: [InMemoryCache]}, &quot;deduplicator&quot;: {&quot;request&quot;: [Function anonymous]}, &quot;fetchQueryPromises&quot;: Map {}, &quot;idCounter&quot;: 10, &quot;link&quot;: {&quot;request&quot;: [Function anonymous]}, &quot;mutationStore&quot;: {&quot;store&quot;: [Object]}, &quot;onBroadcast&quot;: [Function onBroadcast], &quot;queries&quot;: Map {&quot;1&quot; =&gt; [Object], &quot;4&quot; =&gt; [Object]}, &quot;queryDeduplication&quot;: true, &quot;queryIdsByName&quot;: {&quot;getHero&quot;: [Array]}, &quot;queryStore&quot;: {&quot;store&quot;: [Object]}, &quot;scheduler&quot;: [Circular]}, &quot;registeredQueries&quot;: {}, &quot;ssrMode&quot;: false}, &quot;shouldSubscribe&quot;: true, &quot;subscriptionHandles&quot;: [], &quot;variables&quot;: {}}, &quot;result&quot;: {&quot;__typename&quot;: &quot;Human&quot;, &quot;name&quot;: &quot;asdff&quot;}, &quot;stale&quot;: false}
+Difference:
+- Expected
++ Received
+
+  Object {
+    &quot;data&quot;: Object {
+      &quot;hero&quot;: Object {
+-       &quot;name&quot;: &quot;Hello World&quot;,
++       &quot;name&quot;: &quot;asdff&quot;,
+      },
+    },
+  }
+    at heroTest (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:53:12)
+    at Object.next (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:124:6)
+    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1092:22)
+    at FlattenListener.Object.&lt;anonymous&gt;.FlattenListener._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:719:14)
+    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1092:22)
+    at MapOp.Object.&lt;anonymous&gt;.MapOp._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:914:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1092:22)
+    at Object.next (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.js:25:15)
+    at notifySubscription (C:\Users\user\dev\react-head\node_modules\zen-observable\lib\Observable.js:130:18)
+    at onNotify (C:\Users\user\dev\react-head\node_modules\zen-observable\lib\Observable.js:165:3)
+    at SubscriptionObserver.next (C:\Users\user\dev\react-head\node_modules\zen-observable\lib\Observable.js:219:7)
+    at C:\Users\user\dev\react-head\node_modules\src\core\ObservableQuery.ts:605:55
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.next (C:\Users\user\dev\react-head\node_modules\src\core\ObservableQuery.ts:605:24)
+    at C:\Users\user\dev\react-head\node_modules\src\core\QueryManager.ts:616:26
+    at C:\Users\user\dev\react-head\node_modules\src\core\QueryManager.ts:1046:11
+    at Array.forEach (&lt;anonymous&gt;)
+    at C:\Users\user\dev\react-head\node_modules\src\core\QueryManager.ts:1045:10
+    at Map.forEach (&lt;anonymous&gt;)
+    at QueryManager.Object.&lt;anonymous&gt;.QueryManager.broadcastQueries (C:\Users\user\dev\react-head\node_modules\src\core\QueryManager.ts:1039:18)
+    at ApolloClient.Object.&lt;anonymous&gt;.ApolloClient.writeQuery (C:\Users\user\dev\react-head\node_modules\src\ApolloClient.ts:371:29)
+    at Object.op (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:189:21)
+    at MapOp.op [as f] (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.js:95:17)
+    at _try (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:25:14)
+    at MapOp.Object.&lt;anonymous&gt;.MapOp._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:912:15)
+    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1092:22)
+    at Filter.Object.&lt;anonymous&gt;.Filter._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:693:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1094:40)
+    at MapOp.Object.&lt;anonymous&gt;.MapOp._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:914:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._n (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1092:22)
+    at Immediate._onImmediate (C:\Users\user\dev\react-head\node_modules\@cycle\run\src\internals.ts:106:40)
+    at runCallback (timers.js:810:20)
+    at tryOnImmediate (timers.js:768:5)
+    at processImmediate [as _immediateCallback] (timers.js:745:5)</failure>
+      <failure>Error: Failed: &quot;completed&quot;
+    at Env.fail (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine\Env.js:540:34)
+    at Function.next.fail (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:52:22)
+    at Object.complete (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:205:26)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1117:22)
+    at Flatten.Object.&lt;anonymous&gt;.Flatten.less (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:768:44)
+    at Flatten.Object.&lt;anonymous&gt;.Flatten._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:787:10)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1117:22)
+    at Filter.Object.&lt;anonymous&gt;.Filter._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:705:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1119:40)
+    at Merge.Object.&lt;anonymous&gt;.Merge._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:256:9)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1117:22)
+    at MapOp.Object.&lt;anonymous&gt;.MapOp._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:926:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1117:22)
+    at Filter.Object.&lt;anonymous&gt;.Filter._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:705:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1119:40)
+    at MapOp.Object.&lt;anonymous&gt;.MapOp._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:926:7)
+    at Stream.Object.&lt;anonymous&gt;.Stream._c (C:\Users\user\dev\react-head\node_modules\xstream\src\index.ts:1117:22)
+    at C:\Users\user\dev\react-head\node_modules\@cycle\run\src\internals.ts:133:62
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.disposeSinkProxies (C:\Users\user\dev\react-head\node_modules\@cycle\run\src\internals.ts:133:28)
+    at Object.disposeEngine [as dispose] (C:\Users\user\dev\react-head\node_modules\@cycle\run\src\index.ts:164:5)
+    at dispose (C:\Users\user\dev\react-head\node_modules\@cycle\run\src\index.ts:100:14)
+    at Object.&lt;anonymous&gt; (C:\Users\user\dev\react-head\src\client\drivers\cycleApollo\cycleApollo.test.ts:118:3)
+    at Object.asyncJestLifecycle (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\jasmine_async.js:63:37)
+    at resolve (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:56:12)
+    at new Promise (&lt;anonymous&gt;)
+    at mapper (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:43:19)
+    at promise.then (C:\Users\user\dev\react-head\node_modules\jest-jasmine2\build\queue_runner.js:87:41)
+    at &lt;anonymous&gt;</failure>
     </testcase>
     <testcase classname="apolloDriver adapt works" name="apolloDriver adapt works" time="0">
       <skipped/>
