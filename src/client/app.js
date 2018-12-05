@@ -27,7 +27,7 @@ import { captureClicks, makeHistoryDriver } from '@cycle/history';
 
 const client = createApolloClient({
 	apiUrl,
-	links: link
+	// links: link
 	// connectionParams: modules.connectionParams, //for uploading images
 	// clientResolvers: modules.resolvers
 });

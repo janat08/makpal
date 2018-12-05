@@ -1,14 +1,14 @@
-import { getOperationAST } from "graphql";
-import { BatchHttpLink } from "apollo-link-batch-http";
-import { ApolloLink } from "apollo-link";
-import { withClientState } from "apollo-link-state";
-import { WebSocketLink } from "apollo-link-ws";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { LoggingLink } from "apollo-logger";
-import { SubscriptionClient } from "subscriptions-transport-ws";
-import ApolloClient from "apollo-client";
-import ApolloCacheRouter from "apollo-cache-router";
-import { hasDirectives } from "apollo-utilities";
+import { getOperationAST } from 'graphql';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { ApolloLink } from 'apollo-link';
+import { withClientState } from 'apollo-link-state';
+import { WebSocketLink } from 'apollo-link-ws';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { LoggingLink } from 'apollo-logger';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
+import ApolloClient from 'apollo-client';
+import ApolloCacheRouter from 'apollo-cache-router';
+import { hasDirectives } from 'apollo-utilities';
 //doesn't work
 // import config from "config";
 // var {__TEST__} = config
@@ -30,8 +30,8 @@ const createApolloClient = ({
 	const cache = ApolloCacheRouter.override(
 		ApolloCacheRouter.route([netCache, localCache], (document) => {
 			if (
-				hasDirectives(["client"], document) ||
-				getOperationAST(document).name.value === "GeneratedClientQuery"
+				hasDirectives(['client'], document) ||
+				getOperationAST(document).name.value === 'GeneratedClientQuery'
 			) {
 				// Pass all @client queries and @client defaults to localCache
 				return [localCache];
@@ -51,12 +51,12 @@ const createApolloClient = ({
 	const queryLink = createNetLink
 		? createNetLink(apiUrl)
 		: new BatchHttpLink({
-				uri: apiUrl,
-				credentials: "include"
+			uri: apiUrl,
+			credentials: 'include'
 		  });
 
 	let apiLink = queryLink;
-	if (apiUrl && (__TEST__ || typeof navigator !== "undefined" || false)) {
+	if (apiUrl && (__TEST__ || typeof navigator !== 'undefined' || false)) {
 		let finalConnectionParams = {};
 		if (connectionParams) {
 			for (const connectionParam of connectionParams) {
@@ -64,14 +64,14 @@ const createApolloClient = ({
 			}
 		}
 
-		const wsUri = apiUrl.replace(/^http/, "ws");
+		const wsUri = apiUrl.replace(/^http/, 'ws');
 
 		const globalVar =
-			typeof global !== "undefined"
+			typeof global !== 'undefined'
 				? global
-				: typeof window !== "undefined"
-				? window
-				: {};
+				: typeof window !== 'undefined'
+					? window
+					: {};
 		const webSocketImpl = globalVar.WebSocket || globalVar.MozWebSocket;
 
 		const wsClient = new SubscriptionClient(
@@ -107,7 +107,7 @@ const createApolloClient = ({
 					operation.operationName
 				);
 				return (
-					!!operationAST && operationAST.operation === "subscription"
+					!!operationAST && operationAST.operation === 'subscription'
 				);
 			},
 			new WebSocketLink(wsClient),
@@ -129,7 +129,7 @@ const createApolloClient = ({
 		cache
 	};
 	if (__SSR__ && !__TEST__) {
-		if (typeof window !== "undefined" && window.__APOLLO_STATE__) {
+		if (typeof window !== 'undefined' && window.__APOLLO_STATE__) {
 			clientParams.initialState = window.__APOLLO_STATE__;
 		} else {
 			clientParams.ssrMode = true;
@@ -140,7 +140,7 @@ const createApolloClient = ({
 	if (__TEST__) {
 		clientParams.defaultOptions = {
 			query: {
-				fetchPolicy: "no-cache"
+				fetchPolicy: 'no-cache'
 			}
 		};
 	}
@@ -148,7 +148,7 @@ const createApolloClient = ({
 	const client = new ApolloClient(clientParams);
 	client.onResetStore(linkState.writeDefaults);
 
-	if (typeof window !== "undefined" && window.__APOLLO_STATE__) {
+	if (typeof window !== 'undefined' && window.__APOLLO_STATE__) {
 		cache.restore(window.__APOLLO_STATE__);
 	}
 

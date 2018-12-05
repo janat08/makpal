@@ -8,7 +8,6 @@ const responseFilter = (category) => (response$) => {
 		(i.category === category || i.operationName === category)
 	);
 };
-asdf
 
 // changelog
 // category alias to cat

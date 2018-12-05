@@ -1,10 +1,10 @@
-import { ApolloLink, Observable } from "apollo-link";
+import { ApolloLink, Observable } from 'apollo-link';
 // import React from 'react';
-import { withApollo } from "react-apollo";
+import { withApollo } from 'react-apollo';
 // import PropTypes from 'prop-types';
 
 // import { LayoutCenter } from '../../../common/components';
-import { getItem, setItem, removeItem } from "../../clientStorage.web.js";
+import { getItem, setItem, removeItem } from '../../clientStorage.web.js';
 // import Feature from '../connector';
 // import settings from 'config';
 
@@ -12,9 +12,9 @@ import { getItem, setItem, removeItem } from "../../clientStorage.web.js";
 // import CURRENT_USER_QUERY from '../../graphql/CurrentUserQuery.graphql';
 
 const setJWTContext = async (operation) => {
-	const accessToken = await getItem("accessToken");
+	const accessToken = await getItem('accessToken');
 	const headers =
-		["login", "refreshTokens"].indexOf(operation.operationName) < 0 &&
+		['login', 'refreshTokens'].indexOf(operation.operationName) < 0 &&
 		accessToken
 			? { Authorization: `Bearer ${accessToken}` }
 			: {};
@@ -27,13 +27,13 @@ const setJWTContext = async (operation) => {
 let apolloClient;
 
 const saveTokens = async ({ accessToken, refreshToken }) => {
-	await setItem("accessToken", accessToken);
-	await setItem("refreshToken", refreshToken);
+	await setItem('accessToken', accessToken);
+	await setItem('refreshToken', refreshToken);
 };
 
 const removeTokens = async () => {
-	await removeItem("accessToken");
-	await removeItem("refreshToken");
+	await removeItem('accessToken');
+	await removeItem('refreshToken');
 };
 
 const JWTLink = new ApolloLink((operation, forward) => {
@@ -45,8 +45,8 @@ const JWTLink = new ApolloLink((operation, forward) => {
 			if (
 				// !settings.user.auth.access.session.enabled &&
 				!true &&
-				operation.operationName === "currentUser" &&
-				!(await getItem("refreshToken"))
+				operation.operationName === 'currentUser' &&
+				!(await getItem('refreshToken'))
 			) {
 				observer.next({ data: { currentUser: null } });
 				observer.complete();
@@ -58,7 +58,7 @@ const JWTLink = new ApolloLink((operation, forward) => {
 				sub = forward(operation).subscribe({
 					next: (result) => {
 						const promise = (async () => {
-							if (operation.operationName === "login") {
+							if (operation.operationName === 'login') {
 								if (
 									result.data.login.tokens &&
 									!result.data.login.errors
@@ -108,7 +108,7 @@ const JWTLink = new ApolloLink((operation, forward) => {
 										mutation: REFRESH_TOKENS_MUTATION,
 										variables: {
 											refreshToken: await getItem(
-												"refreshToken"
+												'refreshToken'
 											)
 										}
 									});
@@ -218,5 +218,5 @@ const JWTLink = new ApolloLink((operation, forward) => {
 //     : {}
 // );
 
-export default JWTLink;
+export default [JWTLink];
 export { removeTokens };

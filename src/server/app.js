@@ -21,7 +21,7 @@ for (const applyMiddleware of modules.middlewares) {
 	applyMiddleware(app);
 }
 
-asdf;
+// asdf;
 
 //logging
 // const log = getLog();
@@ -56,6 +56,10 @@ app.get('/graphql', () => {});
 
 //static files
 app.use(favicon(path.join(__dirname, '../static/favicon.ico')));
+app.use(
+	'/index.map',
+	express.static(path.join(__dirname, '../../dist/bundles/index.map'))
+);
 app.use('/', express.static(path.join(__dirname, '../static')));
 //bundles are mapped like this so dev and prod builds both work (as dev uses src/static while prod uses dist/static)
 app.use('/bundles', express.static(path.join(__dirname, '../../dist/bundles')));
