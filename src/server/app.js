@@ -21,8 +21,6 @@ for (const applyMiddleware of modules.middlewares) {
 	applyMiddleware(app);
 }
 
-// asdf;
-
 //logging
 // const log = getLog();
 if (config.logIncomingHttpRequests) {

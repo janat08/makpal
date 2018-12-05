@@ -10,7 +10,7 @@ import { apiUrl } from './net';
 import link from './user/access/index';
 import gql from 'graphql-tag';
 import xs from 'xstream';
-import { COUNTER, ADDCOUNTER } from './gql.js';
+import { COUNTER, ADDCOUNTER, CURRENTUSER, LOGIN } from './gql.js';
 import Snabbdom from 'snabbdom-pragma';
 // import dotenv from 'dotenv';
 
@@ -26,11 +26,23 @@ import { captureClicks, makeHistoryDriver } from '@cycle/history';
 // console.log(process.env || result);
 
 const client = createApolloClient({
-	apiUrl,
+	apiUrl
 	// links: link
 	// connectionParams: modules.connectionParams, //for uploading images
 	// clientResolvers: modules.resolvers
 });
+
+client
+	.mutate({
+		mutation: LOGIN,
+		variables: {
+			input: { usernameOrEmail: 'asdf', password: 'asdf' }
+		}
+		// category: 'login'
+	})
+	.then((x) => {
+		client.query({ query: CURRENTUSER }).then(console.log);
+	});
 
 //////////////
 

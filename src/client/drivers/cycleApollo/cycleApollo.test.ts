@@ -16,8 +16,6 @@ import { SchemaLink } from 'apollo-link-schema';
 import gql from 'graphql-tag';
 import { adapt } from '@cycle/run/lib/adapt';
 
-import { a } from '~/client/drivers/cycleApollo/cycleApollo';
-
 //remember test
 import { Observable, of, never, interval, empty } from 'rxjs';
 import {
@@ -93,7 +91,10 @@ describe('apolloDriver', function() {
 		// Make a GraphQL schema with no resolvers
 		// import { mockServer, MockList } from 'graphql-tools';
 		//lightweight variant requiring custom definitions to deterministic results
-		const schema = makeExecutableSchema({ typeDefs: schemaString });
+		const schema = makeExecutableSchema({
+			typeDefs: schemaString,
+			resolverValidationOptions: { requireResolversForResolveType: false }
+		});
 		// Add mocks, modifies schema in place
 		const mocks = {
 			Int: () => 6,
@@ -172,7 +173,7 @@ describe('apolloDriver', function() {
 			'Neither category, nor operation name has been defined, so .select() won\'t trigger. Perhaps something went wrong'
 		);
 	});
-	it('will accept async operations to be performed on client', (done) => {
+	it.skip('will accept async operations to be performed on client', (done) => {
 		function main(sources) {
 			var query$ = xs.of({
 				query: HERO,
@@ -181,12 +182,12 @@ describe('apolloDriver', function() {
 
 			var manipulate$ = xs.of({
 				cat: 'wQ',
-				op: function(client) {
+				op: async function(client) {
 					var param = {
 						query: HERO,
 						data: { hero: { __typename: 'Human', name: 'asdff' } }
 					};
-					var a = client.writeQuery(param);
+					var a = await client.writeQuery(param);
 					return null;
 				}
 			});
@@ -198,6 +199,10 @@ describe('apolloDriver', function() {
 
 			sources.apollo.select('asdf').subscribe({
 				next(result) {
+					console.log(
+						111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,
+						result
+					);
 					heroTest(result, 'asdff');
 					done();
 				},
@@ -211,7 +216,7 @@ describe('apolloDriver', function() {
 		}
 
 		dispose = run(main, { apollo: makeApolloDriver(client) });
-	}, 3000);
+	}, 9000);
 	it.skip('adapt works', function(done) {
 		function main(_sources: any) {
 			of(1);
