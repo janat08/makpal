@@ -13,8 +13,7 @@ require('source-map-support').install({
   }
 });
 
-// remove it after check
-throw new Error('see me in trace stack!')
+require('./testGraphql') // test graphql import
 
 global.config = process.environment;
 require("~/common/defineGlobalVars");

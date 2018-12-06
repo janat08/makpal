@@ -5,4 +5,5 @@ window.state = function(x) {
 	};
 };
 require("~/common/defineGlobalVars.js");
+require('./testgraphql/index') //test graphql import
 require("./app.js");

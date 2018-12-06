@@ -1,0 +1,5 @@
+fragment hellos on Query{
+  hello
+  hello2
+  hello3
+}
