@@ -1,0 +1,7 @@
+#import "./hellos.graphql"
+#import "./worlds.graphql"
+
+query test{
+  ...hellos
+  ...worlds
+}

@@ -1,0 +1,5 @@
+fragment worlds on Query{
+  world
+  world2
+  world3
+}
