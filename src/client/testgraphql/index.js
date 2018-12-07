@@ -8,7 +8,7 @@ testClient.query({
 	query,
 }).then((data) => {
 	console.log('graphql import does work, check the imported graphql file');
-	console.log('test graphql import, fetched data', data);
+	console.log('test graphql import, fetched dataasdf', data);
 });
 
 
